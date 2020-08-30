@@ -1,0 +1,64 @@
+body{
+  text-align: justify;
+}
+  span.cls_003{font-family:"Calibri Bold",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none}
+
+div.cls_003{font-family:"Calibri Bold",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none;padding: 10px 0px;}
+span.cls_014{font-family:"Calibri Bold",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: underline}
+div.cls_014{font-family:"Calibri Bold",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:bold;font-style:normal;text-decoration: none;padding: 10px 0px;}
+span.cls_002{font-family:"Calibri",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+div.cls_002{font-family:"Calibri",serif;font-size: 12.5px;color:rgb(0,0,0);font-weight:normal;font-style:normal;text-decoration: none}
+
+.fees-table {
+  border-collapse: collapse;
+  width: 80%;
+      font-family: "Calibri Bold",serif;
+    font-size:  12.5px;
+}
+
+.fees-table th, td {
+  text-align: left;
+  padding: 3px;
+}
+
+.fees-table tr:nth-child(even){background-color: #f2f2f2;-webkit-print-color-adjust: exact;}
+
+
+.fees-table th {
+  background-color: #4CAF50!important;
+  color: white!important;
+  -webkit-print-color-adjust: exact;
+}
+
+.front-page-table{
+  border-collapse: collapse;
+  width: 80%;
+  font-family: "Calibri Bold",serif;
+  font-size:  12.5px;
+  font-weight:bold;
+  margin-top: 25px;
+  margin-left: 15%;
+}
+
+/*.page{
+padding: 25px 
+}*/
+ol{    font-family: "Calibri",serif;
+    font-size: 12.5px;
+    color: rgb(0,0,0);
+    font-weight: normal;
+    font-style: normal;
+    text-decoration: none;
+    padding-left: 50px;
+}
+ol>li{
+  list-style-type:   lower-alpha;
+}
+ol>li ul>li,.cls_002 ul>li{
+  list-style-type:   disc;
+}
+ol li ol li{
+  list-style-type:   lower-roman;
+}
+* {transition: none !important}
+

@@ -1,0 +1,40 @@
+[11-May-2019 09:21:24 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_view.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_view.php on line 11
+[11-May-2019 09:21:29 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_view.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_view.php on line 11
+[11-May-2019 09:22:18 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_view.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_view.php on line 11
+[11-May-2019 09:24:44 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_view.php:11
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_view.php on line 11
+[11-May-2019 21:08:16 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/index.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/index.php on line 17
+[16-May-2019 14:28:09 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_payment_options.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_payment_options.php on line 9
+[17-May-2019 18:16:20 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/index.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/index.php on line 17
+[20-May-2019 16:10:43 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_payment_options.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_payment_options.php on line 9
+[20-May-2019 16:11:29 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/lead_payment_options.php:9
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/lead_payment_options.php on line 9
+[21-May-2019 14:13:30 Asia/Muscat] PHP Fatal error:  Uncaught Error: Call to a member function fetch_array() on boolean in /home/mydmconsultant/public_html/index.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/mydmconsultant/public_html/index.php on line 17

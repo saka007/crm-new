@@ -1,0 +1,7 @@
+{
+    "require": {
+        "twilio/sdk": "^5.35",
+        "vlucas/phpdotenv": "^3.6",
+        "mpdf/mpdf": "^8.0"
+    }
+}
