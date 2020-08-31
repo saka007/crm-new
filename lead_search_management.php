@@ -1,4 +1,4 @@
-<?php include_once("header.php");	
+<?php include_once("head.php");	
 
 	// $data = array(
  //    			'notf'  =>  1
@@ -7,8 +7,17 @@
 
 ?>
 
+ <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
 
-		<div class="col-sm-10">
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Meetings</h1>
+
+          <div class="row">
+             <div class="col-lg-12">
 		<div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">View Lead</h4></div></div>
 <form name="search" action="" method="post">
 <div class="row">
@@ -424,10 +433,14 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
 			  </tbody>
 			</table>
 		</div>
+		</div>
+		</div>
+		</div>
+		</div>
 
 		
 
-<?php include_once("footer.php"); ?>
+<?php include_once("foot.php"); ?>
 
    <script>
 $(document).ready(function(){

@@ -4,7 +4,7 @@
 //   echo $_POST['message'];die;
 // }
 include_once("include/config.php");
-include_once("include/authenticatec.php");
+include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
 $cl=$obj->display('dm_lead',"id=".$_SESSION['ID']);
 $cl1=$cl->fetch_array();
@@ -177,10 +177,15 @@ $ces1=$ces->fetch_array();
           <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
         </div>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
-          <i class="fas fa-th-large"></i>
+      <li class="nav-item dropdown">
+        <a class="nav-link" data-toggle="dropdown" href="#">
+        <i class="fas fa-power-off"></i>
         </a>
+        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+        <div class="dropdown-divider"></div>
+        <a href="logout.php" class="dropdown-item">
+            logout
+          </a>
       </li>
     </ul>
   </nav>
@@ -239,15 +244,21 @@ $ces1=$ces->fetch_array();
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="/crm1/lead_management.php" class="nav-link">
+                <a href="lead_management.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Add New Lead</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="#" class="nav-link">
+                <a href="lead_search_management.php" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
                   <p>Manage Leads</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="book_meetings.php" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Meetings</p>
                 </a>
               </li>
             </ul>
