@@ -542,6 +542,9 @@ if (isset($_GET['task'])) {
   <!-- <script src="theme/vendor/chart.js/Chart.min.js"></script>
   <script src="theme/js/demo/chart-area-demo.js"></script>
   <script src="theme/js/demo/chart-pie-demo.js"></script>  -->
-<?php include_once("foot.php");
-
-?>
+<?php include_once("foot.php"); ?>
+<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
+ <script src="theme/dist/js/pages/dashboard2.js"></script>
+<!--<script src="theme/dist/js/pages/dashboard.js"></script> -->
+<!-- AdminLTE for demo purposes -->
+<!-- <script src="theme/dist/js/demo.js"></script> -->

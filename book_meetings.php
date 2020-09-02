@@ -814,5 +814,4 @@ include_once("head.php");
         </div>
      </div>
  </div>
-
-          <?php include_once("foot.php"); ?>
+<?php include_once("foot.php"); ?>
