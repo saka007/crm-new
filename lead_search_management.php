@@ -7,6 +7,9 @@
 
 ?>
 
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
  <!-- Begin Page Content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -14,7 +17,7 @@
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Meetings</h1>
+          <h1 class="h3 mb-4 text-gray-800">Manage Leads</h1>
 
           <div class="row">
              <div class="col-lg-12">
@@ -122,7 +125,7 @@ $query.=" and paidYet=0";
 }
 ?>
 
-			<table class="table table-striped table-bordered" id="dataTables-Table_new" style="width:100%">
+			<table data-last-order-identifier="tasks" class="table table-striped table-bordered" id="dataTables-Table_new" style="width:100%">
 
 			  <thead>
 
@@ -146,8 +149,6 @@ $query.=" and paidYet=0";
 			      <th>Remark</th>
 			      <th>Appointment</th>
 				  <th>Pending to do</th>
-				  <th>Student Visa</th>
-				  <th>Business</th>
 
 			    </tr>
 
@@ -270,24 +271,32 @@ $("#b<?php echo $row['id'];?>").hover(function () {
       </div>
       <div class="modal-body">
       	<input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id'];?>">
+		  <div class="col-sm-3 form-group"><label >Meeting Type</label>
+		  <select class="form-control" id="mtype<?php echo $row['id'];?>" name="mtype" >
+	<option value="">Select</option>
+	<option value="zoom">Zoom</option>
+	<option value="in_office">In office</option>
+	</select>
       </div>
+	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
-        <a href="appointment.php?lead=<?php echo $row['id'];  ?>&counsilor=<?php echo $row['Counsilor']; ?>&date=" onclick="confirmation(event,$('#datepicker<?php echo $row['id'];?>').val())" class="btn btn-primary">Book</a>
+		<!-- appointment.php?lead=<?php echo $row['id'];  ?>&counsilor=<?php echo $row['Counsilor']; ?>&date= -->
+	    <a href="#" onclick="confirmation(event,<?php echo $row['id'];  ?>,<?php echo $row['Counsilor']; ?>,$('#datepicker<?php echo $row['id'];?>').val(),$('#mtype<?php echo $row['id'];?>').val())" class="btn btn-primary">Book</a>
       </div>
     </div>
   </div>
 </div>
 <!-- end of modal window -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#m<?php echo $row['id'];?>">
-									BOOK Appointment
+<i class="far fa-calendar-check"></i>
 								</button>
 								<script>
 									$(function(){
 $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 });
-									function confirmation(ev,d) {
+									function confirmation(ev,l,c,d,t) {
       ev.preventDefault();
       url = ev.currentTarget.getAttribute('href');
       // var d =$('datepicker<?php echo $row['id'];?>').val();
@@ -305,8 +314,17 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
       buttonsStyling: false
     }).then(function (result) {
       if(result.value){
+		$.ajax({
+ 		url:'appointment.php',
+ 		method:'POST',
+ 		data:{lead:l,type:t,date:d,emp:c},
+ 		sucess:function(data)
+ 		{
+ 			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')
+ 		}
+ 	});
       Swal.fire('Booked','You have booked the appointment');
-      window.location.href= url+d;
+    //   window.location.href= url+d;
     }
     else{
       Swal.fire('Cancelled');
@@ -346,82 +364,8 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
 
 						    	?>
 
-								</td><td>
-								<button type="button" class="btn btn-primary" onclick="assign(<?=$row['id']?>,<?=$_SESSION['ID']?>)">
-									Assign to Sidharth
-								</button>
-								<script>function assign(l,c) {
-      console.log(l,c);
-      Swal.fire({
-      title: 'Are You sure',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
-      buttonsStyling: false
-    }).then(function (result) {
-      if(result.value){
-	  Swal.fire('Transferred','Lead assigned to siddharth');
-	  $.ajax({
-		url:'sid.php?lead='+l+'&counsilor='+c,
-		method:'GET',
-		sucess:function(data)
-		{
-			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')
-			// $('#myTable').DataTable().destroy();
-			// fetch_data();
-		}
-	})
-    //   window.location.href= url+d;
-    }
-    else{
-      Swal.fire('Cancelled');
-    }
-    });
-}</script>
-									</td>
-									<td>
-								<button type="button" class="btn btn-primary" onclick="assign2(<?=$row['id']?>,<?=$_SESSION['ID']?>)">
-									Assign to Mr Terence
-								</button>
-								<script>function assign2(l,c) {
-      console.log(l,c);
-      Swal.fire({
-      title: 'Are You sure',
-      type: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes',
-      cancelButtonText: 'No',
-      confirmButtonClass: 'btn btn-success',
-      cancelButtonClass: 'btn btn-danger',
-      buttonsStyling: false
-    }).then(function (result) {
-      if(result.value){
-	  Swal.fire('Transferred','Lead assigned to Mr Terence');
-	  $.ajax({
-		url:'terence.php?lead='+l+'&counsilor='+c,
-		method:'GET',
-		sucess:function(data)
-		{
-			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')
-			// $('#myTable').DataTable().destroy();
-			// fetch_data();
-		}
-	})
-    //   window.location.href= url+d;
-    }
-    else{
-      Swal.fire('Cancelled');
-    }
-    });
-}</script>
-									</td>
+								</td>
+								
 
 						    </tr>
 						
@@ -441,11 +385,17 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
 		
 
 <?php include_once("foot.php"); ?>
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
    <script>
 $(document).ready(function(){
 	var table = $('#dataTables-Table_new').DataTable({
-		responsive:true
+		responsive:false,
+		// "scrollY": 200,
+        "scrollX": true
 	});
 
 	 <?php if($_SESSION['TYPE']=="IC" || $_SESSION['TYPE']=="SIC"  || $_SESSION['TYPE']=="MC" || $_SESSION['TYPE']=="BM" || $_SESSION['TYPE']=="ABM" || $_SESSION['TYPE']=="AM"  || $_SESSION['TYPE']=="RM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" ||  $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="HR" ||  $_SESSION["TYPE"]=="TC" ||  $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM") { ?>
@@ -486,3 +436,4 @@ $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 // }	
 
 </script>
+
