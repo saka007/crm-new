@@ -6,32 +6,32 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-$cl=$obj->display('dm_lead',"id=".$_SESSION['ID']);
-$cl1=$cl->fetch_array();
+$cl = $obj->display('dm_lead', "id=" . $_SESSION['ID']);
+$cl1 = $cl->fetch_array();
 
-$op=$obj->display('dm_ops_skill_canada',"leadId=".$_SESSION['ID']);
-$op1=$op->fetch_array();
-$requiredp_docs_client=14;
-$requirede_docs_client=15;
+$op = $obj->display('dm_ops_skill_canada', "leadId=" . $_SESSION['ID']);
+$op1 = $op->fetch_array();
+$requiredp_docs_client = 14;
+$requirede_docs_client = 15;
 // print_r($op1);
-$c=$obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (mcert_re is null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (marraige IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_client_personal WHERE leadid='.$_SESSION["ID"]);
-$c1=$c->fetch_array();
-$ce=$obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_client_edu WHERE leadid='.$_SESSION["ID"]);
-$ce1=$ce->fetch_array();
-$em=$obj->display('dm_employee',"id=".$cl1['assignTo']);
-$em1=$em->fetch_array();
+$c = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (mcert_re is null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (marraige IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_client_personal WHERE leadid=' . $_SESSION["ID"]);
+$c1 = $c->fetch_array();
+$ce = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_client_edu WHERE leadid=' . $_SESSION["ID"]);
+$ce1 = $ce->fetch_array();
+$em = $obj->display('dm_employee', "id=" . $cl1['assignTo']);
+$em1 = $em->fetch_array();
 //spouse
-$requiredp_docs_spouse=12;
-$requirede_docs_spouse=15;
+$requiredp_docs_spouse = 12;
+$requirede_docs_spouse = 15;
 
-$cs=$obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_spouse_personal WHERE leadid='.$_SESSION["ID"]);
-if($cs->num_rows){
-  $cs1=$cs->fetch_array();
+$cs = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_spouse_personal WHERE leadid=' . $_SESSION["ID"]);
+if ($cs->num_rows) {
+  $cs1 = $cs->fetch_array();
 }
 
-$ces=$obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_spouse_edu WHERE leadid='.$_SESSION["ID"]);
-if($ces->num_rows){
-$ces1=$ces->fetch_array();
+$ces = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_spouse_edu WHERE leadid=' . $_SESSION["ID"]);
+if ($ces->num_rows) {
+  $ces1 = $ces->fetch_array();
 }
 ?>
 <!DOCTYPE html>
@@ -68,32 +68,58 @@ $ces1=$ces->fetch_array();
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 </head>
+<style>
+  .disable {
+    pointer-events: none;
+    opacity: 0.6;
+  }
+</style>
 
 <body id="page-top">
 
-<div class="wrapper">
+  <div class="wrapper">
 
-  <!-- Navbar -->
-  <nav class="main-header navbar navbar-expand navbar-white navbar-light">
-    <!-- Left navbar links -->
-    <ul class="navbar-nav">
-      <li class="nav-item">
-        <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="index3.html" class="nav-link">Home</a>
-      </li>
-      <li class="nav-item d-none d-sm-inline-block">
-        <a href="#" class="nav-link">Contact</a>
-      </li>
-    </ul>
+    <!-- Navbar -->
+    <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+      <!-- Left navbar links -->
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="index3.html" class="nav-link">Home</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+          <a href="#" class="nav-link">Contact</a>
+        </li>
+      </ul>
 
 
 
-    <!-- Right navbar links -->
-    <ul class="navbar-nav ml-auto">
-      <!-- Messages Dropdown Menu -->
-      <li class="nav-item dropdown">
+      <!-- Right navbar links -->
+      <ul class="navbar-nav ml-auto">
+        <!-- Messages Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <?php
+          $sql = $obj->display('employee_activity', "emp_id=" . $_SESSION['ID']);
+          if ($sql->num_rows) {
+            $user_activity = $sql->fetch_array();
+            $today = date("Y-m-d");
+            $date = date('Y-m-d', strtotime($user_activity['log_in_time']));
+
+            if ($date === $today) {
+              $isLoginSameDay = true;
+            } else {
+              $isLoginSameDay = false;
+            }
+          }
+          ?>
+        <li class="nav-item" id="timer">
+          <?php echo isset($user_activity['break_out_time']) ? $user_activity['break_out_time'] : ''; ?>
+        </li>
+        <li class="nav-item">
+          <button id="btn" class="btn btn-primary" type="button" onclick="breakTimerToggle()" <?php if ($user_activity['break_out_time'] || $isLoginSameDay) { ?> disabled <?php } ?>><?php echo isset($user_activity['break_out_time']) ? 'Stop Timer' : 'Start Timer'; ?></button>
+        </li>
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -149,89 +175,88 @@ $ces1=$ces->fetch_array();
           <div class="dropdown-divider"></div>
           <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
         </div>
-      </li>
-      <!-- Notifications Dropdown Menu -->
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-          <i class="far fa-bell"></i>
-          <span class="badge badge-warning navbar-badge">15</span>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-          <span class="dropdown-item dropdown-header">15 Notifications</span>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-envelope mr-2"></i> 4 new messages
-            <span class="float-right text-muted text-sm">3 mins</span>
+        </li>
+        <!-- Notifications Dropdown Menu -->
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="far fa-bell"></i>
+            <span class="badge badge-warning navbar-badge">15</span>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-users mr-2"></i> 8 friend requests
-            <span class="float-right text-muted text-sm">12 hours</span>
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <span class="dropdown-item dropdown-header">15 Notifications</span>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-envelope mr-2"></i> 4 new messages
+              <span class="float-right text-muted text-sm">3 mins</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-users mr-2"></i> 8 friend requests
+              <span class="float-right text-muted text-sm">12 hours</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item">
+              <i class="fas fa-file mr-2"></i> 3 new reports
+              <span class="float-right text-muted text-sm">2 days</span>
+            </a>
+            <div class="dropdown-divider"></div>
+            <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+          </div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link" data-toggle="dropdown" href="#">
+            <i class="fas fa-power-off"></i>
           </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item">
-            <i class="fas fa-file mr-2"></i> 3 new reports
-            <span class="float-right text-muted text-sm">2 days</span>
-          </a>
-          <div class="dropdown-divider"></div>
-          <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
-        </div>
-      </li>
-      <li class="nav-item dropdown">
-        <a class="nav-link" data-toggle="dropdown" href="#">
-        <i class="fas fa-power-off"></i>
-        </a>
-        <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-        <div class="dropdown-divider"></div>
-        <a href="logout.php" class="dropdown-item">
-            logout
-          </a>
-      </li>
-    </ul>
-  </nav>
-  <!-- /.navbar -->
+          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+            <div class="dropdown-divider"></div>
+            <a href="logout.php" class="dropdown-item">
+              logout
+            </a>
+        </li>
+      </ul>
+    </nav>
+    <!-- /.navbar -->
 
-  <!-- Main Sidebar Container -->
-  <aside class="main-sidebar sidebar-dark-primary elevation-4">
-    <!-- Brand Logo -->
-    <a href="dashboard.php" class="brand-link">
-      <img src="images/gm.jpg" alt="Logo" class="brand-image img-circle elevation-3"
-           style="opacity: .8">
-      <span class="brand-text font-weight-light">GIANT MIGRATION</span>
-    </a>
+    <!-- Main Sidebar Container -->
+    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+      <!-- Brand Logo -->
+      <a href="dashboard.php" class="brand-link">
+        <img src="images/gm.jpg" alt="Logo" class="brand-image img-circle elevation-3" style="opacity: .8">
+        <span class="brand-text font-weight-light">GIANT MIGRATION</span>
+      </a>
 
-    <!-- Sidebar -->
-    <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-      <div class="user-panel mt-3 pb-3 mb-3 d-flex">
-        <div class="image">
-          <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+      <!-- Sidebar -->
+      <div class="sidebar">
+        <!-- Sidebar user panel (optional) -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+          </div>
+          <div class="info">
+            <a href="#" class="d-block">Admin</a>
+          </div>
         </div>
-        <div class="info">
-          <a href="#" class="d-block">Admin</a>
-        </div>
-      </div>
 
-      <!-- Sidebar Menu -->
-      <nav class="mt-2">
-        <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-          <!-- Add icons to the links using the .nav-icon class
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+          <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+            <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
-          <li class="nav-item active">
-        <a class="nav-link" href="dashboard.php">
-          <i class="fas fa-fw fa-tachometer-alt"></i>
-          <span>Dashboard</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <i class="fas fa-fw fa-book-open"></i>
-          <span>Employee Report</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="#">
-          <i class="fas fa-fw fa-envelope"></i>
-          <span>Lead Category <span id="mmcount"></span></span></a>
-      </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="dashboard.php">
+                <i class="fas fa-fw fa-tachometer-alt"></i>
+                <span>Dashboard</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-book-open"></i>
+                <span>Employee Report</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">
+                <i class="fas fa-fw fa-envelope"></i>
+                <span>Lead Category <span id="mmcount"></span></span></a>
+            </li>
 
           <li class="nav-item has-treeview">
             <a href="#" class="nav-link">
@@ -263,7 +288,34 @@ $ces1=$ces->fetch_array();
               </li>
             </ul>
           </li>
-
+          <li class="nav-item active">
+              <a class="nav-link" href="user_activity.php">
+                <i class="fas fa-fw fa-book-open"></i>
+                <span>User Activity</span></a>
+            </li>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-table"></i>
+                <p>
+                  Extra Features
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a onclick="userActivity('login')" id="loginStart" href="javascript:void(0)" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Login Hour Start</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a onclick="userActivity('logout')" id="loginEnd" href="javascript:void(0)" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Login off</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
   
         </ul>
       </nav>
@@ -271,3 +323,100 @@ $ces1=$ces->fetch_array();
     </div>
     <!-- /.sidebar -->
   </aside>
+  <script>
+          var intervalId;
+          let isDisabled = false;
+          let break_in_time = '';
+          let break_out_time = '';
+          let timer = document.getElementById("timer");
+          let btn = document.getElementById("btn");
+          let log_in_time = false;
+          let log_out_time = false;
+
+
+          function userActivity(action) {
+            if (confirm("Do you want to " + action)) {
+              if (action === 'login') {
+                log_in_time = true;
+              } else {
+                log_in_time = false;
+                log_out_time = true;
+              }
+              callUserActivityAjax();
+            }
+          }
+
+
+          function breakTimerToggle() {
+            if (isDisabled) {
+              alert('This Button was disabled. No action is perform')
+              return false;
+            }
+            if (confirm("You want to " + btn.innerHTML)) {
+              if (btn.innerHTML === "Start Timer") {
+                btn.innerHTML = "Stop Timer";
+              } else {
+                btn.disabled = true;
+                isDisabled = true;
+              }
+
+              if (!intervalId) {
+                intervalId = setInterval(timerStart, 1000);
+                break_in_time = new Date().toLocaleDateString();
+              } else {
+                clearInterval(intervalId);
+                intervalId = null;
+                break_out_time = document.getElementById("timer").innerHTML;
+              }
+
+              callBreakTimerAjax();
+
+            }
+          }
+
+          function callBreakTimerAjax() {
+            jQuery.ajax({
+              url: "<?php echo $base_url; ?>/process/break_time.php",
+              type: "POST",
+              cache: false,
+              dataType: 'json',
+              data: '&break_in_time=' + break_in_time + '&break_out_time=' + break_out_time,
+              success: function(result) {
+                console.log(result);
+              },
+              error: function(result) {
+                console.log(result);
+              }
+            });
+          }
+
+          function callUserActivityAjax() {
+            jQuery.ajax({
+              url: "<?php echo $base_url; ?>/process/login_activity.php",
+              type: "POST",
+              cache: false,
+              dataType: 'json',
+              data: '&log_in_time=' + log_in_time + '&log_out_time=' + log_out_time,
+              success: function(result) {
+                if (result.status === 'success') {
+                  if (log_in_time) {
+                    document.getElementById('loginStart').classList.add('disable');
+                    alert('Logged in Hours')
+                  } else {
+                    document.getElementById('loginEnd').classList.add('disable');
+                    alert('logoff')
+                  }
+
+                }
+              },
+              error: function(result) {
+                console.log(result);
+              }
+            });
+          }
+
+          function timerStart() {
+            var d = new Date();
+            timer.innerHTML = d.toLocaleTimeString();
+          }
+        </script>
