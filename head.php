@@ -33,6 +33,12 @@ $ces = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_
 if ($ces->num_rows) {
   $ces1 = $ces->fetch_array();
 }
+
+$today = date('Y-m-d');
+$employee_activity_sql = $obj->display('employee_activity', "emp_id=" . $_SESSION['ID'] . " and log_in_time like '%$today%'");
+$employee_activity_sql1 = $obj->display('employee_activity', "emp_id=" . $_SESSION['ID'] . " and log_out_time like '%$today%'");
+$loginEntryRecorded = $employee_activity_sql->num_rows;
+$logoutEntryRecorded = $employee_activity_sql1->num_rows;
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -48,7 +54,7 @@ if ($ces->num_rows) {
   <title>Client - Dashboard</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker.css">
+  <!-- <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker.css"> -->
 
   <!-- Custom fonts for this template-->
   <link rel="stylesheet" href="theme/plugins/fontawesome-free/css/all.min.css">
@@ -73,18 +79,23 @@ if ($ces->num_rows) {
 
   <link href="vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
 
-<link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet">
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-<script src="theme/package/dist/sweetalert2.all.js"></script>
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
+  <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
+  <script src="theme/package/dist/sweetalert2.all.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
 
-<link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+  <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
 
 </head>
 <style>
   .disable {
     pointer-events: none;
     opacity: 0.6;
+  }
+
+  .btn-success,
+  .btn-danger {
+    margin: 5px
   }
 </style>
 
@@ -114,25 +125,34 @@ if ($ces->num_rows) {
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
           <?php
-          $sql = $obj->display('employee_activity', "emp_id=" . $_SESSION['ID']);
-          if ($sql->num_rows) {
-            $user_activity = $sql->fetch_array();
-            $today = date("Y-m-d");
-            $date = date('Y-m-d', strtotime($user_activity['log_in_time']));
+          if ($loginEntryRecorded) {
+            $user_activity = $employee_activity_sql->fetch_array();
+          } ?>
+        <li class="nav-item" id="timer" style="margin: 5px 5px;">
+          <?php echo ($user_activity['break_out_time']) ? $user_activity['break_out_time'] : ''; ?>
+        </li>
+        <?php
+        if ($user_activity['break_in_time'] && !$user_activity['break_out_time']) {
+        ?>
+          <script>
+            var myVar = setInterval(myTimer, 1000);
 
-            if ($date === $today) {
-              $isLoginSameDay = true;
-            } else {
-              $isLoginSameDay = false;
+            function myTimer() {
+              var d = new Date();
+              document.getElementById("timer").innerHTML = d.toLocaleTimeString();
             }
-          }
-          ?>
-        <li class="nav-item" id="timer">
-          <?php echo isset($user_activity['break_out_time']) ? $user_activity['break_out_time'] : ''; ?>
-        </li>
+          </script>
+        <?php } else { ?>
+          <script>
+            var myVar;
+          </script>
+        <?php } ?>
         <li class="nav-item">
-          <button id="btn" class="btn btn-primary" type="button" onclick="breakTimerToggle()" <?php if ($user_activity['break_out_time'] || $isLoginSameDay) { ?> disabled <?php } ?>><?php echo isset($user_activity['break_out_time']) ? 'Stop Timer' : 'Start Timer'; ?></button>
+          <button id="timerBtn" class="btn btn-primary" type="button" onclick="breakTimerToggle(myVar)" <?php if ($loginEntryRecorded < 1 || $user_activity['break_out_time'] || $logoutEntryRecorded) {
+                                                                                                        ?> disabled <?php } ?>>
+            <?php echo ($user_activity['break_out_time'] || $user_activity['break_in_time']) ? 'Stop Timer' : 'Start Timer'; ?></button>
         </li>
+
         <a class="nav-link" data-toggle="dropdown" href="#">
           <i class="far fa-comments"></i>
           <span class="badge badge-danger navbar-badge">3</span>
@@ -271,37 +291,37 @@ if ($ces->num_rows) {
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li>
 
-          <li class="nav-item has-treeview">
-            <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-copy"></i>
-              <p>
-                Lead Management
-                <i class="fas fa-angle-left right"></i>
-                <span class="badge badge-info right">6</span>
-              </p>
-            </a>
-            <ul class="nav nav-treeview">
-              <li class="nav-item">
-                <a href="lead_management.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Add New Lead</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="lead_search_management.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Manage Leads</p>
-                </a>
-              </li>
-              <li class="nav-item">
-                <a href="book_meetings.php" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
-                  <p>Meetings</p>
-                </a>
-              </li>
-            </ul>
-          </li>
-          <li class="nav-item active">
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Lead Management
+                  <i class="fas fa-angle-left right"></i>
+                  <span class="badge badge-info right">6</span>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="lead_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add New Lead</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Leads</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>
+              </ul>
+            </li>
+            <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">
                 <i class="fas fa-fw fa-book-open"></i>
                 <span>User Activity</span></a>
@@ -316,120 +336,152 @@ if ($ces->num_rows) {
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a onclick="userActivity('login')" id="loginStart" href="javascript:void(0)" class="nav-link">
+                  <a onclick="userActivity('login')" id="loginStart" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0)
+                                                                                                        ? 'nav-link disable' : 'nav-link'; ?>">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Login Hour Start</p>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a onclick="userActivity('logout')" id="loginEnd" href="javascript:void(0)" class="nav-link">
+                  <a onclick="userActivity('logout')" id="loginEnd" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0 && $logoutEntryRecorded < 1)
+                                                                                                        ? 'nav-link' : 'nav-link disable'; ?>">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Login off</p>
+                    <p>Loggedoff</p>
                   </a>
                 </li>
               </ul>
             </li>
-  
-        </ul>
-      </nav>
-      <!-- /.sidebar-menu -->
-    </div>
-    <!-- /.sidebar -->
-  </aside>
-  <script>
-          var intervalId;
-          let isDisabled = false;
-          let break_in_time = '';
-          let break_out_time = '';
-          let timer = document.getElementById("timer");
-          let btn = document.getElementById("btn");
-          let log_in_time = false;
-          let log_out_time = false;
+
+          </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+      </div>
+      <!-- /.sidebar -->
+    </aside>
+    <script>
+      var intervalId;
+      var isDisabled = false;
+      let break_in_time = '';
+      let break_out_time = '';
+      let timer = document.getElementById("timer");
+      let btn = document.getElementById("timerBtn");
+      let log_in_time = false;
+      let log_out_time = false;
 
 
-          function userActivity(action) {
-            if (confirm("Do you want to " + action)) {
-              if (action === 'login') {
-                log_in_time = true;
-              } else {
-                log_in_time = false;
-                log_out_time = true;
+      function userActivity(action) {
+        Swal.fire({
+          title: 'Do you want to ' + action,
+          type: 'warning',
+          showCancelButton: true,
+          confirmButtonColor: '#3085d6',
+          cancelButtonColor: '#d33',
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No, cancel!',
+          confirmButtonClass: 'btn btn-success',
+          cancelButtonClass: 'btn btn-danger',
+          buttonsStyling: false
+        }).then(function(result) {
+          if (result.value) {
+            if (action === 'login') {
+              log_in_time = true;
+            } else {
+              // alert(btn.disabled);
+              if (btn.disabled == false) {
+                Swal.fire('Cancelled', 'Your Break timer is running please stop and then log off');
+                return false;
               }
-              callUserActivityAjax();
+              log_in_time = false;
+              log_out_time = true;
             }
+            callUserActivityAjax();
+          } else {
+            Swal.fire('Cancelled');
+          }
+        });
+      }
+
+
+      function breakTimerToggle(afterReload) {
+        if (isDisabled) {
+          alert('This Button was disabled. No action is perform')
+          return false;
+        }
+        if (confirm("You want to " + btn.innerHTML.trim())) {
+          if (btn.innerHTML.trim() == "Start Timer") {
+            btn.innerHTML = "Stop Timer";
+          } else {
+            btn.disabled = true;
+            isDisabled = true;
           }
 
-
-          function breakTimerToggle() {
-            if (isDisabled) {
-              alert('This Button was disabled. No action is perform')
-              return false;
-            }
-            if (confirm("You want to " + btn.innerHTML)) {
-              if (btn.innerHTML === "Start Timer") {
-                btn.innerHTML = "Stop Timer";
-              } else {
-                btn.disabled = true;
-                isDisabled = true;
-              }
-
-              if (!intervalId) {
-                intervalId = setInterval(timerStart, 1000);
-                break_in_time = new Date().toLocaleDateString();
-              } else {
-                clearInterval(intervalId);
-                intervalId = null;
-                break_out_time = document.getElementById("timer").innerHTML;
-              }
-
-              callBreakTimerAjax();
-
-            }
+          if (afterReload) {
+            intervalId = afterReload;
           }
 
-          function callBreakTimerAjax() {
-            jQuery.ajax({
-              url: "<?php echo $base_url; ?>/process/break_time.php",
-              type: "POST",
-              cache: false,
-              dataType: 'json',
-              data: '&break_in_time=' + break_in_time + '&break_out_time=' + break_out_time,
-              success: function(result) {
-                console.log(result);
-              },
-              error: function(result) {
-                console.log(result);
-              }
-            });
+          if (!intervalId) {
+            intervalId = setInterval(timerStart, 1000);
+            break_in_time = new Date().toLocaleTimeString();
+          } else {
+            clearInterval(intervalId);
+            intervalId = null;
+            break_out_time = document.getElementById("timer").innerHTML;
           }
 
-          function callUserActivityAjax() {
-            jQuery.ajax({
-              url: "<?php echo $base_url; ?>/process/login_activity.php",
-              type: "POST",
-              cache: false,
-              dataType: 'json',
-              data: '&log_in_time=' + log_in_time + '&log_out_time=' + log_out_time,
-              success: function(result) {
-                if (result.status === 'success') {
-                  if (log_in_time) {
-                    document.getElementById('loginStart').classList.add('disable');
-                    alert('Logged in Hours')
-                  } else {
-                    document.getElementById('loginEnd').classList.add('disable');
-                    alert('logoff')
-                  }
+          callBreakTimerAjax();
 
+        }
+      }
+
+      function callBreakTimerAjax() {
+        jQuery.ajax({
+          url: "<?php echo $base_url; ?>/process/break_time.php",
+          type: "POST",
+          cache: false,
+          dataType: 'json',
+          data: '&break_in_time=' + break_in_time + '&break_out_time=' + break_out_time,
+          success: function(result) {
+            console.log(result);
+          },
+          error: function(result) {
+            console.log(result);
+          }
+        });
+      }
+
+      function callUserActivityAjax() {
+        jQuery.ajax({
+          url: "<?php echo $base_url; ?>/process/login_activity.php",
+          type: "POST",
+          cache: false,
+          dataType: 'json',
+          data: '&log_in_time=' + log_in_time + '&log_out_time=' + log_out_time,
+          success: function(result) {
+            if (result.status === 'success') {
+              if (log_in_time) {
+                document.getElementById('loginStart').classList.add('disable');
+                document.getElementById('loginEnd').classList.remove('disable');
+                btn.disabled = false;
+                Swal.fire('Success', 'Logged in Hours');
+              } else {
+                document.getElementById('loginEnd').classList.add('disable');
+                Swal.fire('Success', 'Logged off');
+                if (!btn.disabled) {
+                  btn.disabled = true;
+                  isDisabled = true;
                 }
-              },
-              error: function(result) {
-                console.log(result);
               }
-            });
-          }
 
-          function timerStart() {
-            var d = new Date();
-            timer.innerHTML = d.toLocaleTimeString();
+            }
+          },
+          error: function(result) {
+            Swal.fire(result);
           }
-        </script>
+        });
+      }
+
+      function timerStart() {
+        var d = new Date();
+        timer.innerHTML = d.toLocaleTimeString();
+      }
+    </script>

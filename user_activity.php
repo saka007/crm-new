@@ -79,8 +79,8 @@ include_once("head.php");
                                         <th>Total Working Hours</th>
                                         <th>Break in Time</th>
                                         <th>Break out Time</th>
-                                        <th>Total Break</th>
-                                        <th>Action</th>
+                                        <th>Total Break Hours</th>
+                                        <!-- <th>Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -88,15 +88,29 @@ include_once("head.php");
                                     $i = 1;
                                     $res = $obj->display("employee_activity", "emp_id=" . $_SESSION['ID'] . " " . $query . " order by created_at DESC");
                                     while ($data = $res->fetch_array()) {
+                                        if (isset($data['log_out_time']) && isset($data['log_in_time'])) {
+                                            $workHourDiff = round((strtotime($data['log_out_time']) - strtotime($data['log_in_time'])) / 3600, 1);
+                                        } else {
+                                            $workHourDiff = 'Missed';
+                                        }
+
+                                        if (isset($data['break_out_time']) && isset($data['break_in_time'])) {
+                                            $time1 = strtotime($data['break_in_time']);
+                                            $time2 = strtotime($data['break_out_time']);
+                                            $breakDiff = round(abs($time2 - $time1) / 3600, 2);
+                                        } else {
+                                            $breakDiff = 'Missed';
+                                        }
+
                                     ?>
                                         <tr>
                                             <td><?= $data['log_in_time']; ?></td>
                                             <td><?= $data['log_out_time']; ?></td>
+                                            <td><?= $workHourDiff; ?></td>
                                             <td><?= $data['break_in_time']; ?></td>
                                             <td><?= $data['break_out_time']; ?></td>
-                                            <td><?= $data['log_in_time']; ?></td>
-                                            <td><?= date('d-m-Y', strtotime($res2['log_in_time'])); ?></td>
-                                            <td><?= date('d-m-Y', strtotime($res2['break_in_time'])); ?></td>
+                                            <td><?= $breakDiff; ?></td>
+                                            <!-- <td><?= '' ?></td> -->
                                         </tr>
 
                                     <?php $i++;

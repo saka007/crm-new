@@ -9,202 +9,193 @@ include_once("include/config.php");
 // }
 
 
-if(isset($_POST['uname']) && isset($_POST['passwrd']))  
+if (isset($_POST['uname']) && isset($_POST['passwrd'])) {
 
-{   
+  $uid = strtolower($_POST["uname"]);
 
-$uid=strtolower($_POST["uname"]);    
+  $pwd = $_POST["passwrd"];
 
-$pwd=$_POST["passwrd"];        
+  $sql = $obj->display('dm_employee', "username='" . $uid . "' and password='" . $pwd . "' and status=1");
 
-$sql=$obj->display('dm_employee',"username='".$uid."' and password='".$pwd."' and status=1");   
+  $data = $sql->fetch_array();
 
-$data=$sql->fetch_array();
+  // print_r($data);die; 
 
-// print_r($data);die; 
+  // if($uid!=$data["email"] || $pwd!=$data["password"])    
 
-// if($uid!=$data["email"] || $pwd!=$data["password"])    
+  // {     
 
-// {     
+  // $invalid=true;      
 
-// $invalid=true;      
+  // //header('Location: login.php?msg=2');    
 
-// //header('Location: login.php?msg=2');    
+  // }   
 
-// }   
+  // else    
 
-// else    
+  // {     
 
-// {     
-
-// // $rol=$obj->display('dm_role','id='.$data["role"]); $rol1=$rol->fetch_array();
+  // // $rol=$obj->display('dm_role','id='.$data["role"]); $rol1=$rol->fetch_array();
 
 
 
-// $_SESSION["ADMIN_USERC"]="Activated";     
+  // $_SESSION["ADMIN_USERC"]="Activated";     
 
-// $_SESSION["LOG_USERC"]=$data["name"];      
+  // $_SESSION["LOG_USERC"]=$data["name"];      
 
-// // $_SESSION["BRANCH"]=$data["branch"];      
+  // // $_SESSION["BRANCH"]=$data["branch"];      
 
-// // $_SESSION["REGION"]=$data["region"];      
+  // // $_SESSION["REGION"]=$data["region"];      
 
-// // $_SESSION["ROLE"]=$data["role"];      
+  // // $_SESSION["ROLE"]=$data["role"];      
 
-// $_SESSION["ID"]=$data["id"];      
-// // $_SESSION["PHOTO"]=$data["photo"];      
+  // $_SESSION["ID"]=$data["id"];      
+  // // $_SESSION["PHOTO"]=$data["photo"];      
 
-// // $_SESSION["TYPE"]=$rol1["type"];      
-// $_SESSION["COUNTRY_INTEREST"]=$data["country_interest"];
+  // // $_SESSION["TYPE"]=$rol1["type"];      
+  // $_SESSION["COUNTRY_INTEREST"]=$data["country_interest"];
 
-// $_SESSION["AUS_TYPE"]=$data["aus_type"];
+  // $_SESSION["AUS_TYPE"]=$data["aus_type"];
 
-// header('Location: cdashboard.php');    
+  // header('Location: cdashboard.php');    
 
-// } 
+  // } 
 
-// }
+  // }
 
-if($uid!=strtolower($data["username"]) || $pwd!=$data["password"])		
+  if ($uid != strtolower($data["username"]) || $pwd != $data["password"]) {
 
-{			
+    $invalid = true;
 
-$invalid=true;			
+    //header('Location: login.php?msg=2');		
 
-//header('Location: login.php?msg=2');		
+  } else {
 
-}		
-
-else		
-
-{			
-
-$rol=$obj->display('dm_role','id='.$data["role"]); $rol1=$rol->fetch_array();
+    $rol = $obj->display('dm_role', 'id=' . $data["role"]);
+    $rol1 = $rol->fetch_array();
 
 
 
-$_SESSION["ADMIN_USER"]="Active";			
+    $_SESSION["ADMIN_USER"] = "Active";
 
-$_SESSION["LOG_USER"]=$data["name"];			
+    $_SESSION["LOG_USER"] = $data["name"];
 
-$_SESSION["BRANCH"]=$data["branch"];			
+    $_SESSION["BRANCH"] = $data["branch"];
 
-$_SESSION["REGION"]=$data["region"];			
+    $_SESSION["REGION"] = $data["region"];
 
-$_SESSION["ROLE"]=$data["role"];			
+    $_SESSION["ROLE"] = $data["role"];
 
-$_SESSION["ID"]=$data["id"];			
-$_SESSION["PHOTO"]=$data["photo"];			
+    $_SESSION["ID"] = $data["id"];
+    $_SESSION["PHOTO"] = $data["photo"];
 
-$_SESSION["TYPE"]=$rol1["type"];			
+    $_SESSION["TYPE"] = $rol1["type"];
 
-header('Location: dashboard.php');		
-
-}	
-
+    header('Location: dashboard.php');
+  }
 }
 
 ?>
 <!doctype html>
 
 <html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Log In</title>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link href="theme/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
-  <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+  <title>Log In</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="theme/plugins/fontawesome-free/css/all.min.css">
+  <!-- Ionicons -->
+  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- icheck bootstrap -->
+  <link rel="stylesheet" href="theme/plugins/icheck-bootstrap/icheck-bootstrap.min.css">
+  <!-- Theme style -->
+  <link rel="stylesheet" href="theme/dist/css/adminlte.min.css">
+  <!-- Google Font: Source Sans Pro -->
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+  <style type="text/css">
+    .bg-gradient-my {
+      /* background-image: url("images/bg2.jpg"); */
+    }
+  </style>
 
-  <!-- Custom styles for this template-->
-  <link href="theme/css/sb-admin-2.css" rel="stylesheet">
+</head>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-<style type="text/css">
-  .bg-gradient-my {
-    background-image:url("images/bg2.jpg");
-  }
+<body class="hold-transition login-page bg-gradient-my">
+  <div class="login-box">
+    <div class="login-logo">
+      <img src="images/gm.jpg">
+    </div>
+    <!-- /.login-logo -->
+    <div class="card">
+      <div class="card-body login-card-body">
+        <p class="login-box-msg">Sign in to start your session</p>
 
-  .toplogo{
-
-  }
-</style>
-
-    </head>
-    <body class="bg-gradient-my">
-
-    <div class="container">
-
-    <!-- Outer Row -->
-    <div class="row justify-content-center">
-
-      <div class="col-xl-6 col-lg-6 col-md-6">
-
-        <div class="card o-hidden border-0 shadow-lg my-5" style="background-color: rgb(255,255,255,0.8)!important;">
-          <div class="card-body p-0">
-            <!-- Nested Row within Card Body -->
-            <div class="row">
-              <div class="col-lg-12">
-                <div class="toplogo" align="center" style="padding-top: 1rem"><img src="images/gm.jpg"> </div>
-                <div class="" style="padding: 1rem 3rem 1rem 3rem">
-                  <div class="text-center">
-                    <h1 class="h4 text-gray-900 mb-4">Welcome!</h1>
-                  </div>
-                  <form method="post" class="user" action="">
-                    <div class="form-group">
-                      <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="uname" aria-describedby="emailHelp" placeholder="Enter Email Address...">
-                    </div>
-                    <div class="form-group">
-                      <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="passwrd" placeholder="Password">
-                    </div>
-                    <div class="form-group">
-                      <div class="custom-control custom-checkbox small">
-                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                        <label class="custom-control-label" for="customCheck">Remember Me</label>
-                      </div>
-                    </div>
-                    <!-- <a href="index.php" class="btn btn-primary btn-user btn-block">
+        <form method="post" class="user" action="">
+          <div class="input-group mb-3">
+            <input type="text" class="form-control form-control-user" id="exampleInputEmail" name="uname" aria-describedby="emailHelp" placeholder="Email">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-envelope"></span>
+              </div>
+            </div>
+          </div>
+          <div class="input-group mb-3">
+            <input type="password" class="form-control form-control-user" id="exampleInputPassword" name="passwrd" placeholder="Password">
+            <div class="input-group-append">
+              <div class="input-group-text">
+                <span class="fas fa-lock"></span>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <div class="icheck-primary">
+                <input type="checkbox" class="custom-control-input" id="customCheck">
+                <label for="customCheck">
+                  Remember Me
+                </label>
+              </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-4">
+              <input type="submit" name="submit" class="btn btn-primary btn-block" value="Login">
+            </div>
+            <!-- /.col -->
+          </div>
+          <!-- <a href="index.php" class="btn btn-primary btn-user btn-block">
                       Login
                     </a> -->
-                    <input type="submit" name="submit" style="background-color:#2bb673" class="btn btn-success btn-user btn-block" value="Login">
-                    <!-- <hr>
+
+          <!-- <hr>
                     <a href="index.html" class="btn btn-google btn-user btn-block">
                       <i class="fab fa-google fa-fw"></i> Login with Google
                     </a>
                     <a href="index.html" class="btn btn-facebook btn-user btn-block">
                       <i class="fab fa-facebook-f fa-fw"></i> Login with Facebook
                     </a> -->
-                  </form>
-                  <hr>
-                  <div class="text-center">
-                    <a class="small" href="register.php">Forgot Password?</a>
-                  </div>
-                  <div class="text-center">
-                    <a class="small" href="register.php">Create an Account!</a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
+        </form>
+        <br />
+        <p class="mb-1">
+          <a href="register.php">I forgot my password</a>
+        </p>
+        <p class="mb-0">
+          <a href="register.php" class="text-center">Register a new membership</a>
+        </p>
       </div>
-
+      <!-- /.login-card-body -->
     </div>
-
   </div>
 
-  <!-- Bootstrap core JavaScript-->
-  <script src="theme/vendor/jquery/jquery.min.js"></script>
-  <script src="theme/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-  <!-- Core plugin JavaScript-->
-  <script src="theme/vendor/jquery-easing/jquery.easing.min.js"></script>
+  <script src="theme/plugins/jquery/jquery.min.js"></script>
+  <!-- Bootstrap 4 -->
+  <script src="theme/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- AdminLTE App -->
+  <script src="theme/dist/js/adminlte.min.js"></script>
 
-  <!-- Custom scripts for all pages-->
-  <script src="theme/js/sb-admin-2.min.js"></script>
+</body>
 
-    </body>
 </html>
