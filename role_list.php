@@ -1,8 +1,12 @@
 <?php
 
-include_once("header.php");	
+include_once("head.php");	
 
 ?>
+
+
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
                 <div class="col-sm-10">
 
@@ -292,7 +296,12 @@ $(document).ready(function() {
 
 </div>
 
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
+
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
 	<script src="js/formvalidation.js"></script>
 

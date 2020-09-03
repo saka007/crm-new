@@ -3,9 +3,10 @@ if(isset($_REQUEST['lead'])){
 $data = array(
 	'leadid' => $_REQUEST['lead'],
 	'date' => date('Y-m-d',strtotime($_REQUEST['date'])),
-	'counsilorid' => $_REQUEST['counsilor'],
+	'counsilorid' => $_REQUEST['emp'],
 	'booked' => 1,
-	'region' => $_SESSION['REGION']
+	'type' =>$_REQUEST['type'],
+	'region' => $_REQUEST['REGION']
 	 );
 // print_r($data);die;
 // echo date('Y-m-d',strtotime($_REQUEST['date']));die;
