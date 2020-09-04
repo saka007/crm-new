@@ -117,7 +117,7 @@ if (isset($_POST['uname']) && isset($_POST['passwrd'])) {
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
   <style type="text/css">
     .bg-gradient-my {
-      /* background-image: url("images/bg2.jpg"); */
+      background-image: url("images/bg2.jpg");
     }
   </style>
 
