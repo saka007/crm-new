@@ -1,4 +1,5 @@
-<?php include_once("head.php");
+<?php
+include_once("head.php");
 
 if ($_POST['save'] || $_POST['submit']) {
 	$emp = $obj->display('dm_employee', 'id=' . $_POST['assign']);
@@ -110,7 +111,7 @@ $lead1 = $lead->fetch_array();
 $reg = $obj->display('dm_region', 'id=' . $lead1['region']);
 $reg1 = $reg->fetch_array();
 ?>
-
+<!-- Begin Page Content -->
 <div class="content-wrapper">
 	<!-- Content Header (Page header) -->
 	<section class="content-header">
@@ -129,57 +130,19 @@ $reg1 = $reg->fetch_array();
 		</div><!-- /.container-fluid -->
 	</section>
 
-	<!-- Main content -->
+
+
 	<section class="content">
 		<div class="row">
 			<div class="col-md-12">
 				<div class="card">
 					<div class="card-body">
+						<?php if (isset($_GET['error'])) {
+							echo '<div class="alert-danger alert">' . $_GET['error'] . '</div>';
+						} ?>
 						<form action="" method="post" id="leadForm">
 							<input type="hidden" name="id" value="<?php echo $_GET['lead']; ?>" />
-							<div class="row">
-								<div class="col-sm-12">
-								<a href="lead_view_management.php" class="btn btn-primary"><i class="fa fa-arrow-left"></i>BACK</a>
-								</div>
-
-								<?php if ($lead1['stepComplete'] != 3 && $lead1['paidYet'] == 0) { ?>
-									<div class="col-sm-12">
-										<div class="row"><label class="col-sm-8 text-right">Assign To</label>
-											<div class="col-sm-4">
-												<select class="form-control assign" required name="assign">
-													<?php
-													if ($_SESSION["TYPE"] == "IC" || $_SESSION["TYPE"] == "SIC" || $_SESSION["TYPE"] == "MC" || $_SESSION["TYPE"] == "BM" || $_SESSION["TYPE"] == "ABM" || $_SESSION["TYPE"] == "RM" || $_SESSION["TYPE"] == "AM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" || $_SESSION["TYPE"] == "FMP" || $_SESSION["TYPE"] == "DGM" || $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "HR" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "TC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "RMO" || $_SESSION["TYPE"] == "RMSM" || $_SESSION["TYPE"] == "AOM") {
-														$emp = $obj->display('dm_employee', 'id=' . $_SESSION["ID"]);
-														$emp1 = $emp->fetch_array();
-													?>
-														<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_SESSION['ID']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
-														<?php
-													} else if ($_SESSION["TYPE"] == "SA" || $_SESSION["TYPE"] == "RT") {
-														$emp = $obj->display('dm_employee', 'role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 order by name');
-														while ($emp1 = $emp->fetch_array()) {
-														?>
-															<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $lead1['assignTo']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
-													<?php }
-													}
-													?>
-												</select>
-											</div>
-										</div>
-									</div>
-								<?php } else { ?>
-									<div class="col-sm-12">
-										<div class="row"><label class="col-sm-8 text-right">Assign To</label>
-											<div class="col-sm-4">
-												<input type="hidden" name="assign" value="<?= $lead1['assignTo']; ?>" />
-												<input type="text" readonly="" value="<?php $ff = $obj->display('dm_employee', 'id=' . $lead1['assignTo']);
-																						$ff1 = $ff->fetch_array();
-																						echo $ff1['name']; ?>" />
-											</div>
-										</div>
-									</div>
-								<?php } ?>
-							</div>
-
+							<h4>Lead Required Data</h4>
 							<div class="row">
 								<div class="col-sm-4 form-group"><label>First Name</label><input type="text" class="form-control" id="fname" name="fname" value="<?php echo $lead1['fname']; ?>" required></div>
 								<div class="col-sm-4 form-group"><label>Middle Name</label><input type="text" class="form-control" id="mname" name="mname" value="<?php echo $lead1['mname']; ?>"></div>
@@ -187,8 +150,8 @@ $reg1 = $reg->fetch_array();
 							</div>
 							<div class="row">
 								<div class="col-sm-4 form-group"><label>Email</label><input type="text" class="form-control" id="email" name="email" value="<?php echo $lead1['email']; ?>" required></div>
-								<div class="col-sm-4 form-group"><label>Landline</label><input type="text" class="form-control" id="phone" name="phone" value="<?php echo $lead1['phone']; ?>"></div>
-								<div class="col-sm-4 form-group"><label>Cell No.</label><input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo $lead1['mobile']; ?>" required></div>
+								<div class="col-sm-4 form-group"><label>Contact No</label><input type="text" class="form-control" id="mobile" name="mobile" value="<?php echo $lead1['mobile']; ?>"></div>
+								<div class="col-sm-4 form-group"><label>Alternate No.</label><input type="text" class="form-control" id="phone" name="phone" maxlength="12" value="<?php echo $lead1['phone']; ?>" required></div>
 							</div>
 							<div class="row">
 								<div class="col-sm-4 form-group"><label>Nationality</label><select class="form-control" name="nationality">
@@ -223,10 +186,9 @@ $reg1 = $reg->fetch_array();
 																} ?>>Female</option>
 									</select>
 								</div>
-
-								<div class="col-sm-4 form-group"><label>Country Interested</label>
+								<div class="col-sm-4 form-group"><label>Country</label>
 									<select class="form-control" name="country_interest">
-
+										<option value="">Select</option>
 										<?php $cnt = $obj->display('dm_country_proces', 'status=1 order by name');
 										while ($cnt1 = $cnt->fetch_array()) {
 										?>
@@ -238,49 +200,48 @@ $reg1 = $reg->fetch_array();
 
 								</div>
 
+
+
 							</div>
 							<div class="row">
 
-								<?php
-								if ($lead1['stepComplete'] != 3 || $lead1['paidYet'] == 0) {
-								?>
-									<div class="col-sm-4 form-group"><label>Program Interested</label>
-										<select class="form-control" name="service_interest">
-											<?php $ser = $obj->display('dm_service', 'status=1 order by name');
-											while ($ser1 = $ser->fetch_array()) {
-											?>
-												<option value="<?php echo $ser1['id']; ?>" <?php if ($ser1['id'] == $lead1['service_interest']) {
-																								echo 'selected="selected"';
-																							} ?>><?php echo $ser1['name']; ?></option>
-											<?php } ?>
+								<!-- <div class="col-sm-4 form-group"><label >Program Interested</label>
+<select class="form-control" name="service_interest">
+	<option value="">Select</option>
+	<?php //$ser = $obj->display('dm_service', 'status=1 order by name');
+	// while ($ser1 = $ser->fetch_array()) {
+	?>
+	<option value="<?php //echo $ser1['id']; ?>"><?php //echo $ser1['name']; ?></option>
+	<?php //} ?>
+</select>
+</div> -->
 
-										</select>
-									</div>
+								<div class="col-sm-4 form-group"><label>Relative</label>
+									<select class="form-control" name="relative">
+										<option value="">Select</option>
+										<option value="Uncle">Uncle</option>
+										<option value="Aunty">Aunty</option>
+										<option value="Sibling">Sibling</option>
+										<option value="not_applicable">Not applicable</option>
+									</select>
+								</div>
 
-									<div class="col-sm-4 form-group"><label>Program Type</label>
-										<select class="form-control" name="type">
-											<option value="Business" <?php if ($lead1['type'] == "Business") {
-																			echo 'selected="selected"';
-																		} ?>>Business</option>
-											<option value="Skill" <?php if ($lead1['type'] == "Skill") {
-																		echo 'selected="selected"';
-																	} ?>>Skill</option>
-											<option value="Student" <?php if ($lead1['type'] == "Student") {
-																		echo 'selected="selected"';
-																	} ?>>Student</option>
-											<option value="Visit" <?php if ($lead1['type'] == "Visit") {
-																		echo 'selected="selected"';
-																	} ?>>Visit</option>
-											<option value="Work" <?php if ($lead1['type'] == "Work") {
-																		echo 'selected="selected"';
-																	} ?>>Work</option>
+								<!-- <div class="col-sm-4 form-group"><label >Program Type</label>
+<select class="form-control" name="type">
+	<option value="">Select</option>
+	<option value="Business">Business</option>
+	<option value="Skill">Skill</option>
+	<option value="Student">Student</option>
+	<option value="Visit">Visit</option>
+	<option value="Work">Work</option>
+	
+	</select>
+	
+	</div> -->
 
-										</select>
-									</div>
-								<?php } ?>
-
-								<div class="col-sm-4 form-group"><label>Marketing Source</label>
+								<div class="col-sm-4 form-group"><label>Source</label>
 									<select class="form-control" name="market_source" required>
+										<option value="">Select</option>
 										<?php $sou = $obj->display('dm_source', 'status=1 order by name');
 										while ($sou1 = $sou->fetch_array()) {
 										?>
@@ -292,27 +253,63 @@ $reg1 = $reg->fetch_array();
 									</select>
 
 								</div>
-								<div class="col-sm-4 form-group"><label>Convert</label>
-									<select class="form-control" name="convet" id="convet" required>
-										<option value="DNQ" <?php if ($lead1['convet'] == "DNQ") {
-																echo 'selected="selected"';
-															} ?>>DNQ</option>
-										<option value="Not Interested" <?php if ($lead1['convet'] == "Not Interested") {
-																			echo 'selected="selected"';
-																		} ?>>Not Interested</option>
-										<option value="Prospect" <?php if ($lead1['convet'] == "Prospect") {
-																		echo 'selected="selected"';
-																	} ?>>Prospect</option>
-										<option value="not_ansawered" <?php if ($lead1['convet'] == "Prospect") {
-																			echo 'selected="selected"';
-																		} ?>>Not Answered</option>
 
+								<div class="col-sm-4 form-group"><label>Maritial Status</label>
+									<select class="form-control" name="mstatus" onchange="showDiv('hidden_div', this)">
+										<option value="">Select</option>
+										<option value="1">Yes</option>
+										<option value="0">No</option>
 									</select>
 
 								</div>
 
-								<div class="col-sm-4 form-group"><label>Mode of Enquiry</label>
-									<select class="form-control" name="enquiry">
+
+
+							</div>
+
+
+							<div id="hidden_div">
+								<h4> Spouse data</h4>
+								<div class="row">
+									<div class="col-sm-4 form-group"><label>Spouse Name</label><input type="text" class="form-control" id="fnames" name="fnames" value="<?php echo $lead1['fnames']; ?>"></div>
+									<div class="col-sm-4 form-group"><label>Spouse Email</label><input type="text" class="form-control" id="emails" name="emails" value="<?php echo $lead1['emails']; ?>"></div>
+									<div class="col-sm-4 form-group"><label>Spouse Contact No</label><input type="text" class="form-control" id="phones" name="phones" value="<?php echo $lead1['phones']; ?>"></div>
+								</div>
+
+								<div class="row">
+									<div class="col-sm-4 form-group"><label>Spouse DOB</label><input type="text" class="form-control" id="mobiles" name="mobiles" maxlength="12" value="<?php echo $lead1['mobiles']; ?>"></div>
+									<div class="col-sm-4 form-group"><label>Spouse Education</label><input type="text" class="form-control" id="sedu" name="sedu" value="<?php echo $lead1['sedu']; ?>"></div>
+									<div class="col-sm-4 form-group"><label>Total Kids</label><input type="text" class="form-control" id="kids" name="kids" value="<?php echo $lead1['kids']; ?>"></div>
+								</div>
+								<div class="row">
+									<div class="col-sm-4 form-group"><label>Spouse Experience</label><input type="text" class="form-control" id="sexp" name="sexp" value="<?php echo $lead1['sexp']; ?>"></div>
+								</div>
+							</div>
+
+
+
+
+							<div class="row">
+								<div class="col-sm-6">
+									<h4 class="mb-3">Lead Source and Assignments</h4>
+								</div>
+
+							</div>
+
+							<div class="row">
+								<div class="col-sm-4 form-group"><label>Lead Status</label>
+									<select class="form-control" name="lead_category" id="lead_category">
+										<option value="">Select</option>
+										<option value="Hot">Hot</option>
+										<option value="Cold">Cold</option>
+										<option value="Warm">Warm</option>
+										<option value="DNQ">DNQ</option>
+									</select>
+
+								</div>
+								<div class="col-sm-4 form-group"><label>Lead Enquiry Source</label>
+									<select class="form-control" name="enquiry" required>
+										<option value="">Select</option>
 										<?php $en = $obj->display('dm_enquiry', 'status=1 order by name');
 										while ($en1 = $en->fetch_array()) {
 										?>
@@ -320,43 +317,49 @@ $reg1 = $reg->fetch_array();
 																							echo 'selected="selected"';
 																						} ?>><?php echo $en1['name']; ?></option>
 										<?php } ?>
+
 									</select>
 
 								</div>
+								<!-- <div class="col-sm-4 form-group"><label >Follow Up</label><input type="text" class="form-control" id="folowup" name="followup"></div> -->
+								<div class="col-sm-4 form-group"><label>Assign Lead </label>
+									<select class="form-control" required name="assign">
+										<option value="">Select</option>
+										<?php
+										/* if($_SESSION["TYPE"]=="IC" || $_SESSION["TYPE"]=="SIC" || $_SESSION["TYPE"]=="MC" || $_SESSION["TYPE"]=="BM" || $_SESSION["TYPE"]=="ABM" || $_SESSION["TYPE"]=="RM" || $_SESSION["TYPE"]=="AM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="HR" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="TC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM" || $_SESSION["TYPE"]=="AOM")
+{
+$emp=$obj->display('dm_employee','id='.$_SESSION["ID"]);
+$emp1=$emp->fetch_array();
+?>
+	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_SESSION['ID']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
+<?php
+}
+else if($_SESSION["TYPE"]=="SA" || $_SESSION["TYPE"]=="RT")
+{
+$emp=$obj->display('dm_employee','role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 order by name');
+while($emp1=$emp->fetch_array())
+{
+?>
+	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_SESSION['ID']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
+	<?php }
+}
+*/
+										?>
+									</select>
+								</div>
+							</div>
+
+							<div class="row">
 
 
-								<div class="col-sm-4 form-group"><label>Follow Up</label><input type="text" class="form-control" id="folowup" name="followup" value="<?php echo date('d-m-Y', strtotime($lead1['followup'])); ?>"></div>
 
-								<div class="col-sm-4 form-group"><label>Appointment</label><input type="text" class="form-control" id="appoint" name="appoint"></div>
+								<div class="col-sm-8 form-group"><label>Remark</label><textarea class="form-control" id="remark" name="remark" value="<?php echo $lead1['remark']; ?>"></textarea></div>
 
-								<div class="col-sm-4 form-group"><label>Lead location</label><input readonly type="text" class="form-control" id="regi" name="regi" value="<?php echo $reg1['name']; ?>"></div>
-
-								<div class="col-sm-12 form-group"><label>Remark</label><textarea class="form-control" id="remark" name="remark">
-	<?php echo $lead1['remark']; ?>
-</textarea></div>
 
 
 								<div class="col-sm-12 form-group">
-									<?php
-									if ($lead1['paidYet'] != 0 && ($_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "FMP" || $_SESSION['TYPE'] == "DGM" || $_SESSION['TYPE'] == "RMSM" || $_SESSION['ROLE'] == 8 || $_SESSION['ROLE'] == 14)) {
-									?>
-										<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<?php
-									}
-									if ($lead1['paidYet'] == 0 && ($_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "FMP" || $_SESSION['TYPE'] == "DGM" || $_SESSION['TYPE'] == "RMSM" || $_SESSION["TYPE"] == "IC" || $_SESSION["TYPE"] == "SIC" || $_SESSION["TYPE"] == "MC" || $_SESSION["TYPE"] == "ABM" || $_SESSION["TYPE"] == "BM" || $_SESSION["TYPE"] == "AM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" || $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "HR" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "TC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "RMO")) {
-									?>
-										<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<?php
-									}
-									$aset = $obj->display('dm_lead_assesment', 'leadId=' . $_GET["lead"]);
-									if ($aset->num_rows == 0) {
-									?>
-										<input type="submit" name="submit" value="SUBMIT" class="btn btn-info" <?php if ($lead1['convet'] != "Prospect") {
-																													echo 'style="display:none"';
-																												} ?> id="submit-btn-info">
-									<?php } else { ?>
-										<a href="<?php echo 'lead_assesment_edit.php?id=' . $_GET["lead"]; ?>" class="btn btn-info float-right">NEXT</a>
-									<?php } ?>
+									<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+									<input type="submit" name="submit" value="SUBMIT" class="btn btn-info" style="display:none" id="submit-btn-info">
 								</div>
 							</div>
 						</form>
@@ -370,49 +373,16 @@ $reg1 = $reg->fetch_array();
 	</section>
 	<!-- /.content -->
 </div>
-
-<?php include_once("foot.php");	?>
-
-<script>
-	$(function() {
-		$('#email').on('keypress', function(e) {
-			if (e.which == 32) {
-				alert('Space not allowed');
-				return false;
-			}
-		});
-		$('#mobile').on('keypress', function(e) {
-			if (e.which > 31 && (e.which < 48 || e.which > 57)) {
-				alert('Only number Allowed');
-				return false;
-			}
-		});
-	});
-
-	$(function() {
-		$('#dob').datepicker({
-			format: 'dd-mm-yyyy',
-			autoclose: true
-		});
-		$('#appoint').datepicker({
-			format: 'dd-mm-yyyy',
-			autoclose: true
-		});
-		$('#appointment').datepicker({
-			format: 'dd-mm-yyyy',
-			autoclose: true
-		});
-		$('#folowup').datepicker({
-			format: 'dd-mm-yyyy',
-			autoclose: true
-		});
-		$('#convet').change(function() {
-			var t = $(this).val();
-			if (t == "Prospect") {
-				$('#submit-btn-info').show();
-			} else {
-				$('#submit-btn-info').hide();
-			}
-		});
-	});
+<style type="text/css">
+	#hidden_div {
+		display: none;
+	}
+</style>
+<script type="text/javascript">
+	function showDiv(divId, element) {
+		document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
+	}
 </script>
+
+<!-- End of Main Content -->
+<?php include_once('foot.php'); ?>
