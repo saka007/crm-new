@@ -1,36 +1,134 @@
 <?php
 include_once("head.php");
 
-$ie = $obj->display('ielts','id=1');
-if($ie->num_rows > 0){
-$ie1= $ie->fetch_array();
+// $ie = $obj->display('ielts','id=1');
+// if($ie->num_rows > 0){
+// $ie1= $ie->fetch_array();
+// }
+
+if($_POST['save'] || $_POST['submit'])
+{
+$ext=$obj->display('dm_lead','email="'.$_POST['email'].'" or mobile="'.$_POST['mobile'].'"');
+if($ext->num_rows == 0)
+{
+$emp=$obj->display('dm_employee','id='.$_POST['assign']); $emp1=$emp->fetch_array();
+
+if($_POST['dob']!="") { $dob=date('Y-m-d',strtotime($_POST['dob']));} else { $dob=NULL;}
+if($_POST['appointment']!="") { $appointment=date('Y-m-d',strtotime($_POST['appointment']));} else { $appointment=NULL;}
+
+	$data = array(
+    			'fname'  =>  $_POST['fname'],
+    			'mname'  =>  $_POST['mname'],
+    			'lname'  =>  $_POST['lname'],
+    			'email'  =>  $_POST['email'],
+    			'phone'  =>  $_POST['phone'],
+    			'mobile'  =>  $_POST['mobile'],
+    			'nationality'  =>  $_POST['nationality'],
+    			'address'  =>  $_POST['address'],
+    			'dob'  =>  $dob,
+    			'gender'  =>  $_POST['gender'],
+    			'country_interest'  =>  $_POST['country_interest'],
+    			'service_interest'  =>  $_POST['service_interest'],
+    			'market_source'  =>  $_POST['market_source'],
+    			'appointment'  =>  $appointment,
+    			'followup'  =>  date('Y-m-d',strtotime($_POST['followup'])),
+    			'enquiry'  =>  $_POST['enquiry'],
+    			'convet'  =>  $_POST['convet'],
+    			'regdate'  =>  date('Y-m-d'),
+    			'assignTo'  =>  $_POST['assign'],
+    			'type'  =>  $_POST['type'],
+    			'branch'  =>  $emp1['branch'],
+    			'region'  =>  $emp1['region'],
+    			'Counsilor'  =>  $_POST['assign'],
+				'last_updated' => date('d-m-Y h-i-sa'),
+				'lead_category' =>$_POST['lead_category'],
+				'relative' => $_POST['relative'],
+				'mstatus' => $_POST['mstatus'],
+				'fnames' => $_POST['fnames'],
+				'emails'=> $_POST['emails'],
+				'phones'=> $_POST['phones'],
+				'mobiles'=> $_POST['mobiles'],
+				'sedu'=> $_POST['sedu'],
+				'kids'=> $_POST['kids'],
+				'sexp' => $_POST['sexp']
+				);
+			$odr = $obj->insert('dm_lead',$data);
+
+/*	$data2 = array(
+    			'lead'  =>  $odr
+				);
+			$obj->insert('dm_documents',$data2);
+
+	$data3 = array(
+    			'lead'  =>  $odr
+				);
+			$obj->insert('dm_document_details',$data3);*/
+
+if($_POST['remark']!="")
+{
+	$data4 = array(
+    			'lead'  =>  $odr,
+    			'date'  =>  date('Y-m-d'),
+    			'remark'  =>  $_POST['remark'],
+				);
+			$obj->insert('dm_lead_remark',$data4);
+}
+if($_POST['remark']!="")
+{
+    $data5=  array(
+        'notf' =>1
+        );
+        $obj->update('dm_lead',$data5,'id=$odr');
+}
+        
+if($_POST['appoint']!=""){
+	$data = array(
+		'leadid' => $_POST['id'],
+		'date' => date('Y-m-d',strtotime($_POST['appoint'])),
+		'counsilorid' => $_POST['assign'],
+		'booked' => 1,
+		'type' =>$_POST['mtype'],
+		'region' => $emp1['region']
+		 );
+	// print_r($data);die;
+	// echo date('Y-m-d',strtotime($_REQUEST['date']));die;
+	$obj->insert('appointments',$data);
+}
+	
+if($_POST['save'])	{ 
+	header("location:lead_view.php?lead=".$odr);
 }
 
-// if($_POST)
-// {
-//   // print_r($_POST);die;
-//   $p=$_POST['password'];
-//   $rp=$_POST['rpassword'];
-//   if($p!=$rp)
-//   {
-//     header("Location: profile.php?pass=no");
-//   }
-//   else
-//   {
+if($_POST['submit']) {
+	header("location:lead_assesment_form.php?lead=".$odr);
 
-//   $data=array(
-//     'fname'=>$_POST['fname'],
-//     'lname'=>$_POST['lname'],
-//     'email'=>$_POST['email'],
-//     'password'=>$_POST['password']
-//   );
-//   // print_r($data);die;
-//   $obj->update('dm_lead',$data,'id='.$cl1['id']);
-//   header('Location: profile.php');
-// }
-// echo "no";die;
-  
-// }
+		/*if($_POST['service_interest'] == 5) {
+			header("location:lead_assesment_form.php?lead=".$odr."&type=Student");
+		} 
+		
+		if($_POST['service_interest'] == 4 || $_POST['service_interest']==21 || $_POST['service_interest']==23 || $_POST['service_interest']==22 || $_POST['service_interest']==19 || $_POST['service_interest']==6 || $_POST['service_interest']==7 || $_POST['service_interest']==33 || $_POST['service_interest']==3) {
+			header("location:lead_assesment_form.php?lead=".$odr."&type=Visit");
+		} 
+		
+		if($_POST['service_interest'] == 3) {
+			header("location:lead_assesment_form.php?lead=".$odr."&type=Work");
+		} 
+		
+		if($_POST['service_interest'] == 2) {
+			header("location:lead_assesment_form.php?lead=".$odr."&type=Business");
+		} 
+		
+		if($_POST['service_interest'] == 1 || $_POST['service_interest']==31 || $_POST['service_interest']==32 || $_POST['service_interest']==24 || $_POST['service_interest']==25 || $_POST['service_interest']==26 || $_POST['service_interest']==27 || $_POST['service_interest']==28 || $_POST['service_interest']==29) {
+			header("location:lead_assesment_form.php?lead=".$odr."&type=Skill");
+		}*/
+
+}
+}
+else
+{
+header("location:lead_management.php?error=Duplicate entry");
+}
+}
 ?>
  <!-- Begin Page Content -->
         <div class="content-wrapper">
@@ -59,8 +157,8 @@ $ie1= $ie->fetch_array();
 </div>
 <div class="row">
 <div class="col-sm-4 form-group"><label >Email</label><input type="text" class="form-control" id="email" name="email" required></div>
-<div class="col-sm-4 form-group"><label >Contact No</label><input type="text" class="form-control" id="phone" name="phone" ></div>
-<div class="col-sm-4 form-group"><label >Alternate No.</label><input type="text" class="form-control" id="mobile" name="mobile" maxlength="12" required></div>
+<div class="col-sm-4 form-group"><label >Contact No</label><input type="text" class="form-control" id="mobile" name="mobile" ></div>
+<div class="col-sm-4 form-group"><label >Alternate No.</label><input type="text" class="form-control" id="phone" name="phone" maxlength="12" required></div>
 </div>
 <div class="row">
 <div class="col-sm-4 form-group"><label >Nationality</label><select class="form-control" name="nationality"  >
@@ -123,6 +221,7 @@ $ie1= $ie->fetch_array();
 	<option value="Uncle">Uncle</option>
 	<option value="Aunty">Aunty</option>
 	<option value="Sibling">Sibling</option>
+	<option value="not_applicable">Not applicable</option>
 </select>
 </div>
 
@@ -154,7 +253,7 @@ $ie1= $ie->fetch_array();
 	</div>
 
 	<div class="col-sm-4 form-group"><label >Maritial Status</label>
-<select class="form-control" name="type" onchange="showDiv('hidden_div', this)">
+<select class="form-control" name="mstatus" onchange="showDiv('hidden_div', this)">
 	<option value="">Select</option>
 	<option value="1">Yes</option>
 	<option value="0">No</option>
@@ -170,16 +269,19 @@ $ie1= $ie->fetch_array();
 <div id="hidden_div">
 	<h4> Spouse data</h4>
 <div class="row">
-<div class="col-sm-4 form-group"><label >Spouse Name</label><input type="text" class="form-control" id="fname" name="fname" required ></div>
-<div class="col-sm-4 form-group"><label >Spouse Email</label><input type="text" class="form-control" id="email" name="email" required></div>
-<div class="col-sm-4 form-group"><label >Spouse Contact No</label><input type="text" class="form-control" id="phone" name="phone" ></div>
+<div class="col-sm-4 form-group"><label >Spouse Name</label><input type="text" class="form-control" id="fnames" name="fnames"  ></div>
+<div class="col-sm-4 form-group"><label >Spouse Email</label><input type="text" class="form-control" id="emails" name="emails" ></div>
+<div class="col-sm-4 form-group"><label >Spouse Contact No</label><input type="text" class="form-control" id="phones" name="phones" ></div>
 </div>
 
 <div class="row">
-<div class="col-sm-4 form-group"><label >Spouse DOB</label><input type="text" class="form-control" id="mobile" name="mobile" maxlength="12" required></div>
-<div class="col-sm-4 form-group"><label >Spouse Education</label><input type="text" class="form-control" id="phone" name="phone" ></div>
-<div class="col-sm-4 form-group"><label >Total Kids</label><input type="text" class="form-control" id="mobile" name="mobile" maxlength="12" required></div>
+<div class="col-sm-4 form-group"><label >Spouse DOB</label><input type="text" class="form-control" id="mobiles" name="mobiles" maxlength="12"></div>
+<div class="col-sm-4 form-group"><label >Spouse Education</label><input type="text" class="form-control" id="sedu" name="sedu" ></div>
+<div class="col-sm-4 form-group"><label >Total Kids</label><input type="text" class="form-control" id="kids" name="kids"></div>
 </div>
+<div class="row">
+<div class="col-sm-4 form-group"><label >Spouse Experience</label><input type="text" class="form-control" id="sexp" name="sexp" ></div>
+	</div>
 </div>
 
 
@@ -192,7 +294,7 @@ $ie1= $ie->fetch_array();
 
 <div class="row">
 <div class="col-sm-4 form-group"><label >Lead Status</label>
-<select class="form-control" name="convet" id="convet">
+<select class="form-control" name="lead_category" id="lead_category">
 	<option value="">Select</option>
 	<option value="Hot">Hot</option>
 	<option value="Cold">Cold</option>

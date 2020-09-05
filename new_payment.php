@@ -2,19 +2,19 @@
 include_once("head.php");
 
 ?>
+
  <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Payment</h1>
+          <h1 class="h3 mb-4 text-gray-800">Generate Invoice</h1>
 
           <div class="row">
-
-            <div class="col-lg-12">
-            
-              <!-- document list -->
-              <div class="card shadow mb-4">
-              <div class="col-sm-10">
+             <div class="col-lg-12">
+		<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">View Lead</h4></div></div> -->
               </br>
               <form action="" method="post" name="paymentForm " enctype="multipart/form-data">
 			<input type="hidden" name="lead" value="<?php echo $_GET['lead'];?>" />
@@ -23,7 +23,7 @@ include_once("head.php");
 				
 				<div class="row">
 					<div class="col-sm-12 form-group" style="text-align: center;">
-						<h4 class="h4-color">CLIENT PAYMENT</h4>
+						<h4 class="h4-color">PAYMENT DETAILS</h4>
 					</div>
 					
 				</div>
@@ -54,13 +54,13 @@ include_once("head.php");
 							<td colspan="4" style="padding:0; border:none">
 							<table><tr>
 								<td>Payment Total</td>
-								<td><input type="text" class="form-control" id="payTotal" name="payTotal" value="<?php echo $lead1['payTotal'];?>" readonly=""  ></td>
+								<td><input type="text" class="form-control" id="payTotal" name="payTotal"></td>
 
 								<td>Discount</td>
-								<td><input type="text" class="form-control" id="payTotal" name="payTotal" value="<?php echo $lead1['discount'];?>" readonly="" ></td>
+								<td><input type="text" class="form-control" id="disc" name="disc"></td>
 							
 								<td>Payment Balance</td>
-								<td><input type="text" class="form-control" id="payBalance" name="payBalance" value="<?php echo $lead1['payBalance'];?>" readonly=""  ></td>
+								<td><input type="text" class="form-control" id="payBalance" name="payBalance"></td>
 							</tr>
 							</table>
 							</td>	
@@ -80,13 +80,13 @@ include_once("head.php");
 								<td><input type="text" class="form-control" id="payAmt" name="payAmt" min="0" max="<?=$lead1['payBalance'];?>" required></td>
 							
 								<td>VAT</td>
-								<td><input type="text" class="form-control" id="taxAmt" name="taxAmt"  readonly="" required></td>
+								<td><input type="text" class="form-control" id="taxAmt" name="taxAmt"  required></td>
 							</tr>	
 							<tr>
 								<td>Total Pay Amount</td>
-								<td><input type="text" class="form-control" id="totPayAmt" name="totPayAmt"  readonly="" required></td>
+								<td><input type="text" class="form-control" id="totPayAmt" name="totPayAmt"  required></td>
 								<td>Balance Amount</td>
-								<td><input type="text" class="form-control" id="totBalance" name="totBalance"  readonly="" required></td>
+								<td><input type="text" class="form-control" id="totBalance" name="totBalance"  required></td>
 							</tr>	
 							</table>
 							<table id="nextTr" class="table">
@@ -121,4 +121,64 @@ include_once("head.php");
 
 
       <!-- End of Main Content -->
-      <?php include_once('foot.php'); ?>
+	  <?php include_once('foot.php'); ?>
+	  
+	  <script>
+   	// var region=<?php echo $r;?>;
+$(function(){
+$('#nextTr').hide(); 
+$('#nextPayDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+
+$('#disc').blur(function(){
+	var bal = $('#payTotal').val()-$('#disc').val();
+	$('#payBalance').val(bal);
+});
+
+$('#payAmt').blur(function(){
+var amt= $(this).val();
+var bal= $('#payBalance').val();
+var vat= 5;
+bal=parseFloat(bal)-parseFloat(amt);
+
+var tax = parseFloat(amt)*0.01*parseFloat(vat);
+// var tax;
+
+// if (vat=1)
+// {
+// 	tax=0;
+// }
+// else
+// {
+// 	tax = parseFloat(amt)*0.01*parseFloat(vat);
+// }
+var tot = parseFloat(amt)+parseFloat(tax);
+
+if(bal > 0) { 
+	$('#nextTr').show(); 
+	$("#nextPayAmt").prop('required',true); 
+	$("#nextPayDate").prop('required',true); 
+	$('#nextPayAmt').attr("max",bal);
+}
+else
+{
+	$('#nextTr').hide(); 
+	$("#nextPayAmt").prop('required',false); 
+	$("#nextPayDate").prop('required',false); 
+	$('#nextPayAmt').attr("max",bal);
+}
+<?php if ($p1['novat']==0){ ?>
+$('#taxAmt').val(tax);
+<?php } 
+if ($p1['novat']==1){
+?>
+$('#taxAmt').val(0);
+<?php } ?>
+// console.log($("#address").val());
+// $('#taxAmt').val((region==3&&(!($("#address").val().toLowerCase().includes("dubai")) && !($("#address").val().toLowerCase().includes("dxb")) && !($("#address").val().toLowerCase().includes("uae")))) ||  (region==5&&(!($("#address").val().toLowerCase().includes("sharjah")) && !($("#address").val().toLowerCase().includes("shj")) && !($("#address").val().toLowerCase().includes("uae")) &&
+// !$("#address").val().toLowerCase().includes("dubai"))) ||  (region==4&&(!$("#address").val().toLowerCase().includes("abu dhabi") && !$("#address").val().toLowerCase().includes("dubai") && !$("#address").val().toLowerCase().includes("AUH") && !$("#address").val().toLowerCase().includes("uae"))) ?0:tax);
+$('#totPayAmt').val(tot);
+$('#totBalance').val(bal);
+
+});
+}); 
+</script>
