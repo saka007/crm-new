@@ -1,6 +1,32 @@
 <?php
 include_once("head.php");
 
+$lead=$obj->display('dm_lead','id='.$_GET['lead']);
+$lead1=$lead->fetch_array();
+
+$data = array(
+	"payTotal" => $_POST['payAmt'],
+	"discount" => $_POST['taxAmt'],
+	"paidYet" => $_POST['payMethod'],
+	"payBalance" => $_POST['payCategory'],
+	"demandAmt" => $_POST['nextPayAmt'],
+	"demdRemark" => $_POST['demdRemark'],
+	"dueDate" => date('Y-m-d',strtotime($_POST['nextPayDate']))
+	);
+
+	$obj->update('dm_lead',$data,'id='.$_POST['lead']);
+
+
+	// $data2 = array(
+	// 	"leadId" =>  $_POST['lead'],
+	// 	"amount" => $_POST['payAmt'],
+	// 	"tax" => $_POST['taxAmt'],
+	// 	"payMethod" => $_POST['payMethod'],
+	// 	"payCategory" => $_POST['payCategory'],
+	// 	"date" => date('Y-m-d')
+	// 	);
+	// $recipt=$obj->insert('dm_pay_history',$data2);
+
 ?>
 
  <!-- Begin Page Content -->

@@ -1,7 +1,18 @@
 <?php
 include_once("head.php");
-?>
 
+$tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID']);
+$tots1 = $tots->fetch_array();
+
+$mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done=1');
+$mdone1 = $mdone->fetch_array();
+
+$ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done is NULL');
+$ndone1 = $ndone->fetch_array();
+
+?>
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
  <!-- Begin Page Content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -20,27 +31,21 @@ include_once("head.php");
 
              <div class="row">
       <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop">12</h3>
+      <h3 class="bold no-mtop"><?=$tots1['count'];?></h3>
       <p style="color:#989898" class="font-medium no-mbot">
-        Not Started      </p>
-      <p class="font-medium-xs no-mbot text-muted">
-        Tasks assigned to me: 5      </p>
-    </div>
+        Total Meetings Booked    </p>
+          </div>
         <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop">10</h3>
+      <h3 class="bold no-mtop"><?=$mdone1['count'];?></h3>
       <p style="color:#03A9F4" class="font-medium no-mbot">
-        In Progress      </p>
-      <p class="font-medium-xs no-mbot text-muted">
-        Tasks assigned to me: 1      </p>
+        Meeting Done      </p>
     </div>
         <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop">12</h3>
+      <h3 class="bold no-mtop"><?=$ndone1['count'];?></h3>
       <p style="color:#2d2d2d" class="font-medium no-mbot">
-        Testing      </p>
-      <p class="font-medium-xs no-mbot text-muted">
-        Tasks assigned to me: 4      </p>
+        Meetings Yet to Done     </p>
     </div>
-        <div class="col-md-2 col-xs-6 border-right">
+        <!-- <div class="col-md-2 col-xs-6 border-right">
       <h3 class="bold no-mtop">11</h3>
       <p style="color:#adca65" class="font-medium no-mbot">
         Awaiting Feedback      </p>
@@ -53,10 +58,12 @@ include_once("head.php");
         Complete      </p>
       <p class="font-medium-xs no-mbot text-muted">
         Tasks assigned to me: 7      </p>
-    </div>
+    </div> -->
       </div>
 
-      <table id="userActivity" class="table table-bordered table-striped">
+      <hr/>
+
+      <table class="table table-bordered table-striped" id="dataTables-Table_new" name="dataTables-Table_new" style="width:100%" > 
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
@@ -64,12 +71,27 @@ include_once("head.php");
                                         <th>Date</th>
                                         <th>Status</th>
                                         <th>Mode of Meeting</th>
-                                        <th></th>
                                         <!-- <th>Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
-                                   <tr><td></td></tr>
+                                   <?php
+                                   $meet = $obj->display3('SELECT *,a.type as mtype FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id WHERE a.counsilorid='.$_SESSION['ID']);
+                                   if($meet->num_rows > 0) {
+                                      $i=1;
+                                   while($row = $meet->fetch_array())
+                                   { ?>
+                                   <tr>
+                                      <td><?=$i;?></td>
+                                      <td><?=$row['fname'].''.$row['lname'];?></td>
+                                      <td><?=$row['date'];?></td>
+                                      <td><?php if($row['done']==1) { echo "Done"; } else { echo "Not Done"; }?></td>
+                                      <td><?=$row['mtype'];?></td>
+                                    </tr>
+
+                                   <?php $i++;}} ?>
+
+                                   </tbody></table>
 
              </div>
           </div>
@@ -78,3 +100,19 @@ include_once("head.php");
      </div>
  </div>
 <?php include_once("foot.php"); ?>
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+
+<script>
+$(document).ready(function(){
+	var table = $('#dataTables-Table_new').DataTable({
+		responsive:false,
+		// "scrollY": 200,
+        "scrollX": true
+	});
+
+});
+
+</script>
