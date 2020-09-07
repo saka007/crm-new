@@ -1,13 +1,19 @@
 <?php
-include_once("header.php");	
+include_once("head.php");	
 ?>
-<div class="col-sm-10">
-                    <h4 class="mb-3" style="color:#2cb674;">Source Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+            <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
+                 <div class="col-sm-10">
+                    <h4 class="mb-3">Lead Source Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
                
                             <table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
                                 <thead>
 									<tr>
-									  <th>Source Name</th>
+									  <th>Lead Source Name</th>
 									  <th style="text-align:right">Action</th>
 									</tr>
                                 </thead>
@@ -31,7 +37,7 @@ include_once("header.php");
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">Edit Source</h4>
+                <h4 class="modal-title">Edit Lead Source</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
 
@@ -43,7 +49,7 @@ include_once("header.php");
 				<input type="hidden" name="action" value="edit" />
 				<div class="row">
                     <div class="form-group col-12">
-                        <label>Source Name</label>
+                        <label>Lead Source Name</label>
                             <input type="text" class="form-control" name="name" value="<?=$res2['name'];?>" />
                     </div>
 				</div>
@@ -112,13 +118,17 @@ $(document).ready(function() {
                             </table>
                             <!-- /.table-responsive -->
                 </div>
+            </div>
+        </div>
+    </div>
+ </div>
                 <!-- /.col-lg-12 -->
            
 <div class="modal" id="newForm">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title">New Source</h4>
+                <h4 class="modal-title">New Lead Source</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
@@ -128,7 +138,7 @@ $(document).ready(function() {
 				<input type="hidden" name="action" value="add" />
 				<div class="row">
                     <div class="form-group col-12">
-                        <label>Source Name</label>
+                        <label>Lead Source Name</label>
                             <input type="text" class="form-control" name="name" />
                     </div>
 				</div>
@@ -144,7 +154,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 	<script src="js/formvalidation.js"></script>
 
 <script>

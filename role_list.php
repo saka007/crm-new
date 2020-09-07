@@ -8,9 +8,15 @@ include_once("head.php");
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
+    <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
                 <div class="col-sm-10">
 
-                    <h4 class="mb-3" style="color:#2cb674;">Role Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+                    <h4 class="mb-3">Access Hierarchy Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 
                
 
@@ -20,8 +26,8 @@ include_once("head.php");
 
 									<tr>
 
-									  <th>Role Name</th>
-									  <th>Role Code</th>
+									  <th>Access Name</th>
+									  <!-- <th>Access Code</th> -->
 
 									  <th style="text-align:right">Action</th>
 
@@ -46,7 +52,7 @@ include_once("head.php");
 								<tr id="item-<?=$res2['id']?>">
 
 								 <td><?=$res2['name'];?></td>
-								 <td><?=$res2['type'];?></td>
+								 <!-- <td><?=$res2['type'];?></td> -->
 
 	
 
@@ -231,7 +237,10 @@ $(document).ready(function() {
                             <!-- /.table-responsive -->
 
                 </div>
-
+            </div>
+        </div>
+    </div>
+ </div>
                 <!-- /.col-lg-12 -->
 
            
@@ -244,7 +253,7 @@ $(document).ready(function() {
 
             <div class="modal-header">
 
-                <h4 class="modal-title">New Role</h4>
+                <h4 class="modal-title">New Access</h4>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
 
@@ -264,7 +273,7 @@ $(document).ready(function() {
 
                     <div class="form-group col-12">
 
-                        <label>Role Name</label>
+                        <label>Access Name</label>
 
                             <input type="text" class="form-control" name="name" />
 

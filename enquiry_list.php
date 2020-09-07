@@ -1,12 +1,17 @@
 <?php
 
-include_once("header.php");	
+include_once("head.php");	
 
 ?>
-
+                   <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
                 <div class="col-sm-10">
 
-                    <h4 class="mb-3" style="color:#2cb674;">Enquiry Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+                    <h4 class="mb-3">Lead Inquiry Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 
                
 
@@ -16,7 +21,7 @@ include_once("header.php");
 
 									<tr>
 
-									  <th>Enquiry Names</th>
+									  <th>Lead Inquiry Type Name</th>
 
 									  <th style="text-align:right">Action</th>
 
@@ -64,7 +69,7 @@ include_once("header.php");
 
             <div class="modal-header">
 
-                <h4 class="modal-title">Edit Enquiry</h4>
+                <h4 class="modal-title">Edit Lead Inquiry Type</h4>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
 
@@ -225,7 +230,10 @@ $(document).ready(function() {
                             <!-- /.table-responsive -->
 
                 </div>
-
+            </div>
+        </div>
+    </div>
+ </div>
                 <!-- /.col-lg-12 -->
 
            
@@ -238,7 +246,7 @@ $(document).ready(function() {
 
             <div class="modal-header">
 
-                <h4 class="modal-title">New Enquiry</h4>
+                <h4 class="modal-title">New Lead Inquiry Type</h4>
 
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
 
@@ -290,7 +298,7 @@ $(document).ready(function() {
 
 </div>
 
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 
 	<script src="js/formvalidation.js"></script>
 
