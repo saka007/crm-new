@@ -1,8 +1,14 @@
 <?php
-include_once("header.php");	
+include_once("head.php");	
 ?>
-<div class="col-sm-10">
-                    <h4 class="mb-3" style="color:#2cb674;">Country Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+    <!-- Begin Page Content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
+             <div class="col-sm-10">
+                    <h4 class="mb-3">Country Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
                
                             <table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
                                 <thead>
@@ -23,7 +29,7 @@ include_once("header.php");
 	
 									 <td style="text-align:right" >
 									 <a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
-									<!-- <a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> -->
+									<a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> 
 								 </td>   
 								</tr>
 								
@@ -144,7 +150,7 @@ $(document).ready(function() {
         </div>
     </div>
 </div>
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 	<script src="js/formvalidation.js"></script>
 
 <script>

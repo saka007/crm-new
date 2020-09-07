@@ -293,6 +293,47 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li> -->
 
+            <li class="nav-item active">
+              <a class="nav-link" href="region_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Region Management</span></a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="branch_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Branch Management</span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="department_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Department Management</span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="country_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Country Management</span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="enquiry_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Lead Inquiry Management</span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="source_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Lead Source Management</span></a>
+            </li>
+
+            <li class="nav-item active">
+              <a class="nav-link" href="role_list.php">
+                <i class="fas fa-user"></i>
+                <span>Access Hierarchy Management</span></a>
+            </li>
+            
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>

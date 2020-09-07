@@ -1,12 +1,18 @@
 <?php
 
-include_once("header.php");	
+include_once("head.php");	
 
 ?>
 
+ <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
 <div class="col-sm-10">
 
-	<h4 class="mb-3" style="color:#2cb674;">Branch Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+	<h4 class="mb-3">Branch Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm" style="float: right;">Add New <i class="fa fa-plus"></i></a></h4>
 
 
 
@@ -38,7 +44,7 @@ include_once("header.php");
 
 				$i=1;
 
-				$re=$obj->display("dm_branch","status=1 order by name ASC"); 	
+				$re=$obj->display("dm_branch"); 	
 
 				while($res2=$re->fetch_array())
 
@@ -159,6 +165,22 @@ include_once("header.php");
 		<label>Phone No.</label>
 
 			<input type="text" class="form-control" name="mobile" value="<?=$res2['mobile']?>" />
+
+	</div>
+
+	<div class="form-group col-6">
+
+		<label>Status</label>
+
+		<select type="text" class="form-control" name="status" >
+
+
+				<option value="1" <?php if($res2['status']==1) { echo 'selected="selected"';}?> >ACTIVE</option>
+				<option value="0" <?php if($res2['status']==0) { echo 'selected="selected"';}?> >DEACTIVE</option>
+
+			
+
+			</select>
 
 	</div>
 
@@ -289,7 +311,10 @@ success: function(result) {
 			<!-- /.table-responsive -->
 
 </div>
-
+		</div>
+	</div>
+ </div>
+</div>
                 <!-- /.col-lg-12 -->
 
           
@@ -406,7 +431,7 @@ success: function(result) {
 
 </div>
 
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 
 	<script src="js/formvalidation.js"></script>
 
@@ -529,6 +554,21 @@ $(document).ready(function() {
 
 });
 
-
+$('body').on('change','#region',function(){ 
+ 		var id = $(this).val();
+		if(id!="")
+		{ 
+					$.ajax({
+						url: "process/branch_process.php",
+						type: "POST",
+						dataType: 'json',
+						data:'&id='+id+'&action=change',
+						success:function(result){
+							$('#branch').html(result.html);
+							$('#counsilor').html(result.html2);
+						}
+					});
+		}
+	});
 
 </script>			

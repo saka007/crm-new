@@ -1,12 +1,16 @@
 <?php
 
-include_once("header.php");	
+include_once("head.php");	
 
 ?>
-
+    <!-- Begin Page Content -->
+    <div class="content-wrapper">
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+            <div class="container-fluid">
                 <div class="col-sm-10">
 
-                    <h4 class="mb-3" style="color:#2cb674;">Region Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+                    <h4 class="mb-3">Region Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 
                
 
@@ -146,7 +150,9 @@ $(document).ready(function() {
                             <!-- /.table-responsive -->
 
                 </div>
-
+            </div>
+        </div>
+    </div>
                 <!-- /.col-lg-12 -->
 
            
@@ -211,7 +217,7 @@ $(document).ready(function() {
 
 </div>
 
-<?php 	include_once("footer.php");	?>
+<?php include_once("foot.php");	?>
 
 	<script src="js/formvalidation.js"></script>
 
@@ -281,4 +287,4 @@ $(document).ready(function() {
 
 });
 
-</script>			
+</script>
