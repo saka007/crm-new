@@ -1,17 +1,22 @@
-<?php include_once("header.php");	
+<?php include_once("head.php");	
 
 // echo $_GET['payment'] . " ==> leadPayment" . $_GET['leadPayment'];
 
 $lead=$obj->display('dm_lead','id='.$_GET['lead']);
-$lead1=$lead->fetch_array();
+if($lead->num_rows){
+	$lead1=$lead->fetch_array();
+}
 $r=$lead1['region'];
 // $m=$lead1['market_source'];
 
 $recpt=$obj->display('dm_pay_history','id='.$_GET['receipt']);
+if($recpt->num_rows){
 $recpt1=$recpt->fetch_array();
-
+}
 $bran=$obj->display('dm_branch','id='.$lead1['branch']);
+if($bran->num_rows){
 $bran1=$bran->fetch_array();
+}
 ?>
 		<div class="col-sm-10">
 			<div class="container">
@@ -36,7 +41,7 @@ $bran1=$bran->fetch_array();
 			            <div class="text-right text-sm-right" style="text-align:right">
 			            <h5 style="padding:0 0 5px; margin:0;font-size:1rem; line-height:1"><label>Date : </label> <?php echo date('d-m-Y',strtotime($recpt1['date'])); ?></h5>
 			            <h5 style="padding:0 0 5px; margin:0;font-size:1rem; line-height:1"><label>Receipt No : </label> <?php echo str_pad($recpt1['id'], 4, 0, STR_PAD_LEFT); ?></h5>
-			            <h5 style="padding:0 0 5px; margin:0;font-size:1rem; line-height:1"><label>Agreement No. : </label> <?php $gh=$obj->display('dm_lead_contract','leadId='.$_GET['lead']); $gh1=$gh->fetch_array(); echo $gh1['id'];?></h5>
+			            <h5 style="padding:0 0 5px; margin:0;font-size:1rem; line-height:1"><label>Agreement No. : </label> <?php $gh=$obj->display('dm_lead_contract','leadId='.$_GET['lead']); if($gh->num_rows) $gh1=$gh->fetch_array(); echo $gh1['id'];?></h5>
 			            <?php
 			            if ($r !='6' && $r !='7' && $r !='8')
 			            {
@@ -239,7 +244,7 @@ if($lead1['novat']==1)
 			</div>
 		</div>
 		</div>
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 <style>
 .height {
     min-height: 150px;

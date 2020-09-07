@@ -79,8 +79,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
   <!-- <link href="vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
   <script src="theme/plugins/jquery/jquery.min.js"></script>
-<!-- jQuery UI 1.11.4 -->
-<script src="theme/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- jQuery UI 1.11.4 -->
+  <script src="theme/plugins/jquery-ui/jquery-ui.min.js"></script>
   <!-- <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
   <!-- <script src="theme/package/dist/sweetalert2.all.js"></script> -->
@@ -98,6 +98,14 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   .btn-success,
   .btn-danger {
     margin: 5px
+  }
+
+  #disabled-button-wrapper {
+    display: inline-block;
+  }
+
+  #disabled-button-wrapper .btn[disabled] {
+    pointer-events: none;
   }
 </style>
 
@@ -149,7 +157,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
             var myVar;
           </script>
         <?php } ?>
-        <li class="nav-item">
+        <li class="nav-item" id="disabled-button-wrapper" <?php if ($loginEntryRecorded < 1) { ?> data-title="Enabled after Login hour activity is started" <?php } ?>>
           <button id="timerBtn" class="btn btn-primary" type="button" onclick="breakTimerToggle(myVar)" <?php if ($loginEntryRecorded < 1 || $user_activity['break_out_time'] || $logoutEntryRecorded) {
                                                                                                         ?> disabled <?php } ?>>
             <?php echo ($user_activity['break_out_time'] || $user_activity['break_in_time']) ? 'Stop Timer' : 'Start Timer'; ?></button>
@@ -333,7 +341,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-user"></i>
                 <span>Access Hierarchy Management</span></a>
             </li>
-            
+
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -407,6 +415,9 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
       <!-- /.sidebar -->
     </aside>
     <script>
+      $(function() {
+        $('#disabled-button-wrapper').tooltip();
+      });
       var intervalId;
       var isDisabled = false;
       let break_in_time = '';
@@ -510,6 +521,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 document.getElementById('loginStart').classList.add('disable');
                 document.getElementById('loginEnd').classList.remove('disable');
                 btn.disabled = false;
+                $('#disabled-button-wrapper').tooltip('disable');
                 Swal.fire('Success', 'Logged in Hours');
               } else {
                 document.getElementById('loginEnd').classList.add('disable');

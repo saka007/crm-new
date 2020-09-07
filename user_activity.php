@@ -88,24 +88,33 @@ include_once("head.php");
                                     $i = 1;
                                     $res = $obj->display("employee_activity", "emp_id=" . $_SESSION['ID'] . " " . $query . " order by created_at DESC");
                                     while ($data = $res->fetch_array()) {
-                                        if (isset($data['log_out_time']) && isset($data['log_in_time'])) {
-                                            $workHourDiff = round((strtotime($data['log_out_time']) - strtotime($data['log_in_time'])) / 3600, 1);
-                                        } else {
+
+                                        if (($data['log_out_time'] == 0)) {
                                             $workHourDiff = 'Missed';
+                                        } else {
+                                            if (isset($data['log_out_time']) && isset($data['log_in_time'])) {
+                                                $workHourDiff = round((strtotime($data['log_out_time']) - strtotime($data['log_in_time'])) / 3600, 1);
+                                            } else {
+                                                $workHourDiff = 'Missed';
+                                            }
                                         }
 
-                                        if (isset($data['break_out_time']) && isset($data['break_in_time'])) {
-                                            $time1 = strtotime($data['break_in_time']);
-                                            $time2 = strtotime($data['break_out_time']);
-                                            $breakDiff = round(abs($time2 - $time1) / 3600, 2);
+
+                                        if (!empty($data['break_out_time'])) {
+                                            if (isset($data['break_out_time']) && isset($data['break_in_time'])) {
+                                                $time1 = strtotime($data['break_in_time']);
+                                                $time2 = strtotime($data['break_out_time']);
+                                                $breakDiff = round(abs($time2 - $time1) / 3600, 2);
+                                            }
                                         } else {
                                             $breakDiff = 'Missed';
                                         }
 
+
                                     ?>
                                         <tr>
                                             <td><?= $data['log_in_time']; ?></td>
-                                            <td><?= $data['log_out_time']; ?></td>
+                                            <td><?= $data['log_out_time'] == 0 ? '' : $data['log_out_time']; ?></td>
                                             <td><?= $workHourDiff; ?></td>
                                             <td><?= $data['break_in_time']; ?></td>
                                             <td><?= $data['break_out_time']; ?></td>
@@ -131,14 +140,13 @@ include_once("head.php");
     <!-- /.content -->
 </div>
 
-<?php include_once("foot.php");    ?>
-
 <!-- Use when datatables is required on page -->
 <!-- DataTables -->
 <script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<?php include_once("foot.php");  ?>
 <script>
     $(function() {
         $("#userActivity").DataTable({
@@ -146,8 +154,6 @@ include_once("head.php");
             "autoWidth": false,
         });
     });
-</script>
-<script>
     //Date range picker
     $('#sdate').datetimepicker({
         format: 'DD-MM-YYYY',
