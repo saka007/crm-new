@@ -282,7 +282,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
             </li>
-            <li class="nav-item active">
+            <!-- <li class="nav-item active">
               <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-book-open"></i>
                 <span>Employee Report</span></a>
@@ -291,7 +291,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               <a class="nav-link" href="#">
                 <i class="fas fa-fw fa-envelope"></i>
                 <span>Lead Category <span id="mmcount"></span></span></a>
-            </li>
+            </li> -->
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -322,6 +322,11 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   </a>
                 </li>
               </ul>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="employe_list.php">
+                <i class="fas fa-fw fa-users"></i>
+                <span>Employee Management</span></a>
             </li>
             <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">
