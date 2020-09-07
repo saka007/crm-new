@@ -53,7 +53,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
   <title>Client - Dashboard</title>
 
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+  <!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous"> -->
   <!-- <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap-datepicker.css"> -->
 
   <!-- Custom fonts for this template-->
@@ -77,14 +77,16 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   <!-- Google Font: Source Sans Pro -->
   <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
 
-  <link href="vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet">
-
-  <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet">
+  <!-- <link href="vendor/datatables/css/dataTables.bootstrap4.css" rel="stylesheet"> -->
+  <script src="theme/plugins/jquery/jquery.min.js"></script>
+<!-- jQuery UI 1.11.4 -->
+<script src="theme/plugins/jquery-ui/jquery-ui.min.js"></script>
+  <!-- <link href="https://cdn.datatables.net/buttons/1.5.2/css/buttons.dataTables.min.css" rel="stylesheet"> -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@8"></script>
-  <script src="theme/package/dist/sweetalert2.all.js"></script>
-  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script>
+  <!-- <script src="theme/package/dist/sweetalert2.all.js"></script> -->
+  <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/dropzone.min.js"></script> -->
 
-  <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet">
+  <!-- <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> -->
 
 </head>
 <style>
@@ -193,7 +195,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           <a href="#" class="dropdown-item">
             <!-- Message Start -->
             <div class="media">
-              <img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+              <img src="" alt="User Avatar" class="img-size-50 img-circle mr-3">
               <div class="media-body">
                 <h3 class="dropdown-item-title">
                   Nora Silvester
