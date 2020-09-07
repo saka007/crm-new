@@ -33,7 +33,7 @@ if($p1['paidYet']==0)
     			"payBalance" => $payBalance,
     			"demandAmt" => $_POST['nextPayAmt'],
     			"demdRemark" => $_POST['demdRemark'],
-    			"dueDate" => date('Y-m-d',strtotime($_POST['nextPayDate']))
+    			"dueDate" => date('Y-m-d',strtotime($_POST['nextPayDate']))	
 				);
 	$obj->update('dm_lead',$data,'id='.$_POST['lead']);
 

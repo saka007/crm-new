@@ -1,6 +1,40 @@
 <?php
 include_once("head.php");
 
+$lead=$obj->display('dm_lead','id='.$_GET['lead']);
+if($lead->num_rows > 0) {
+$lead1=$lead->fetch_array();
+}
+
+$paidyetac=$lead1['paidYet']+$_POST['payAmt'];
+
+$data = array(
+	"payTotal" => $_POST['payTotal'],
+	"discount" => $_POST['disc'],
+	"paidYet" => $paidyetac,
+	"payBalance" => $_POST['totBalance'],
+	"demandAmt" => $_POST['nextPayAmt'],
+	"demdRemark" => $_POST['demdRemark'],
+	'feeAgreeDate' => date('Y-m-d'),
+	'agreeDate' => date('Y-m-d'),
+	'payType' => $_POST['payCategory'],
+	"status" => 'Active',
+	"dueDate" => date('Y-m-d',strtotime($_POST['nextPayDate']))
+	);
+
+	$obj->update('dm_lead',$data,'id='.$_POST['lead']);
+
+
+	// $data2 = array(
+	// 	"leadId" =>  $_POST['lead'],
+	// 	"amount" => $_POST['payAmt'],
+	// 	"tax" => $_POST['taxAmt'],
+	// 	"payMethod" => $_POST['payMethod'],
+	// 	"payCategory" => $_POST['payCategory'],
+	// 	"date" => date('Y-m-d')
+	// 	);
+	// $recipt=$obj->insert('dm_pay_history',$data2);
+
 ?>
 
  <!-- Begin Page Content -->
@@ -34,10 +68,10 @@ include_once("head.php");
 							<table class="table">
 							<tr>
 								<td>Fee Category</td>
-								<td><select name="payCategory" class="form-control">
-								<option value="Retainer">Full</option>
-								<option value="Professional">Part</option>
-                                <option value="Professional">Stage-wise</option>
+								<td><select name="payCategory" class="form-control" <?php if($lead1['payType']!="") { echo "readonly"; } ?>>
+								<option value="Full" <?php if($lead1['payType']=="Full") { echo "selected"; } ?>>Full</option>
+								<option value="Part" <?php if($lead1['payType']=="Part") { echo "selected"; } ?>>Part</option>
+                                <option value="Stage-wise" <?php if($lead1['payType']=="Stage-wise") { echo "selected"; } ?>>Stage-wise</option>
 								</select></td>
 								
 								<td>Payment Mode</td>
@@ -54,13 +88,13 @@ include_once("head.php");
 							<td colspan="4" style="padding:0; border:none">
 							<table><tr>
 								<td>Payment Total</td>
-								<td><input type="text" class="form-control" id="payTotal" name="payTotal"></td>
+								<td><input type="text" class="form-control" id="payTotal" name="payTotal" <?php if($lead1['payTotal']!=0) { echo "value=".$lead1['payTotal'].' readonly';} ?>></td>
 
 								<td>Discount</td>
-								<td><input type="text" class="form-control" id="disc" name="disc"></td>
+								<td><input type="text" class="form-control" id="disc" name="disc" <?php if($lead1['payTotal']!=0) { echo "value=".$lead1['discount'].' readonly';} ?>></td>
 							
 								<td>Payment Balance</td>
-								<td><input type="text" class="form-control" id="payBalance" name="payBalance"></td>
+								<td><input type="text" class="form-control" id="payBalance" name="payBalance" <?php if($lead1['payTotal']!=0) { echo "value=".$lead1['payBalance'].' readonly';} ?>></td>
 							</tr>
 							</table>
 							</td>	

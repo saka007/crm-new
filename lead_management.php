@@ -54,15 +54,6 @@ if($_POST['appointment']!="") { $appointment=date('Y-m-d',strtotime($_POST['appo
 				);
 			$odr = $obj->insert('dm_lead',$data);
 
-/*	$data2 = array(
-    			'lead'  =>  $odr
-				);
-			$obj->insert('dm_documents',$data2);
-
-	$data3 = array(
-    			'lead'  =>  $odr
-				);
-			$obj->insert('dm_document_details',$data3);*/
 
 if($_POST['remark']!="")
 {
