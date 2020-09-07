@@ -8,6 +8,8 @@ $lead1=$lead->fetch_array();
 
 $paidyetac=$lead1['paidYet']+$_POST['payAmt'];
 
+if ($_POST){
+
 $data = array(
 	"payTotal" => $_POST['payTotal'],
 	"discount" => $_POST['disc'],
@@ -25,15 +27,19 @@ $data = array(
 	$obj->update('dm_lead',$data,'id='.$_POST['lead']);
 
 
-	// $data2 = array(
-	// 	"leadId" =>  $_POST['lead'],
-	// 	"amount" => $_POST['payAmt'],
-	// 	"tax" => $_POST['taxAmt'],
-	// 	"payMethod" => $_POST['payMethod'],
-	// 	"payCategory" => $_POST['payCategory'],
-	// 	"date" => date('Y-m-d')
-	// 	);
-	// $recipt=$obj->insert('dm_pay_history',$data2);
+	$data2 = array(
+		"leadId" =>  $_POST['lead'],
+		"amount" => $_POST['payAmt'],
+		"tax" => $_POST['taxAmt'],
+		"payMethod" => $_POST['payMethod'],
+		"payCategory" => $_POST['payCategory'],
+		"date" => date('Y-m-d')
+		);
+	$recipt=$obj->insert('dm_pay_history',$data2);
+
+	header("location:lead_payment_invoice.php?lead=".$_POST['lead'].'&receipt='.$recipt);
+
+}
 
 ?>
 
@@ -129,7 +135,13 @@ $data = array(
 								<td><input type="text" class="form-control" id="nextPayAmt" name="nextPayAmt" min="0" max="" ></td>
 							
 								<td>Next Pay Date</td>
-								<td><input type="text" class="form-control" id="nextPayDate" name="nextPayDate" ></td>
+								<td><div class="input-group date" id="nextPayDate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="nextPayDate" data-target="#nextPayDate" />
+                                    <div class="input-group-append" data-target="#nextPayDate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+								</td>
 							</tr>	
 							<tr>
 								<td>Remark</td>
@@ -161,7 +173,7 @@ $data = array(
    	// var region=<?php echo $r;?>;
 $(function(){
 $('#nextTr').hide(); 
-$('#nextPayDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+// $('#nextPayDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 
 $('#disc').blur(function(){
 	var bal = $('#payTotal').val()-$('#disc').val();

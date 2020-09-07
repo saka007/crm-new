@@ -102,7 +102,7 @@ include_once("head.php");
 
                         <label>Role Name</label>
 
-                            <input type="text" class="form-control" name="name" value="<?=$res2['name'];?>" />
+                            <input type="text" class="form-control" name="name" value="<?=$res2['name'];?>" required/>
 
                     </div>
 
