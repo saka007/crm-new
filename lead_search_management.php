@@ -25,11 +25,27 @@
 <form name="search" action="" method="post">
 <div class="row">
 <div class="col-sm-2 form-group">
-<label >Start Date</label><input type="text" class="form-control" id="sdate" name="sdate" value="<?php if($_POST['sdate']) echo $_POST['sdate']; else  echo date('d-m-Y')?>"></div>
-<div class="col-sm-2 form-group"><label >End Date</label>
-<input type="text" class="form-control" id="edate" name="edate" value="<?php if($_POST['edate']) echo $_POST['edate']; else echo date('d-m-Y')?>" ></div>
+                                <label>Start Date</label>
+                                <div class="input-group date" id="sdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
 
-<div class="col-sm-3 form-group"><label >Marketing Source</label>
+                            </div>
+							<div class="col-sm-2 form-group"><label>End Date</label>
+                                <div class="input-group date" id="edate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+
+<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
 <select class="form-control" name="market_source" >
 	<option value="">Select</option>
 	<?php $sou=$obj->display('dm_source','status=1 order by name');
@@ -39,8 +55,8 @@
 	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 	<?php } ?>
 	</select>
-</div>
-<div class="col-sm-3 form-group"><label >Mode of Enquiry</label>
+</div> -->
+<!-- <div class="col-sm-3 form-group"><label >Mode of Enquiry</label>
 <select class="form-control" name="enquiry">
 	<option value="">Select</option>
 	<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
@@ -49,9 +65,9 @@
 	
 	</select>
 	
-	</div>			
+	</div>			 -->
 
-<div class="col-sm-3 form-group"><label >Country Interested</label>
+<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
 <select class="form-control" name="country_interest" >
 	<option value="">Select</option>
 	
@@ -86,7 +102,7 @@
 	
 	</select>
 	
-	</div>	
+	</div>	 -->
 	<div class="col-sm-3 form-group"><label >Search</label>	
 		<input type="text" class="form-control" id="find" name="find" value=""></div>
 
@@ -139,16 +155,16 @@ $query.=" and paidYet=0";
 			      <th>Name</th>
 			      <th>Email</th>
 			      <th>Mobile</th>
-			      <th>Counselor</th>
+			      <th>Consultant</th>
 			      <th>Country</th>
 
-			      <th>Program</th>
+			      <!-- <th>Program</th> -->
 			      <th>Source</th>
 			      <th>Mode</th>
-			      <th>Convert</th>
+			      <!-- <th>Convert</th> -->
 			      <th>Remark</th>
 			      <th>Appointment</th>
-				  <th>Pending to do</th>
+				  <!-- <th>Pending to do</th> -->
 
 			    </tr>
 
@@ -221,10 +237,10 @@ $em=$obj->display('dm_employee','id='.$row['Counsilor']); $em1=$em->fetch_array(
 
 						    	<td><?php echo $ctr1["name"]; ?></td>
 
-						    	<td><?php echo $ser1["name"]; ?></td>
+						    	<!-- <td><?php echo $ser1["name"]; ?></td> -->
 						    	<td><?php echo $mak1["name"]; ?></td>
 						    	<td><?php echo $row["enquiry"]; ?></td>
-						    	<td><?php echo $row["convet"]; ?></td>
+						    	<!-- <td><?php echo $row["convet"]; ?></td> -->
 <td>
 
 <a href="#" data-toggle="modal" data-target="#modal<?php echo $row['id'];?>" id="b<?php echo $row['id'];?>">View</a>	
@@ -333,7 +349,7 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
 }
 								</script>
 								</td>
-						    	<td> 
+						    	<!-- <td> 
 
 						    	<?php
 						    		if($row['stepComplete']==4) { ?>
@@ -364,7 +380,7 @@ $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	a
 
 						    	?>
 
-								</td>
+								</td> -->
 								
 
 						    </tr>
@@ -404,8 +420,8 @@ $(document).ready(function(){
 	
 });
 $(function(){
-$('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-$('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+// $('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+// $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 }); 
 
 

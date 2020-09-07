@@ -430,11 +430,13 @@ while($emp1=$emp->fetch_array())
 	</section>
 	<!-- /.content -->
 </div>
+<?php if ($lead1['mstatus']!=1) { ?>
 <style type="text/css">
 	#hidden_div {
 		display: none;
 	}
 </style>
+<?php } ?>
 <script type="text/javascript">
 	function showDiv(divId, element) {
 		document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
