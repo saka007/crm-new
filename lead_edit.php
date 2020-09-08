@@ -188,11 +188,12 @@ $reg1 = $reg->fetch_array();
 
 							</div>
 							<div class="row">
-								<div class="col-sm-4 form-group"><label>DOB</label><input type="text" class="form-control" id="dob" name="dob" value="<?php if ($lead1['dob'] == "") {
-																																							echo "";
-																																						} else {
-																																							echo date('d-m-Y', strtotime($lead1['dob']));
-																																						} ?>"></div>
+								<div class="col-sm-4 form-group"><label>DOB</label><div class="input-group date" id="dob" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="dob" data-target="#dob" value="<?php echo $lead1['dob'];?>" />
+                                    <div class="input-group-append" data-target="#dob" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div></div>
 								<div class="col-sm-4 form-group"><label>Gender</label>
 									<select name="gender" class="form-control">
 										<option value="Male" <?php if ($lead1['gender'] == "Male") {
@@ -279,7 +280,7 @@ $reg1 = $reg->fetch_array();
 
 								</div>
 
-								<div class="col-sm-4 form-group"><label>Maritial Status</label>
+								<div class="col-sm-4 form-group"><label>Marital Status</label>
 									<select class="form-control" name="mstatus" onchange="showDiv('hidden_div', this)">
 										<option value="">Select</option>
 										<option value="1" <?php if ($lead1['mstatus']=="1") {
@@ -324,8 +325,13 @@ $reg1 = $reg->fetch_array();
 
 <div class="row">
 
-<div class="col-sm-4 form-group"><label >Meeting Type</label>
-<input type="text" class="form-control datepicker" name="mdate" id="mdate">
+<div class="col-sm-4 form-group"><label >Meeting Date</label>
+<div class="input-group date" id="mdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="mdate" data-target="#mdate"  />
+                                    <div class="input-group-append" data-target="#mdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
 </div>
 
 <div class="col-sm-4 form-group"><label >Meeting Type</label>
@@ -416,7 +422,7 @@ while($emp1=$emp->fetch_array())
 
 								<div class="col-sm-12 form-group">
 									<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="submit" name="submit" value="SUBMIT" class="btn btn-info" id="submit-btn-info">
+									<input type="submit" name="submit" value="Go to Payment" class="btn btn-info" id="submit-btn-info">
 								</div>
 							</div>
 						</form>
@@ -437,11 +443,22 @@ while($emp1=$emp->fetch_array())
 	}
 </style>
 <?php } ?>
+<?php include_once('foot.php'); ?>
+
 <script type="text/javascript">
 	function showDiv(divId, element) {
 		document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
 	}
+	$('#dob').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#mdate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
 </script>
 
 <!-- End of Main Content -->
-<?php include_once('foot.php'); ?>

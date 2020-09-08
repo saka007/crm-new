@@ -172,6 +172,11 @@ $data = array(
 	  <script>
    	// var region=<?php echo $r;?>;
 $(function(){
+	$('#nextPayDate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
 $('#nextTr').hide(); 
 // $('#nextPayDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 

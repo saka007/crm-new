@@ -110,6 +110,19 @@ if (isset($_GET['lead'])) {
 
 						</div>
 
+						<h4> Spouse data</h4>
+						<br/>
+
+						<div class="row">
+
+							<div class="col-sm-4 form-group"><label>Spouse Name</label><br /><?php echo $lead1['fnames']; ?></div>
+
+							<div class="col-sm-4 form-group"><label>Spouse Email</label><br /><?php echo $lead1['emails']; ?></div>
+
+							<div class="col-sm-4 form-group"><label>Spouse Contact No</label><br /><?php echo $lead1['phones']; ?></div>
+
+						</div>
+
 						<div class="row">
 
 							<div class="col-sm-4 form-group"><label>Gender</label><br /><?php echo $lead1['gender']; ?></div>

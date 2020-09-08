@@ -28,9 +28,9 @@ if ($bran->num_rows) {
 				<div class="col-sm-2">
 					<h1>Invoice</h1>
 				</div>
-				<div class="col-sm-3">
+				<!-- <div class="col-sm-3">
 					<a href="http://localhost:8080/mydmconsultant/mail.php" class="btn btn-info">Send Welcome Mail</a>
-				</div>
+				</div> -->
 				<div class="col-sm-2">
 					<a href="#" onclick="javascript:printPage(print);" style="margin-left: -90px;" class="btn btn-info">Print Receipt</a>
 				</div>

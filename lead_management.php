@@ -11,7 +11,7 @@ if($_POST['save'] || $_POST['submit'])
 $ext=$obj->display('dm_lead','email="'.$_POST['email'].'" or mobile="'.$_POST['mobile'].'"');
 if($ext->num_rows == 0)
 {
-$emp=$obj->display('dm_employee','id='.$_POST['assign']); $emp1=$emp->fetch_array();
+$emp=$obj->display('dm_employee','id='.$_POST['assign']);if($emp->num_rows > 0) { $emp1=$emp->fetch_array();}
 
 if($_POST['dob']!="") { $dob=date('Y-m-d',strtotime($_POST['dob']));} else { $dob=NULL;}
 if($_POST['appointment']!="") { $appointment=date('Y-m-d',strtotime($_POST['appointment']));} else { $appointment=NULL;}
@@ -168,7 +168,13 @@ header("location:lead_management.php?error=Duplicate entry");
 
 </div>
 <div class="row">
-<div class="col-sm-4 form-group"><label >DOB</label><input type="text" class="form-control" id="dob" name="dob"  ></div>
+<div class="col-sm-4 form-group"><label >DOB</label><div class="input-group date" id="dob" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="dob" data-target="#dob" value="<?php if ($_POST['dob']) echo $_POST['dob'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#dob" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div></div>
 <div class="col-sm-4 form-group"><label>Gender</label>
 	<select name="gender" class="form-control" >
 		<option value="">Select</option>
@@ -243,7 +249,7 @@ header("location:lead_management.php?error=Duplicate entry");
 	
 	</div>
 
-	<div class="col-sm-4 form-group"><label >Maritial Status</label>
+	<div class="col-sm-4 form-group"><label >Marital Status</label>
 <select class="form-control" name="mstatus" onchange="showDiv('hidden_div', this)">
 	<option value="">Select</option>
 	<option value="1">Yes</option>
@@ -309,10 +315,10 @@ header("location:lead_management.php?error=Duplicate entry");
 	</div>	
 	<!-- <div class="col-sm-4 form-group"><label >Follow Up</label><input type="text" class="form-control" id="folowup" name="followup"></div> -->
 	<div class="col-sm-4 form-group"><label >Assign Lead </label>
-<select class="form-control" required name="assign">
+<select class="form-control" name="assign">
 <option value="">Select</option>
 <?php 
-/* if($_SESSION["TYPE"]=="IC" || $_SESSION["TYPE"]=="SIC" || $_SESSION["TYPE"]=="MC" || $_SESSION["TYPE"]=="BM" || $_SESSION["TYPE"]=="ABM" || $_SESSION["TYPE"]=="RM" || $_SESSION["TYPE"]=="AM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="HR" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="TC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM" || $_SESSION["TYPE"]=="AOM")
+ if($_SESSION["TYPE"]=="IC" || $_SESSION["TYPE"]=="SIC" || $_SESSION["TYPE"]=="MC" || $_SESSION["TYPE"]=="BM" || $_SESSION["TYPE"]=="ABM" || $_SESSION["TYPE"]=="RM" || $_SESSION["TYPE"]=="AM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="HR" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="TC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM" || $_SESSION["TYPE"]=="AOM")
 {
 $emp=$obj->display('dm_employee','id='.$_SESSION["ID"]);
 $emp1=$emp->fetch_array();
@@ -329,7 +335,6 @@ while($emp1=$emp->fetch_array())
 	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_SESSION['ID']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
 	<?php }
 }
-*/
  ?>
 </select>
 </div>
@@ -366,12 +371,22 @@ while($emp1=$emp->fetch_array())
     display: none;
 }
 </style>
+<?php include_once('foot.php'); ?>
+
 <script type="text/javascript">
 	function showDiv(divId, element)
 {
     document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
 }
+
+$('#dob').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+
+
 </script>
 
       <!-- End of Main Content -->
-      <?php include_once('foot.php'); ?>
+     

@@ -286,7 +286,13 @@ $("#b<?php echo $row['id'];?>").hover(function () {
         </button>
       </div>
       <div class="modal-body">
-      	<input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id'];?>">
+	  <div class="input-group date" id="datepicker<?php echo $row['id'];?>" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="date" data-target="#datepicker<?php echo $row['id'];?>" />
+                                    <div class="input-group-append" data-target="#datepicker<?php echo $row['id'];?>" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
+      	<!-- <input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id'];?>"> -->
 		  <div class="col-sm-3 form-group"><label >Meeting Type</label>
 		  <select class="form-control" id="mtype<?php echo $row['id'];?>" name="mtype" >
 	<option value="">Select</option>
@@ -309,8 +315,14 @@ $("#b<?php echo $row['id'];?>").hover(function () {
 <i class="far fa-calendar-check"></i>
 								</button>
 								<script>
+			
 									$(function(){
-$('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+// $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+$('#datepicker<?php echo $row['id'];?>').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
 });
 									function confirmation(ev,l,c,d,t) {
       ev.preventDefault();

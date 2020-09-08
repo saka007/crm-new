@@ -1,14 +1,30 @@
 <?php
 include_once("head.php");
-
+if ($_SESSION['TYPE']=="SA"){
+$tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments`');
+$tots1 = $tots->fetch_array();
+}
+else{
 $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID']);
 $tots1 = $tots->fetch_array();
-
+}
+if ($_SESSION['TYPE']=="SA"){
+  $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done=1');
+$mdone1 = $mdone->fetch_array();
+}
+else{
 $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done=1');
 $mdone1 = $mdone->fetch_array();
+}
 
+if ($_SESSION['TYPE']=="SA"){
+  $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done is NULL');
+$ndone1 = $ndone->fetch_array();
+}
+else{
 $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done is NULL');
 $ndone1 = $ndone->fetch_array();
+}
 
 ?>
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -76,7 +92,12 @@ $ndone1 = $ndone->fetch_array();
                                 </thead>
                                 <tbody>
                                    <?php
+                                   if($_SESSION['TYPE']=="SA"){
+                                    $meet = $obj->display3('SELECT *,a.type as mtype FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id');
+                                   }
+                                   else{
                                    $meet = $obj->display3('SELECT *,a.type as mtype FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id WHERE a.counsilorid='.$_SESSION['ID']);
+                                   }
                                    if($meet->num_rows > 0) {
                                       $i=1;
                                    while($row = $meet->fetch_array())
