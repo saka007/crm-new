@@ -1,5 +1,31 @@
 <?php include_once("head.php");	
 
+if ($_SESSION['TYPE']=="SA"){
+	$totl = $obj->display3('select count(*) as count from dm_lead');
+	$totl1 = $totl->fetch_array();
+	}
+	else{
+		$totl = $obj->display3('select count(*) as count from dm_lead WHERE counsilorid='.$_SESSION["ID"]);
+		$totl1 = $totl->fetch_array();
+	}
+	if ($_SESSION['TYPE']=="SA"){
+	  $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
+	  $toth1 = $toth->fetch_array();
+	}
+	else{
+	$toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilorid='.$_SESSION["ID"]);
+	$toth1 = $toth->fetch_array();
+	}
+	
+	if ($_SESSION['TYPE']=="SA"){
+	  $totw= $obj->display3('select count(*) as count from dm_lead where lead_category="Warm"');
+	$totw1 = $totw->fetch_array();
+	}
+	else{
+	$totw= $obj->display3('select count(*) as count from dm_lead where lead_category="Warm" and counsilorid='.$_SESSION["ID"]);
+	$totw1 = $totw->fetch_array();
+	}
+
 	// $data = array(
  //    			'notf'  =>  1
 	// 			);
@@ -18,6 +44,24 @@
 
           <!-- Page Heading -->
           <h1 class="h3 mb-4 text-gray-800">Manage Leads</h1>
+		  <br/>
+		  <div class="row">
+      <div class="col-md-2 col-xs-6 border-right">
+      <h3 class="bold no-mtop"><?=$totl1['count'];?></h3>
+      <p style="color:#989898" class="font-medium no-mbot">
+        Total Leads    </p>
+          </div>
+        <div class="col-md-2 col-xs-6 border-right">
+      <h3 class="bold no-mtop"><?=$toth1['count'];?></h3>
+      <p style="color:#03A9F4" class="font-medium no-mbot">
+        Hot Leads      </p>
+    </div>
+        <div class="col-md-2 col-xs-6 border-right">
+      <h3 class="bold no-mtop"><?=$totw1['count'];?></h3>
+      <p style="color:#2d2d2d" class="font-medium no-mbot">
+        Warm Leads     </p>
+    </div>
+	</div>
 
           <div class="row">
              <div class="col-lg-12">
@@ -432,6 +476,16 @@ $(document).ready(function(){
 	
 });
 $(function(){
+	$('#sdate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#edate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
 // $('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
 // $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 }); 
