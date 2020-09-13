@@ -379,6 +379,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
             </li>
 
             <li class="nav-item">
+              <a class="nav-link" href="contract_file_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Manage Agreements</span></a>
+            </li>
+
+            <li class="nav-item">
               <a class="nav-link" href="role_list.php">
                 <i class="fas fa-user"></i>
                 <span>Access Hierarchy Management</span></a>
@@ -434,9 +440,9 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   </a>
                 </li>
                  <li class="nav-item">
-                  <a href="lead_search_management.php" class="nav-link">
+                  <a href="lead_agree_upload_list.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
-                    <p></p>
+                    <p>Agreement Upload</p>
                   </a>
                 </li>
                 <!-- <li class="nav-item">

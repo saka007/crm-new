@@ -6,10 +6,10 @@
         <div class="container-fluid">	
 			<div class="row">
 
-		<div class="col-sm-10">
+		<div class="col-12">
 		<div class="row"><div class="col-sm-12"><h4 class="mb-3">Pending Leads for agreement upload</h4></div></div>
 
-		<form name="search" action="" method="post">
+		<!-- <form name="search" action="" method="post">
 			<div class="row">
 		<div class="col-sm-2 form-group"><label>Region</label>
 		<select class="form-control" name="region" id="region" >
@@ -25,7 +25,7 @@
 
 		<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
 		</div>
-			</form>
+			</form> -->
 		<br>
 			<table class="table table-striped table-bordered" id="myTable" style="width:100%">
 			  <thead>
@@ -74,7 +74,9 @@ if($_POST['region']!="") { 	$query.=" and region=".$_POST['region'];}
 							{
 							$ser1=$ser->fetch_array();
 							$prog=$obj->display('dm_service','id='.$ser1["service_interest"]);
+							if($prog->num_rows > 0){
 							$prog1=$prog->fetch_array();
+							}
 
 							if($ser1['type']=="Student") {$ld="DMC";}
 							if($ser1['type']=="Visit") {$ld="DMV";}
@@ -102,7 +104,8 @@ $em=$obj->display('dm_employee','id='.$ser1['Counsilor']); $em1=$em->fetch_array
 																<td><?php echo $em1['name'];?></td>
 
 								<td><?php $cont=$obj->display('dm_contract_file','country='.$ser1['country_interest'].' and service='.$ser1['service_interest']);
-$cont1=$cont->fetch_array();
+								if($cont->num_rows > 0){
+$cont1=$cont->fetch_array();}
 ?><a href="<?php if($cont1['file']!="") { ?>uploads/documents/<?php echo $cont1['file']; } else { echo "#";}?>" target="_blank" class="btn btn-info">Download </a></td>
 
 						    	

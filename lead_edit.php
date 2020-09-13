@@ -423,7 +423,7 @@ while($emp1=$emp->fetch_array())
 
 								<div class="col-sm-12 form-group">
 									<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<!-- <input type="submit" name="submit" value="Go to Payment" class="btn btn-info" id="submit-btn-info"> -->
+									<input type="submit" name="submit" value="Go to Payment" class="btn btn-info" id="submit-btn-info">
 								</div>
 							</div>
 						</form>

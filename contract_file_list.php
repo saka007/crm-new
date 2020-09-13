@@ -1,11 +1,14 @@
 <?php include_once("head.php"); ?>
+
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
            <!-- Begin Page Content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
         <div class="container-fluid">	
 			<div class="row">
-                <div class="col-sm-10">
+                <div class="col-12">
 
 	<h4 class="mb-3">Upload Contract <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 

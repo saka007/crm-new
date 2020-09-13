@@ -149,7 +149,7 @@ header("location:lead_management.php?error=Duplicate entry");
 <div class="row">
 <div class="col-sm-4 form-group"><label >Email</label><input type="text" class="form-control" id="email" name="email" required></div>
 <div class="col-sm-4 form-group"><label >Contact No</label><input type="text" class="form-control" id="mobile" name="mobile" ></div>
-<div class="col-sm-4 form-group"><label >Alternate No.</label><input type="text" class="form-control" id="phone" name="phone" maxlength="12" required></div>
+<div class="col-sm-4 form-group"><label >Alternate No.</label><input type="text" class="form-control" id="phone" name="phone" maxlength="12"></div>
 </div>
 <div class="row">
 <div class="col-sm-4 form-group"><label >Nationality</label><select class="form-control" name="nationality"  >

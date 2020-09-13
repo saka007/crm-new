@@ -6,62 +6,62 @@ $s=$lead1['service_interest'];
 // print_r($_FILES);die;
 if($_POST)
 {
-	if($_POST['garys']=="Yes")
-	{
-	$gr=$obj->display('dm_gary_contract','leadId='.$_POST['lead']);
-if($s==26 || $s==27 || $s==28 || $s==29 || $s==66 || $s==67 || $s==68 || $s==69 || $s==70 || $s==71 || $s==73 || $s==74 || $s==93 || $s==94 || $s==95 || $s==96 || $s==100 || $s==103 || $s==107 || $s==108 || $s==109 || $s==113 || $s==114 || $s==115){
-	if($gr->num_rows== 0)
-	{
-		$data=array(
-			'leadid' => $_POST['lead'],
-			'contract' => '',
-			'contract_signed' =>''
-		);
-		$obj->insert('dm_gary_contract',$data);
-	}
+// 	if($_POST['garys']=="Yes")
+// 	{
+// 	$gr=$obj->display('dm_gary_contract','leadId='.$_POST['lead']);
+// if($s==26 || $s==27 || $s==28 || $s==29 || $s==66 || $s==67 || $s==68 || $s==69 || $s==70 || $s==71 || $s==73 || $s==74 || $s==93 || $s==94 || $s==95 || $s==96 || $s==100 || $s==103 || $s==107 || $s==108 || $s==109 || $s==113 || $s==114 || $s==115){
+// 	if($gr->num_rows== 0)
+// 	{
+// 		$data=array(
+// 			'leadid' => $_POST['lead'],
+// 			'contract' => '',
+// 			'contract_signed' =>''
+// 		);
+// 		$obj->insert('dm_gary_contract',$data);
+// 	}
 
-}
-}	
+// }
+// }	
 	// echo 'hi';die;
-	if($lead1['type']!="Skill")
-	{
-		$data=array('assignTo' => "16" );
-	    $obj->update('dm_lead',$data,'id='.$_GET['lead']);
-	}
-	else{
-	if($r=="3" || $r=="4"||$r=="5")
-	{
-		if($lead1['country_interest']=="1")
-		{
-			$data=array('assignTo' => "12" );
-			$obj->update('dm_lead',$data,'id='.$_GET['lead']);
-		}
-		elseif ($lead1['country_interest']=="2" && $r=="3") {
-			$data=array('assignTo' => "93" );
-			$obj->update('dm_lead',$data,'id='.$_GET['lead']);
-		}
-		elseif ($lead1['country_interest']=="2" && $r=="4") {
-			$data=array('assignTo' => "71" );
-			$obj->update('dm_lead',$data,'id='.$_GET['lead']);
-		}
-		elseif ($lead1['country_interest']=="2" && $r=="5") {
-			$data=array('assignTo' => "5" );
-			$obj->update('dm_lead',$data,'id='.$_GET['lead']);
-		}
-	}
-	elseif ($r=="7") {
-		$data=array('assignTo' => "24" );
-	    $obj->update('dm_lead',$data,'id='.$_GET['lead']);
-	}
-	elseif ($r=="8" && $lead1['country_interest']=="1") {
-		$data=array('assignTo' => "24" );
-	    $obj->update('dm_lead',$data,'id='.$_GET['lead']);
-	}
-	elseif ($r=="8" && $lead1['country_interest']=="2") {
-		$data=array('assignTo' => "58" );
-	    $obj->update('dm_lead',$data,'id='.$_GET['lead']);
-	}
-    }
+	// if($lead1['type']!="Skill")
+	// {
+	// 	$data=array('assignTo' => "16" );
+	//     $obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// }
+	// else{
+	// if($r=="3" || $r=="4"||$r=="5")
+	// {
+	// 	if($lead1['country_interest']=="1")
+	// 	{
+	// 		$data=array('assignTo' => "12" );
+	// 		$obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// 	}
+	// 	elseif ($lead1['country_interest']=="2" && $r=="3") {
+	// 		$data=array('assignTo' => "93" );
+	// 		$obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// 	}
+	// 	elseif ($lead1['country_interest']=="2" && $r=="4") {
+	// 		$data=array('assignTo' => "71" );
+	// 		$obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// 	}
+	// 	elseif ($lead1['country_interest']=="2" && $r=="5") {
+	// 		$data=array('assignTo' => "5" );
+	// 		$obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// 	}
+	// }
+	// elseif ($r=="7") {
+	// 	$data=array('assignTo' => "24" );
+	//     $obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// }
+	// elseif ($r=="8" && $lead1['country_interest']=="1") {
+	// 	$data=array('assignTo' => "24" );
+	//     $obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// }
+	// elseif ($r=="8" && $lead1['country_interest']=="2") {
+	// 	$data=array('assignTo' => "58" );
+	//     $obj->update('dm_lead',$data,'id='.$_GET['lead']);
+	// }
+    // }
 
 if($_FILES['sheet']['name']!="")
 {
@@ -112,13 +112,13 @@ if($_POST['garys']!="")
 							<label>Upload Contract* <span>(pdf or jpg)</span></label>
 							<input type="file" class="form-control" id="sheet" name="sheet"  >
 					</div>
-					<div class="col-sm-6 form-group">
+					<!-- <div class="col-sm-6 form-group">
 							<label>Gary's</label>
 							<select name="garys" class="form-control">
 								<option value="Yes">Yes</option>
 								<option value="No">No</option>
 							</select>
-					</div>
+					</div> -->
 				</div>
 					
 					<div class="col-sm-12 form-group">
