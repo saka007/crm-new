@@ -224,7 +224,7 @@ if ($_SESSION['TYPE']=="SA")
 		// echo $query;
 	}
 	else{
-					$result = $obj->display('dm_lead','1=1  order by regdate desc limit 0,100');
+					$result = $obj->display('dm_lead','1=1 and paidYet=0  order by regdate desc limit 0,100');
 				}
 				}
 				else
@@ -342,6 +342,7 @@ $("#b<?php echo $row['id'];?>").hover(function () {
 	<option value="">Select</option>
 	<option value="zoom">Zoom</option>
 	<option value="in_office">In office</option>
+	<option value="walk_in">Walk In</option>
 	</select>
       </div>
 	  </div>

@@ -119,7 +119,7 @@
 									<tr>
 										<th>Lead ID</th>
 										<th>Agreement<br />No</th>
-										<th>Gary's</th>
+										<!-- <th>Gary's</th> -->
 										<th>Name</th>
 
 										<th>To</th>
@@ -172,7 +172,7 @@
 									if ($_POST['case'] != "") {
 										$query .= " and type='" . $_POST['case'] . "'";
 									}
-									$query .= " and stepComplete=3 and paidYet!=0";
+									$query .= " and paidYet!=0";
 
 									// echo "select ".$value." from ".$table." where ".$condition;die;
 									// echo $query; die;
@@ -185,8 +185,8 @@
 
 										while ($row = $result->fetch_assoc()) {
 
-											$result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
-											$lead1   = $result1->fetch_array();
+											// $result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
+											// $lead1   = $result1->fetch_array();
 
 											if ($row['type'] == "Student") {
 												$ld = "DMC";
@@ -205,7 +205,9 @@
 											}
 
 											$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
+											if($ser->num_rows > 0){
 											$ser1 = $ser->fetch_array();
+											}
 											$ctr = $obj->display("dm_country_proces", "id=" . $row["country_interest"]);
 											$ctr1 = $ctr->fetch_array();
 											$agre = $obj->display('dm_lead_contract', ' leadId=' . $row["id"]);
@@ -226,7 +228,7 @@
 													<td style="text-align:center"><?php $cont = $obj->display('dm_lead_contract', 'leadId=' . $row['id']);
 																					$cont1 = $cont->fetch_array();
 																					echo $cont1['id']; ?></td>
-													<td style="text-align:center"><?php echo $cont1['garys']; ?></td>
+													<!-- <td style="text-align:center"><?php echo $cont1['garys']; ?></td> -->
 													<td><?php echo $row["fname"] . " " . $row["lname"]; ?>
 														<div class="row-actions"><span class="edit"><a href="mailto:<?php echo $row["email"]; ?>"><?php echo $row["email"]; ?></a></span></div>
 													</td>
@@ -238,7 +240,7 @@
 														$con1 = $con->fetch_array();
 														echo $con1["name"]; ?></td>
 													<td><a class="btn btn-primary btn-sm" href="#" data-toggle="modal" data-target=".bd-example<?php echo $i; ?>"><i class="fas fa-folder">
-															</i>View</a></td>
+															</i> View</a></td>
 												</tr>
 												<div class="modal fade bd-example-modal-lg bd-example<?php echo $i; ?>" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 													<div class="modal-dialog">
