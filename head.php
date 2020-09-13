@@ -142,7 +142,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
+          <a href="dashboard.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
@@ -354,6 +354,11 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-globe"></i>
                 <span>Department Management</span></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="service_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Service Management</span></a>
+            </li>
 
             <li class="nav-item">
               <a class="nav-link" href="country_list.php">
@@ -423,7 +428,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               </a>
               <ul class="nav nav-treeview">
                 <li class="nav-item">
-                  <a href="lead_management.php" class="nav-link">
+                  <a href="operation_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Client Data</p>
                   </a>
@@ -448,6 +453,69 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-fw fa-users"></i>
                 <span>Employee Management</span></a>
             </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Leave request
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right  "><?=$cln1['count'];?></span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="leave_list.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Leaves</p>
+                  </a>
+                </li>
+                 <!-- <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p></p>
+                  </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>  -->
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Report
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right"><?=$cln1['count'];?></span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="report_sales.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sales Report</p>
+                  </a>
+                </li>
+                 <!-- <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p></p>
+                  </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>  -->
+              </ul>
+            </li>
+
             <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">
                 <i class="fas fa-fw fa-book-open"></i>
@@ -478,6 +546,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>
               </ul>
             </li>
+
+            
 
           </ul>
         </nav>
@@ -512,6 +582,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           cancelButtonClass: 'btn btn-danger',
           buttonsStyling: false
         }).then(function(result) {
+          // alert(result.value);
           if (result.value) {
             if (action === 'login') {
               log_in_time = true;

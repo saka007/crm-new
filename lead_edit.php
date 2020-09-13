@@ -81,10 +81,10 @@ if ($_POST['save'] || $_POST['submit']) {
 		$obj->insert('dm_lead_remark', $data4);
 	}
 
-	if ($_POST['appoint'] != "") {
+	if ($_POST['mdate'] != "") {
 		$data = array(
 			'leadid' => $_POST['id'],
-			'date' => date('Y-m-d', strtotime($_POST['appoint'])),
+			'date' => date('Y-m-d', strtotime($_POST['mdate'])),
 			'counsilorid' => $_POST['assign'],
 			'booked' => 1,
 			'type' =>$_POST['mtype'],
@@ -223,16 +223,16 @@ $reg1 = $reg->fetch_array();
 							</div>
 							<div class="row">
 
-								<!-- <div class="col-sm-4 form-group"><label >Program Interested</label>
+								<div class="col-sm-4 form-group"><label >Program Interested</label>
 <select class="form-control" name="service_interest">
 	<option value="">Select</option>
-	<?php //$ser = $obj->display('dm_service', 'status=1 order by name');
-	// while ($ser1 = $ser->fetch_array()) {
+	<?php $ser = $obj->display('dm_service', 'status=1 order by name');
+	 while ($ser1 = $ser->fetch_array()) {
 	?>
-	<option value="<?php //echo $ser1['id']; ?>"><?php //echo $ser1['name']; ?></option>
-	<?php //} ?>
+	<option value="<?php echo $ser1['id']; ?>"><?php echo $ser1['name']; ?></option>
+	<?php } ?>
 </select>
-</div> -->
+</div>
 
 								<div class="col-sm-4 form-group"><label>Relative</label>
 									<select class="form-control" name="relative">
@@ -339,6 +339,7 @@ $reg1 = $reg->fetch_array();
 	<option value="">Select</option>
 	<option value="zoom">Zoom</option>
 	<option value="in_office">In office</option>
+	<option value="walk_in">Walk In</option>
 	</select>
       </div>
 </div>
@@ -422,7 +423,7 @@ while($emp1=$emp->fetch_array())
 
 								<div class="col-sm-12 form-group">
 									<input type="submit" name="save" value="SAVE" class="btn btn-info">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									<input type="submit" name="submit" value="Go to Payment" class="btn btn-info" id="submit-btn-info">
+									<!-- <input type="submit" name="submit" value="Go to Payment" class="btn btn-info" id="submit-btn-info"> -->
 								</div>
 							</div>
 						</form>

@@ -1,4 +1,4 @@
-<?php include_once("header.php");
+<?php include_once("head.php");
 $lead=$obj->display('dm_lead','id='.$_GET['lead']);
 $lead1=$lead->fetch_array();
 $r=$lead1['region'];
@@ -92,7 +92,12 @@ if($_POST['garys']!="")
 }
 ?>
 
-
+       <!-- Begin Page Content -->
+    <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
 		<div class="col-sm-10">
 
 			<form action="" method="post" name="paymentForm " enctype="multipart/form-data">
@@ -119,14 +124,15 @@ if($_POST['garys']!="")
 					<div class="col-sm-12 form-group">
 					<input type="submit" name="submit" value="UPLOAD" class="btn btn-info" >
 					</div> 	
-					
-				</div>
-				</form>
-	
-		</div>
-
-    		
+				</form>	
+			 </div>
+			 </div>
+			 </div>
+			 </div>
+			 </div>
+				
+        
 		
-<?php include_once("footer.php"); ?>
+<?php include_once("foot.php"); ?>
 
 

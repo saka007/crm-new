@@ -1,6 +1,6 @@
 <?php
 include_once("include/config.php");
-$lead=$obj->display('appointments', 'done=1 AND date > "2020-04-01" order by date');
+$lead=$obj->display('appointments');
 while($lead1=$lead->fetch_array()) {
     $og_date = $lead1["date"];
     // $date = DateTime::createFromFormat('Y-m-d', $og_date);

@@ -11,7 +11,8 @@ include_once("head.php");
         <div class="container-fluid">
 
           <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Apply for leave / History</h1>
+          <h1 class="h3 mb-4 text-gray-800">Apply for leave / History
+		  </h1>
 
           <div class="row">
              <div class="col-lg-12">
@@ -25,7 +26,7 @@ include_once("head.php");
 					  <th>Approve</th>
 					  <th>Apply Date</th>
 					  <th>Remark</th>
-					  <th>File</th>
+					  <!-- <th>File</th> -->
 					  <th style="text-align:right">Action</th>
 					</tr>
 				</thead>
@@ -43,7 +44,7 @@ include_once("head.php");
 				 <td><?=$res2['approvBy'];?></td>
 				 <td><?=date('d-m-Y',strtotime($res2['applyDate']));?></td>
 				 <td><?=$res2['remark'];?></td>
-				 <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td>
+				 <!-- <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td> -->
 				 <td style="text-align:right" >
 				 <?php if(strtotime($res2['fromDate']) >= strtotime(date('Y-m-d'))) {?>
 					 <a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
@@ -270,6 +271,13 @@ success: function(result) {
 
 	<script src="js/formvalidation.js"></script>
 <script>
+  $(document).ready(function(){
+	var table = $('#dataTables-Table').DataTable({
+		responsive:false,
+		// "scrollY": 200,
+        "scrollX": true
+	});
+});
 $(document).ready(function() {
 	$('#fromDate').datetimepicker({
         format: 'DD-MM-YYYY',
