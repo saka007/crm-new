@@ -1,4 +1,7 @@
 <?php include_once("head.php");	?>
+
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
    <!-- Begin Page Content -->
  <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -135,14 +138,14 @@ $cont1=$cont->fetch_array();}
 				$(document).ready(function(){
     $('#myTable').DataTable({
     	responsive:true,
-    	dom:'Bflrtp',
-    	"lengthMenu": [[-1], ["All"]],
-    	buttons: [ 
-			{
-                extend: 'excel',
-				footer: true,
-                title: 'Pending contract'
-            }]
+    	// dom:'Bflrtp',
+    	// "lengthMenu": [[-1], ["All"]],
+    	// buttons: [ 
+		// 	{
+        //         extend: 'excel',
+		// 		footer: true,
+        //         title: 'Pending contract'
+        //     }]
     });
 });
 		</script>
@@ -150,5 +153,20 @@ $cont1=$cont->fetch_array();}
     		
 		
 <?php include_once("foot.php"); ?>
+
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script>
+$(document).ready(function(){
+	var table = $('#dataTables-Table_new').DataTable({
+		responsive:false,
+		// "scrollY": 200,
+        "scrollX": true
+	});
+});
+
+	</script>
 
 
