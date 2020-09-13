@@ -1,8 +1,22 @@
 <?php
-include_once("header.php");	
+include_once("head.php");	
 ?>
-<div class="col-sm-10">
-	<h4 class="mb-3" style="color:#2cb674;">Leave Management <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+ <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Apply for leave / History
+		  </h1>
+
+          <div class="row">
+             <div class="col-lg-12">
+	<h4 class="mb-3" >Leaves Taken <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 			<table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
 				<thead>
 					<tr>
@@ -12,7 +26,7 @@ include_once("header.php");
 					  <th>Approve</th>
 					  <th>Apply Date</th>
 					  <th>Remark</th>
-					  <th>File</th>
+					  <!-- <th>File</th> -->
 					  <th style="text-align:right">Action</th>
 					</tr>
 				</thead>
@@ -30,7 +44,7 @@ include_once("header.php");
 				 <td><?=$res2['approvBy'];?></td>
 				 <td><?=date('d-m-Y',strtotime($res2['applyDate']));?></td>
 				 <td><?=$res2['remark'];?></td>
-				 <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td>
+				 <!-- <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td> -->
 				 <td style="text-align:right" >
 				 <?php if(strtotime($res2['fromDate']) >= strtotime(date('Y-m-d'))) {?>
 					 <a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
@@ -56,11 +70,23 @@ include_once("header.php");
 	<div class="row">
                     <div class="form-group col-sm-3">
                         <label>Leave From</label>
-                            <input type="text" class="form-control" name="fromDate" id="fromDate" value="<?=date('d-m-Y',strtotime($res2['fromDate']));?>" />
+						<div class="input-group date" id="fromDate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="fromDate" data-target="#fromDate" value="<?php if ($_POST['fromDate']) echo $_POST['fromDate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#fromDate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Leave To</label>
-                            <input type="text" class="form-control" name="toDate" id="toDate" value="<?=date('d-m-Y',strtotime($res2['toDate']));?>" />
+						<div class="input-group date" id="toDate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="toDate" data-target="#toDate" value="<?php if ($_POST['toDate']) echo $_POST['toDate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#toDate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Leave Type</label>
@@ -157,6 +183,10 @@ success: function(result) {
 			<!-- /.table-responsive -->
 
 </div>
+</div>
+</div>
+</div>
+</div>
                 <!-- /.col-lg-12 -->
        
 <div class="modal" id="newForm">
@@ -174,11 +204,23 @@ success: function(result) {
 				<div class="row">
                     <div class="form-group col-sm-3">
                         <label>Leave From</label>
-                            <input type="text" class="form-control" name="fromDate" id="fromDate2" />
+						<div class="input-group date" id="fromDate2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="fromDate" data-target="#fromDate2" value="<?php if ($_POST['fromDate']) echo $_POST['fromDate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#fromDate2" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Leave To</label>
-                            <input type="text" class="form-control" name="toDate" id="toDate2" />
+						<div class="input-group date" id="toDate2" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="toDate" data-target="#toDate2" value="<?php if ($_POST['toDate2']) echo $_POST['toDate2'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#toDate2" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
                     </div>
                     <div class="form-group col-sm-3">
                         <label>Leave Type</label>
@@ -193,14 +235,14 @@ success: function(result) {
 								<?php } ?>
 						</select>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <!-- <div class="form-group col-sm-3">
                         <label>Approve By</label>
                             <input type="text" class="form-control" name="approvBy"  />
-                    </div>
-                    <div class="form-group col-sm-4">
+                    </div> -->
+                    <!-- <div class="form-group col-sm-4">
                         <label>Document to be Uploaded:</label>
                             <input type="file" class="form-control" name="file"  />
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-sm-12">
                         <label>Remark</label>
@@ -220,15 +262,47 @@ success: function(result) {
     </div>
 </div>
 
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
+
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
 	<script src="js/formvalidation.js"></script>
 <script>
+  $(document).ready(function(){
+	var table = $('#dataTables-Table').DataTable({
+		responsive:false,
+		// "scrollY": 200,
+        "scrollX": true
+	});
+});
 $(document).ready(function() {
-	$('#fromDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-	$('#toDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
-	$('#fromDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-	$('#toDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+	$('#fromDate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#fromDate2').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#toDate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#toDate2').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	// $('#fromDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+	// $('#toDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+	// $('#fromDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+	// $('#toDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
 	$('#popForm').formValidation({
         framework: 'bootstrap',
         excluded: ':disabled',

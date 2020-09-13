@@ -37,6 +37,16 @@ $data = array(
 		);
 	$recipt=$obj->insert('dm_pay_history',$data2);
 
+	$gh=$obj->display('dm_lead_contract','leadId='.$_POST['lead']);
+if($gh->num_rows == 0)
+{
+			$dataSheet = array(
+					'leadId'  	 =>  $_POST['lead'],
+	    			'contract'   =>  ''
+	    			);
+			$obj->insert('dm_lead_contract',$dataSheet);
+}
+
 	header("location:lead_payment_invoice.php?lead=".$_POST['lead'].'&receipt='.$recipt);
 
 }

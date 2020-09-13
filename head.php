@@ -6,21 +6,39 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-// $cl = $obj->display('dm_lead', "id=" . $_SESSION['ID']);
-// $cl1 = $cl->fetch_array();
+if($_SESSION['TYPE']=="SA"){
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
+}
+else{
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor='.$_SESSION['ID']);
+}
+if($cl->num_rows >0 ){
+$cl1 = $cl->fetch_array();
+}
+
+if($_SESSION['TYPE']=="SA"){
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
+}
+else{
+  $cln = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet!=0 and counsilor='.$_SESSION['ID']);
+}
+if($cln->num_rows >0 ){
+$cln1 = $cln->fetch_array();
+}
+// echo $cl1['count'];
 
 // $op = $obj->display('dm_ops_skill_canada', "leadId=" . $_SESSION['ID']);
 // $op1 = $op->fetch_array();
 // $requiredp_docs_client = 14;
 // $requirede_docs_client = 15;
-// // print_r($op1);
+// print_r($op1);
 // $c = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (mcert_re is null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (marraige IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_client_personal WHERE leadid=' . $_SESSION["ID"]);
 // $c1 = $c->fetch_array();
 // $ce = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_client_edu WHERE leadid=' . $_SESSION["ID"]);
 // $ce1 = $ce->fetch_array();
 // $em = $obj->display('dm_employee', "id=" . $cl1['assignTo']);
 // $em1 = $em->fetch_array();
-// //spouse
+//spouse
 // $requiredp_docs_spouse = 12;
 // $requirede_docs_spouse = 15;
 
@@ -124,7 +142,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-          <a href="index3.html" class="nav-link">Home</a>
+          <a href="dashboard.php" class="nav-link">Home</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
           <a href="#" class="nav-link">Contact</a>
@@ -304,45 +322,68 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li> -->
 
-            <li class="nav-item active">
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Admin Setup
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right">6</span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <!-- <li class="nav-item">
+                  <a href="lead_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add New Lead</p>
+                  </a>
+                </li> -->
+                <li class="nav-item">
               <a class="nav-link" href="region_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Region Management</span></a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="branch_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Branch Management</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="department_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Department Management</span></a>
             </li>
+            <li class="nav-item">
+              <a class="nav-link" href="service_list.php">
+                <i class="fas fa-globe"></i>
+                <span>Service Management</span></a>
+            </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="country_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Country Management</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="enquiry_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Lead Inquiry Management</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="source_list.php">
                 <i class="fas fa-globe"></i>
                 <span>Lead Source Management</span></a>
             </li>
 
-            <li class="nav-item active">
+            <li class="nav-item">
               <a class="nav-link" href="role_list.php">
                 <i class="fas fa-user"></i>
                 <span>Access Hierarchy Management</span></a>
+            </li>
+              </ul>
             </li>
 
             <li class="nav-item has-treeview">
@@ -351,7 +392,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Lead Management
                   <i class="fas fa-angle-left right"></i>
-                  <span class="badge badge-info right">6</span>
+                  <span class="badge badge-info right"><?=$cl1['count'];?></span>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -375,11 +416,106 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>
               </ul>
             </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Client Management
+                  <i class="fas fa-angle-left right"></i>
+                  <span class="badge badge-info right"><?=$cln1['count'];?></span>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="operation_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Client Data</p>
+                  </a>
+                </li>
+                 <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p></p>
+                  </a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>  -->
+              </ul>
+            </li>
+
             <li class="nav-item active">
               <a class="nav-link" href="employe_list.php">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Employee Management</span></a>
             </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Leave request
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right  "><?=$cln1['count'];?></span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="leave_list.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Manage Leaves</p>
+                  </a>
+                </li>
+                 <!-- <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p></p>
+                  </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>  -->
+              </ul>
+            </li>
+
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Report
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right"><?=$cln1['count'];?></span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="report_sales.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Sales Report</p>
+                  </a>
+                </li>
+                 <!-- <li class="nav-item">
+                  <a href="lead_search_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p></p>
+                  </a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a href="book_meetings.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings</p>
+                  </a>
+                </li>  -->
+              </ul>
+            </li>
+
             <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">
                 <i class="fas fa-fw fa-book-open"></i>
@@ -410,6 +546,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>
               </ul>
             </li>
+
+            
 
           </ul>
         </nav>

@@ -346,7 +346,6 @@ include_once("head.php");
 														},
 														errorElement: 'span',
 														errorPlacement: function(error, element) {
-															alert('error in submit')
 															error.addClass('invalid-feedback');
 															element.closest('.form-group').append(error);
 														},

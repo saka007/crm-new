@@ -1,4 +1,4 @@
-<?php include_once("header.php");
+<?php include_once("head.php");
 // $req_url1 = 'https://api.exchangerate-api.com/v4/latest/INR';
 // 					$req_url2 = 'https://api.exchangerate-api.com/v4/latest/AED';
 //                     $response_json1 = file_get_contents($req_url1);
@@ -9,8 +9,22 @@
 //                     $aed=$response_object2->rates->USD;
 ?>
 
-<div class="col-sm-10">
-		<div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">Total Sales Report</h4></div></div>
+<link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
+<link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+
+          <!-- Page Heading -->
+          <h1 class="h3 mb-4 text-gray-800">Sales Report
+		  </h1>
+
+          <div class="row">
+             <div class="col-lg-12">
+
+		<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">Total Sales Report</h4></div></div> -->
 <form name="search" action="" method="post">
 
 <div class="row">
@@ -19,32 +33,36 @@
 
 <label >Start Date</label>
 
-<input type="text" class="form-control" id="sdate" name="sdate" value="<?php if($_POST['sdate']) echo $_POST['sdate']; else  echo date('d-m-Y')?>" >
-
+<div class="input-group date" id="sdate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
 </div>
 
 <div class="col-sm-2 form-group">
 
 <label >End Date</label>
 
-<input type="text" class="form-control" id="edate" name="edate" value="<?php if($_POST['edate']) echo $_POST['edate']; else echo date('d-m-Y')?>" >
+<div class="input-group date" id="edate" data-target-input="nearest">
+                                    <input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
+                                                                                                                                            else  echo date('d-m-Y') ?>" />
+                                    <div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
+                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                                    </div>
+                                </div>
 
 </div>
 
-<?php $region="";
- if ($_SESSION['ID']=="25")
-{
-	$region =' and id in (3,4,7)';
-}
-if($_SESSION['ID']=='6')
-{
-	$region=' and id in (5,6,8)';
-}
+<!-- <?php 
+
  if($_SESSION['TYPE']=="SA" ||  $_SESSION['TYPE']=="RMSM" || $_SESSION['TYPE']=="DGM" || $_SESSION['TYPE']=="FMP" || $_SESSION['TYPE']=="FO" || $_SESSION['TYPE']=="BM") { 
 if($_SESSION['TYPE']!="BM") {
-?>		
+?>		 -->
 
-<div class="col-sm-2 form-group"><label>Region</label>
+<!-- <div class="col-sm-2 form-group"><label>Region</label>
 <select class="form-control" name="region" id="region" >
 	<option value="">Select</option>
 	<?php $sou=$obj->display('dm_region','status=1 '.$region.' order by name');
@@ -54,8 +72,8 @@ if($_SESSION['TYPE']!="BM") {
 	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 	<?php } ?>
 	</select>
-</div>
-<?php if($_SESSION['ID']!='6' && $_SESSION['ID']!='25'){?>
+</div> -->
+<!-- <?php if($_SESSION['ID']!='6' && $_SESSION['ID']!='25'){?>
 <div class="col-sm-2 form-group"><label>UAE Or Overseas</label>
 <select class="form-control" name="gcc" id="region" >
 	<option value="">Select</option>
@@ -63,14 +81,14 @@ if($_SESSION['TYPE']!="BM") {
 	<option value="2">SHJ OMN & PUN</option>
 	</select>
 	</div>
-<?php }?>
-<div class="col-sm-2 form-group"><label>Branch</label>
+<?php }?> -->
+<!-- <div class="col-sm-2 form-group"><label>Branch</label>
 <select class="form-control" name="branch" id="branch" >
 	<option value="">Select</option>
 	</select>
-</div>
-<?php } ?>
-<div class="col-sm-3 form-group"><label >Marketing Source</label>
+</div> -->
+<!-- <?php } ?> -->
+<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
 <select class="form-control" name="market_source" >
 	<option value="">Select</option>
 	<?php $sou=$obj->display('dm_source','status=1 order by name');
@@ -80,8 +98,8 @@ if($_SESSION['TYPE']!="BM") {
 	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 	<?php } ?>
 	</select>
-</div>
-<div class="col-sm-2 form-group"><label >Mode of Enquiry</label>
+</div> -->
+<!-- <div class="col-sm-2 form-group"><label >Mode of Enquiry</label>
 <select class="form-control" name="enquiry">
 	<option value="">Select</option>
 	<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
@@ -90,9 +108,9 @@ if($_SESSION['TYPE']!="BM") {
 	
 	</select>
 	
-	</div>			
+	</div>			 -->
 
-<div class="col-sm-2 form-group"><label >Country Interested</label>
+<!-- <div class="col-sm-2 form-group"><label >Country Interested</label>
 <select class="form-control" name="country_interest" >
 	<option value="">Select</option>
 	
@@ -104,8 +122,8 @@ if($_SESSION['TYPE']!="BM") {
 	<?php } ?>		
 	</select>
 	
-	</div> 
-<div class="col-sm-3 form-group"><label >Program Interested</label>
+	</div>  -->
+<!-- <div class="col-sm-3 form-group"><label >Program Interested</label>
 <select class="form-control" name="service_interest" >
 	<option value="">Select</option>
 	<?php $ser=$obj->display('dm_service','status=1 order by name');
@@ -116,8 +134,8 @@ if($_SESSION['TYPE']!="BM") {
 	<?php } ?>
 	
 </select>
-</div>
-<div class="col-sm-2 form-group"><label >Convert</label>
+</div> -->
+<!-- <div class="col-sm-2 form-group"><label >Convert</label>
 <select class="form-control" name="convet" id="convet" >
 	<option value="">Select</option>
 	<option value="DNQ" <?php if($_POST['convet']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
@@ -126,10 +144,10 @@ if($_SESSION['TYPE']!="BM") {
 	
 	</select>
 	
-	</div>
+	</div> -->
 
 
-<div class="col-sm-2 form-group"><label >Program Type</label>
+<!-- <div class="col-sm-2 form-group"><label >Program Type</label>
 <select class="form-control" name="type">
 	<option value="">Select</option>
 	<option value="Business" <?php if($_POST['type']=="Business") { echo 'selected="selected"';}?>>Business</option>
@@ -139,9 +157,9 @@ if($_SESSION['TYPE']!="BM") {
 	<option value="Work" <?php if($_POST['type']=="Work") { echo 'selected="selected"';}?>>Work</option>
 	
 	</select>
-</div>
+</div> -->
 
-<div class="col-sm-3 form-group"><label>Counselor</label>
+<!-- <div class="col-sm-3 form-group"><label>Counselor</label>
 <select class="form-control" name="counsilor" id="counsilor" >
 	<option value="">Select</option>
 <?php 
@@ -156,14 +174,14 @@ while($emp1=$emp->fetch_array())
 </select>
 </div>
 
-<?php } ?>
+<?php } ?> -->
 
-<div class="col-sm-3 form-group"><label>Jan Sales</label>
+<!-- <div class="col-sm-3 form-group"><label>Jan Sales</label>
 <select class="form-control" name="jan" id="jan" >
 	<option value="">Select</option>
 	<option value="1">With Jan sales</option>
 </select>
-</div>
+</div> -->
 
 
 
@@ -252,7 +270,7 @@ $query.=" and T1.date between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and
 
 $em=$obj->display('dm_employee','id='.$row['at']); $em1=$em->fetch_array();
 $gh=$obj->display('dm_lead_contract','leadId='.$row['id']); $gh1=$gh->fetch_array(); 
-$si=$obj->display('dm_service','id='.$row['service_interest']); $si1=$si->fetch_array();
+$si=$obj->display('dm_service','id='.$row['service_interest']); if ($si->num_rows > 0) { $si1=$si->fetch_array();}
 $sr=$obj->display('dm_source','id='.$row['source']);$sr1=$sr->fetch_array();
 					    	?>
 
@@ -347,12 +365,31 @@ else
 $query.="";
 } ?>			
 		</div>
-<?php include_once("footer.php"); ?>
+		</div>
+		</div>
+		</div>
+		</div>
+<?php include_once("foot.php"); ?>
+
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 
    <script>
 $(function(){
-$('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-$('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+// $('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+// $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+$('#sdate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#edate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    }); 
 }); 
 </script>
 <script>

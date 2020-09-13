@@ -223,16 +223,16 @@ $reg1 = $reg->fetch_array();
 							</div>
 							<div class="row">
 
-								<!-- <div class="col-sm-4 form-group"><label >Program Interested</label>
+								<div class="col-sm-4 form-group"><label >Program Interested</label>
 <select class="form-control" name="service_interest">
 	<option value="">Select</option>
-	<?php //$ser = $obj->display('dm_service', 'status=1 order by name');
-	// while ($ser1 = $ser->fetch_array()) {
+	<?php $ser = $obj->display('dm_service', 'status=1 order by name');
+	 while ($ser1 = $ser->fetch_array()) {
 	?>
-	<option value="<?php //echo $ser1['id']; ?>"><?php //echo $ser1['name']; ?></option>
-	<?php //} ?>
+	<option value="<?php echo $ser1['id']; ?>"><?php echo $ser1['name']; ?></option>
+	<?php } ?>
 </select>
-</div> -->
+</div>
 
 								<div class="col-sm-4 form-group"><label>Relative</label>
 									<select class="form-control" name="relative">
@@ -339,6 +339,7 @@ $reg1 = $reg->fetch_array();
 	<option value="">Select</option>
 	<option value="zoom">Zoom</option>
 	<option value="in_office">In office</option>
+	<option value="walk_in">Walk In</option>
 	</select>
       </div>
 </div>
