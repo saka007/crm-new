@@ -13,8 +13,8 @@ if($ext->num_rows == 0)
 {
 $emp=$obj->display('dm_employee','id='.$_POST['assign']);if($emp->num_rows > 0) { $emp1=$emp->fetch_array();}
 
-if($_POST['dob']!="") { $dob=date('Y-m-d',strtotime($_POST['dob']));} else { $dob=NULL;}
-if($_POST['appointment']!="") { $appointment=date('Y-m-d',strtotime($_POST['appointment']));} else { $appointment=NULL;}
+if($_POST['dob']!="") { $dob=date('Y-m-d',strtotime($_POST['dob']));} 
+if($_POST['appointment']!="") { $appointment=date('Y-m-d',strtotime($_POST['appointment']));}
 
 	$data = array(
     			'fname'  =>  $_POST['fname'],

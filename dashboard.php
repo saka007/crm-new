@@ -13,7 +13,16 @@ if (isset($_GET['task'])) {
 	header("location:dashboard.php");
 }
 ?>
-
+ <!-- fullCalendar -->
+ <link rel="stylesheet" href="https://phppot.com/demo/php-calendar-event-management-using-fullcalendar-javascript-library/fullcalendar/fullcalendar.min.css">
+<style>
+span.fc-title {
+    color: #ffffff;
+    font-size: 15px;
+    margin-left: 5px;
+    line-height: 20px;
+}
+</style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
     <div class="content-header">
@@ -183,48 +192,16 @@ if (isset($_GET['task'])) {
             
             <!-- /.card -->
             <div class="row">
-              <div class="col-md-6">
-                <!-- DIRECT CHAT -->
-               <div class="card bg-gradient-success">
-              <div class="card-header border-0">
-
-                <h3 class="card-title">
-                  <i class="far fa-calendar-alt"></i>
-                  Calendar
-                </h3>
-                <!-- tools card -->
-                <div class="card-tools">
-                  <!-- button with a dropdown -->
-                  <div class="btn-group">
-                    <button type="button" class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown" data-offset="-52">
-                      <i class="fas fa-bars"></i></button>
-                    <div class="dropdown-menu" role="menu">
-                      <a href="#" class="dropdown-item">Add new event</a>
-                      <a href="#" class="dropdown-item">Clear events</a>
-                      <div class="dropdown-divider"></div>
-                      <a href="#" class="dropdown-item">View calendar</a>
-                    </div>
-                  </div>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="collapse">
-                    <i class="fas fa-minus"></i>
-                  </button>
-                  <button type="button" class="btn btn-success btn-sm" data-card-widget="remove">
-                    <i class="fas fa-times"></i>
-                  </button>
+              <div class="col-md-12">
+                <div class="card-body p-0">
+                   <!-- THE CALENDAR -->
+                  <div id="calendar"></div>
                 </div>
-                <!-- /. tools -->
               </div>
-              <!-- /.card-header -->
-              <div class="card-body pt-0">
-                <!--The calendar -->
-                <div id="calendar" style="width: 100%"></div>
-              </div>
-              <!-- /.card-body -->
             </div>
-                <!--/.direct-chat -->
-              </div>
               <!-- /.col -->
 
+              <div class="row">
               <div class="col-md-6">
                 <!-- USERS LIST -->
                 <div class="card">
@@ -543,8 +520,80 @@ if (isset($_GET['task'])) {
   <script src="theme/js/demo/chart-area-demo.js"></script>
   <script src="theme/js/demo/chart-pie-demo.js"></script>  -->
 <?php include_once("foot.php"); ?>
+<!-- ChartJS -->
+<script src="theme/plugins/chart.js/Chart.min.js"></script>
+<!-- Sparkline -->
+<script src="theme/plugins/sparklines/sparkline.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
  <script src="theme/dist/js/pages/dashboard2.js"></script>
 <!--<script src="theme/dist/js/pages/dashboard.js"></script> -->
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="theme/dist/js/demo.js"></script> -->
+<!-- fullCalendar 2.2.5 -->
+<script src='http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js'></script>
+
+<!-- <script src="theme/plugins/fullcalendar-daygrid/main.min.js"></script> -->
+<!-- <script src="../plugins/fullcalendar-timegrid/main.min.js"></script> -->
+<!-- <script src="theme/plugins/fullcalendar-interaction/main.min.js"></script>
+<script src="theme/plugins/fullcalendar-bootstrap/main.min.js"></script> -->
+<!-- Page specific script -->
+<script>
+
+$(document).ready(function () {
+    var calendar = $('#calendar').fullCalendar({
+        editable: false,
+        events: "fetch-event.php",
+        displayEventTime: false,
+        eventRender: function (event, element, view) {
+            event.allDay = false;
+            // if (event.allDay === 'true') {
+            //     event.allDay = true;
+            // } else {
+            //     event.allDay = false;
+            // }
+        },
+       // selectable: true,
+        //selectHelper: true,
+        // select: function (start, end, allDay) {
+        //     var title = prompt('Event Title:');
+
+        //     if (title) {
+        //         var start = $.fullCalendar.formatDate(start, "Y-MM-DD HH:mm:ss");
+        //         var end = $.fullCalendar.formatDate(end, "Y-MM-DD HH:mm:ss");
+
+        //         displayMessage("Added Successfully");
+        //         calendar.fullCalendar('renderEvent',
+        //                 {
+        //                     title: title,
+        //                     start: start,
+        //                     end: end,
+        //                     allDay: allDay
+        //                 },
+        //         true
+        //                 );
+        //     }
+        //     calendar.fullCalendar('unselect');
+        // },
+
+        editable: true,
+        eventDrop: function (event, delta) {
+                    var start = $.fullCalendar.formatDate(event.start, "Y-MM-DD HH:mm:ss");
+                    var end = $.fullCalendar.formatDate(event.end, "Y-MM-DD HH:mm:ss");
+                    displayMessage("Updated Successfully");
+                },
+        // eventClick: function (event) {
+        //     var deleteMsg = confirm("Do you really want to delete?");
+        //     if (deleteMsg) {
+        //         $('#calendar').fullCalendar('removeEvents', event.id);
+        //         displayMessage("Deleted Successfully");
+        //     }
+        // }
+
+    });
+});
+
+function displayMessage(message) {
+	    $(".response").html("<div class='success'>"+message+"</div>");
+    setInterval(function() { $(".success").fadeOut(); }, 1000);
+}
+</script>

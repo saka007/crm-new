@@ -21,7 +21,7 @@
 
           <div class="row">
              <div class="col-lg-12">
-		<div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">View Lead</h4></div></div>
+		<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3">View Lead</h4></div></div> -->
 <form name="search" action="" method="post">
 <div class="row">
 <div class="col-sm-2 form-group">

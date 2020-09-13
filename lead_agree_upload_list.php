@@ -1,27 +1,32 @@
-<?php include_once("header.php");	?>
-
+<?php include_once("head.php");	?>
+   <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
 
 		<div class="col-sm-10">
-<div class="row"><div class="col-sm-12"><h4 class="mb-3" style="color:#2cb674;">Pending Leads for agreement upload</h4></div></div>
+		<div class="row"><div class="col-sm-12"><h4 class="mb-3">Pending Leads for agreement upload</h4></div></div>
 
-<form name="search" action="" method="post">
-	<div class="row">
-<div class="col-sm-2 form-group"><label>Region</label>
-<select class="form-control" name="region" id="region" >
-	<option value="">Select</option>
-	<?php $sou=$obj->display('dm_region','status=1 order by name');
-	while($sou1=$sou->fetch_array())
-	{
-	?>
-	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
-	<?php } ?>
-	</select>
-</div>
+		<form name="search" action="" method="post">
+			<div class="row">
+		<div class="col-sm-2 form-group"><label>Region</label>
+		<select class="form-control" name="region" id="region" >
+			<option value="">Select</option>
+			<?php $sou=$obj->display('dm_region','status=1 order by name');
+			while($sou1=$sou->fetch_array())
+			{
+			?>
+			<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
+			<?php } ?>
+			</select>
+		</div>
 
-<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
-</div>
-	</form>
-<br>
+		<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
+		</div>
+			</form>
+		<br>
 			<table class="table table-striped table-bordered" id="myTable" style="width:100%">
 			  <thead>
 			    <tr>
@@ -119,6 +124,10 @@ $cont1=$cont->fetch_array();
 			</table>
 	
 		</div>
+	  </div>
+	</div>
+   </div>
+ </div>
 		<script>
 				$(document).ready(function(){
     $('#myTable').DataTable({
@@ -137,6 +146,6 @@ $cont1=$cont->fetch_array();
 
     		
 		
-<?php include_once("footer.php"); ?>
+<?php include_once("foot.php"); ?>
 
 

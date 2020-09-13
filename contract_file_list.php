@@ -1,9 +1,13 @@
-<?php
-include_once("header.php");	
-?>
-<div class="col-sm-10">
+<?php include_once("head.php"); ?>
+           <!-- Begin Page Content -->
+ <div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">	
+			<div class="row">
+                <div class="col-sm-10">
 
-	<h4 class="mb-3" style="color:#2cb674;">Upload Contract <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="background:#2cb674;">Add New <i class="fa fa-plus"></i></a></h4>
+	<h4 class="mb-3">Upload Contract <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
 
 			<table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
 				<thead>
@@ -36,6 +40,10 @@ include_once("header.php");
 <?php $i++;} ?>
 				</tbody>
 			</table>
+		</div>
+	   </div>
+	</div>
+ </div>
 </div>
 
 
@@ -94,7 +102,7 @@ include_once("header.php");
         </div>
     </div>
 </div>
-<?php 	include_once("footer.php");	?>
+<?php 	include_once("foot.php");	?>
 
 <script src="js/formvalidation.js"></script>
 

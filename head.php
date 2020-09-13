@@ -6,33 +6,33 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-$cl = $obj->display('dm_lead', "id=" . $_SESSION['ID']);
-$cl1 = $cl->fetch_array();
+// $cl = $obj->display('dm_lead', "id=" . $_SESSION['ID']);
+// $cl1 = $cl->fetch_array();
 
-$op = $obj->display('dm_ops_skill_canada', "leadId=" . $_SESSION['ID']);
-$op1 = $op->fetch_array();
-$requiredp_docs_client = 14;
-$requirede_docs_client = 15;
-// print_r($op1);
-$c = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (mcert_re is null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (marraige IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_client_personal WHERE leadid=' . $_SESSION["ID"]);
-$c1 = $c->fetch_array();
-$ce = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_client_edu WHERE leadid=' . $_SESSION["ID"]);
-$ce1 = $ce->fetch_array();
-$em = $obj->display('dm_employee', "id=" . $cl1['assignTo']);
-$em1 = $em->fetch_array();
-//spouse
-$requiredp_docs_spouse = 12;
-$requirede_docs_spouse = 15;
+// $op = $obj->display('dm_ops_skill_canada', "leadId=" . $_SESSION['ID']);
+// $op1 = $op->fetch_array();
+// $requiredp_docs_client = 14;
+// $requirede_docs_client = 15;
+// // print_r($op1);
+// $c = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (mcert_re is null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (marraige IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_client_personal WHERE leadid=' . $_SESSION["ID"]);
+// $c1 = $c->fetch_array();
+// $ce = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_client_edu WHERE leadid=' . $_SESSION["ID"]);
+// $ce1 = $ce->fetch_array();
+// $em = $obj->display('dm_employee', "id=" . $cl1['assignTo']);
+// $em1 = $em->fetch_array();
+// //spouse
+// $requiredp_docs_spouse = 12;
+// $requirede_docs_spouse = 15;
 
-$cs = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_spouse_personal WHERE leadid=' . $_SESSION["ID"]);
-if ($cs->num_rows) {
-  $cs1 = $cs->fetch_array();
-}
+// $cs = $obj->display3('SELECT ((IF(copr IS null, 1,0))+(IF(vphoto IS null, 1,0))+(IF(final_visa_docfb is null, 1,0))+(IF (final_visa_docfull IS null, 1,0))+(IF (bcert IS null, 1,0))+(IF(niddoc IS null, 1,0))+(IF (ielts is null,1,0))+(IF (passport IS null, 1,0))+(IF(passport_new is null, 1,0))+(IF(pcc is null, 1,0))+(IF(photo is null, 1,0))+(IF(resume is null, 1,0))) as SUM FROM dm_spouse_personal WHERE leadid=' . $_SESSION["ID"]);
+// if ($cs->num_rows) {
+//   $cs1 = $cs->fetch_array();
+// }
 
-$ces = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_spouse_edu WHERE leadid=' . $_SESSION["ID"]);
-if ($ces->num_rows) {
-  $ces1 = $ces->fetch_array();
-}
+// $ces = $obj->display3('SELECT ((IF(con_mark_sheet_m IS null, 1,0))+(IF(con_mark_sheet_b IS null, 1,0))+(IF(ind_mark_sheet_m is null, 1,0))+(IF (revised_eca_m IS null, 1,0))+(IF (intermediate is null, 1,0))+(IF (revised_eca_b IS null, 1,0))+(IF(revised_wes_eca_m IS null, 1,0))+(IF (conv_cert_m IS null, 1,0))+(IF (revised_wes_eca_b is null,1,0))+(IF (eca_m IS null, 1,0))+(IF(conv_cert_b is null, 1,0))+(IF(ind_mark_sheet_b is null, 1,0))+(IF(bach_seal_trans_unv is null, 1,0))+(IF(eca_b is null, 1,0))+(IF(ssc is null, 1,0))) as SUM FROM dm_spouse_edu WHERE leadid=' . $_SESSION["ID"]);
+// if ($ces->num_rows) {
+//   $ces1 = $ces->fetch_array();
+// }
 
 $today = date('Y-m-d');
 $employee_activity_sql = $obj->display('employee_activity', "emp_id=" . $_SESSION['ID'] . " and log_in_time like '%$today%'");
@@ -444,6 +444,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           cancelButtonClass: 'btn btn-danger',
           buttonsStyling: false
         }).then(function(result) {
+          // alert(result.value);
           if (result.value) {
             if (action === 'login') {
               log_in_time = true;
