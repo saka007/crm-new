@@ -144,7 +144,7 @@ header("location:lead_management.php?error=Duplicate entry");
 <div class="row">
 <div class="col-sm-4 form-group"><label >First Name</label><input type="text" class="form-control" id="fname" name="fname" required ></div>
 <div class="col-sm-4 form-group"><label >Middle Name</label><input type="text" class="form-control" id="mname" name="mname"></div>
-<div class="col-sm-4 form-group"><label >Family Name</label><input type="text" class="form-control" id="lname" name="lname" required ></div>
+<div class="col-sm-4 form-group"><label >Family Name</label><input type="text" class="form-control" id="lname" name="lname" ></div>
 </div>
 <div class="row">
 <div class="col-sm-4 form-group"><label >Email</label><input type="text" class="form-control" id="email" name="email" required></div>
@@ -168,13 +168,15 @@ header("location:lead_management.php?error=Duplicate entry");
 
 </div>
 <div class="row">
-<div class="col-sm-4 form-group"><label >DOB</label><div class="input-group date" id="dob" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" name="dob" data-target="#dob" value="<?php if ($_POST['dob']) echo $_POST['dob'];
-                                                                                                                                            else  echo date('d-m-Y') ?>" />
-                                    <div class="input-group-append" data-target="#dob" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div></div>
+<div class="col-sm-4 form-group">
+	<label >DOB</label>
+	   <div class="input-group date" id="dob" data-target-input="nearest">
+         <input type="text" class="form-control datetimepicker-input" name="dob" data-target="#dob" value="<?php if ($_POST['dob']) echo $_POST['dob'];                                                                                                                                    else  echo date('d-m-Y') ?>" />
+            <div class="input-group-append" data-target="#dob" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+		</div>
+</div>
 <div class="col-sm-4 form-group"><label>Gender</label>
 	<select name="gender" class="form-control" >
 		<option value="">Select</option>
@@ -272,7 +274,16 @@ header("location:lead_management.php?error=Duplicate entry");
 </div>
 
 <div class="row">
-<div class="col-sm-4 form-group"><label >Spouse DOB</label><input type="text" class="form-control" id="mobiles" name="mobiles" maxlength="12"></div>
+<div class="col-sm-4 form-group">
+	<label >Spouse DOB</label>
+	   <div class="input-group date" id="mobiles" data-target-input="nearest">
+         <input type="text" class="form-control datetimepicker-input" name="mobiles" data-target="#mobiles" value="<?php if ($_POST['mobiles']) echo $_POST['dob']; else  echo date('d-m-Y') ?>" />
+            <div class="input-group-append" data-target="#mobiles" data-toggle="datetimepicker">
+                <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+            </div>
+		</div>
+</div>
+<!-- <div class="col-sm-4 form-group"><label >Spouse DOB</label><input type="text" class="form-control" id="mobiles" name="mobiles" maxlength="12"></div> -->
 <div class="col-sm-4 form-group"><label >Spouse Education</label><input type="text" class="form-control" id="sedu" name="sedu" ></div>
 <div class="col-sm-4 form-group"><label >Total Kids</label><input type="text" class="form-control" id="kids" name="kids"></div>
 </div>
@@ -374,18 +385,137 @@ while($emp1=$emp->fetch_array())
 <?php include_once('foot.php'); ?>
 
 <script type="text/javascript">
-	function showDiv(divId, element)
-{
-    document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
-}
+$(document).ready(function() {
+$('#leadForm').validate({
+			rules: {
+				fname: {
+					required: true,
+				},
+				mname: {
+					required: true,
+				},
+				email: {
+					required: true,
+					email: true,
+				},
+				mobile: {
+					required: true,
+				},
+				phone: {
+					required: true,
+				},
+				nationality: {
+					required: true,
+				},
+				gender: {
+					required: true,
+				},
+				country_interest: {
+					required: true,
+				},
+				service_interest: {
+					required: true,
+				},
+				relative: {
+					required: true,
+				},
+				market_source: {
+					required: true,
+				},
+				lead_category: {
+					required: true,
+				},
+				enquiry: {
+					required: true,
+				},
+				// assign: {
+				// 	required: true,
+				// },
 
-$('#dob').datetimepicker({
-        format: 'DD-MM-YYYY',
-        allowInputToggle: true,
-        // defaultDate: moment()
-    });
+			},
+			messages: {
+				fname: "First name is required",
+				mname: "Middle name is required",
+				email: "Email name is required",
+				mobile: "Contact number is required",
+				phone: "Alternate number is required",
+				nationality: "Nationality is required",
+				gender: "Gender is required",
+				country_interest: "Country is required",
+				service_interest: "Service/Program is required",
+				relative: "Relative is required",
+				market_source: "Source is required",
+				lead_category: "Lead category is required",
+				enquiry: "Inquiry is required",
+				//assign: "Assign is required",
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.form-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) {
+				$(element).addClass('is-invalid');
+			},
+			unhighlight: function(element, errorClass, validClass) {
+				$(element).removeClass('is-invalid');
+			},
+			success: function(label, element) {
+				if ($(element).hasClass("is-invalid")) {
+					$(element).addClass("is-valid");
+				}
+			},
+			submitHandler: function() {
+				var formData = new FormData($('#leadForm')[0]);
+				$.ajax({
+					url: 'lead_management.php',
+					type: 'POST',
+					enctype: 'multipart/form-data',
+					dataType: 'json',
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(result) {
+						if (result.status == 'success') {
+							$('.alert-success').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-success').css('display', 'none');
+							}, 1000);
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
+						} else {
+							$('.alert-danger').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-danger').css('display', 'none');
+							}, 1000);
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			}
+	});
 
+	$('#dob').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+	
+	$('#mobiles').datetimepicker({
+		format: 'DD-MM-YYYY',
+		allowInputToggle: true,
+		// defaultDate: moment()
+	});
 
+});
+function showDiv(divId, element)
+	{
+		document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
+	}
 </script>
 
       <!-- End of Main Content -->

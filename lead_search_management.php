@@ -38,37 +38,52 @@ if ($_SESSION['TYPE']=="SA"){
 
  <!-- Begin Page Content -->
  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
+ <section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Lead Management</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+						<li class="breadcrumb-item active">Lead Management</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+    </section>
+    <section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<!-- /.card -->
+					<div class="card">
+						<div class="card-header">
+						<div class="row">
+							<div class="col-md-2 col-xs-6 border-right">
+							<h3 class="bold no-mtop"><?=$totl1['count'];?></h3>
+							<p style="color:#989898" class="font-medium no-mbot">
+								Total Leads    </p>
+								</div>
+								<div class="col-md-2 col-xs-6 border-right">
+							<h3 class="bold no-mtop"><?=$toth1['count'];?></h3>
+							<p style="color:#03A9F4" class="font-medium no-mbot">
+								Hot Leads      </p>
+							</div>
+								<div class="col-md-2 col-xs-6 border-right">
+							<h3 class="bold no-mtop"><?=$totw1['count'];?></h3>
+							<p style="color:#2d2d2d" class="font-medium no-mbot">
+								Warm Leads     </p>
+							</div>
+							</div>
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Manage Leads</h1>
-		  <br/>
-		  <div class="row">
-      <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$totl1['count'];?></h3>
-      <p style="color:#989898" class="font-medium no-mbot">
-        Total Leads    </p>
-          </div>
-        <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$toth1['count'];?></h3>
-      <p style="color:#03A9F4" class="font-medium no-mbot">
-        Hot Leads      </p>
-    </div>
-        <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$totw1['count'];?></h3>
-      <p style="color:#2d2d2d" class="font-medium no-mbot">
-        Warm Leads     </p>
-    </div>
-	</div>
-
-          <div class="row">
-             <div class="col-lg-12">
-		<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3">View Lead</h4></div></div> -->
-<form name="search" action="" method="post">
-<div class="row">
-<div class="col-sm-2 form-group">
+   							 <div class="row">
+								<div class="col-lg-12 col-md-12 col-sm-12">
+							<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3">View Lead</h4></div></div> -->
+							<form name="search" action="" method="post">
+							<div class="row">
+							<div class="col-sm-2 form-group">
                                 <label>Start Date</label>
                                 <div class="input-group date" id="sdate" data-target-input="nearest">
                                     <input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
@@ -89,72 +104,74 @@ if ($_SESSION['TYPE']=="SA"){
                                 </div>
                             </div>
 
-<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
-<select class="form-control" name="market_source" >
-	<option value="">Select</option>
-	<?php $sou=$obj->display('dm_source','status=1 order by name');
-	while($sou1=$sou->fetch_array())
-	{
-	?>
-	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
-	<?php } ?>
-	</select>
-</div> -->
-<!-- <div class="col-sm-3 form-group"><label >Mode of Enquiry</label>
-<select class="form-control" name="enquiry">
-	<option value="">Select</option>
-	<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
-	<option value="Email" <?php if($_POST['enquiry']=="Email") { echo 'selected="selected"';}?>>Email</option>
-	<option value="Walkin" <?php if($_POST['enquiry']=="Walkin") { echo 'selected="selected"';}?>>Walkin</option>
-	
-	</select>
-	
-	</div>			 -->
+							<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
+							<select class="form-control" name="market_source" >
+								<option value="">Select</option>
+								<?php $sou=$obj->display('dm_source','status=1 order by name');
+								while($sou1=$sou->fetch_array())
+								{
+								?>
+								<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
+								<?php } ?>
+								</select>
+							</div> -->
+							<!-- <div class="col-sm-3 form-group"><label >Mode of Enquiry</label>
+							<select class="form-control" name="enquiry">
+								<option value="">Select</option>
+								<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
+								<option value="Email" <?php if($_POST['enquiry']=="Email") { echo 'selected="selected"';}?>>Email</option>
+								<option value="Walkin" <?php if($_POST['enquiry']=="Walkin") { echo 'selected="selected"';}?>>Walkin</option>
+								
+								</select>
+								
+								</div>			 -->
 
-<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
-<select class="form-control" name="country_interest" >
-	<option value="">Select</option>
-	
-<?php $cnt=$obj->display('dm_country_proces','status=1 order by name');
-	while($cnt1=$cnt->fetch_array())
-	{
-	?>
-	<option value="<?php echo $cnt1['id'];?>"  <?php if($cnt1['id']==$_POST['country_interest']) { echo 'selected="selected"';}?>><?php echo $cnt1['name'];?></option>
-	<?php } ?>		
-	</select>
-	
-	</div>
+							<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
+							<select class="form-control" name="country_interest" >
+								<option value="">Select</option>
+								
+							<?php $cnt=$obj->display('dm_country_proces','status=1 order by name');
+								while($cnt1=$cnt->fetch_array())
+								{
+								?>
+								<option value="<?php echo $cnt1['id'];?>"  <?php if($cnt1['id']==$_POST['country_interest']) { echo 'selected="selected"';}?>><?php echo $cnt1['name'];?></option>
+								<?php } ?>		
+								</select>
+								
+								</div>
 
-<div class="col-sm-3 form-group"><label >Program Interested</label>
-<select class="form-control" name="service_interest" >
-	<option value="">Select</option>
-	<?php $ser=$obj->display('dm_service','status=1 order by name');
-	while($ser1=$ser->fetch_array())
-	{
-	?>
-	<option value="<?php echo $ser1['id'];?>"  <?php if($ser1['id']==$_POST['service_interest']) { echo 'selected="selected"';}?>><?php echo $ser1['name'];?></option>
-	<?php } ?>
-	
-</select>
-</div>
-<div class="col-sm-3 form-group"><label >Convert</label>
-<select class="form-control" name="convet" id="convet" >
-	<option value="">Select</option>
-	<option value="Prospect" <?php if($_POST['convet']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
-	<option value="Not Interested" <?php if($_POST['convet']=="Not Interested") { echo 'selected="selected"';}?>>Not Interested</option>
-	<option value="DNQ" <?php if($_POST['convet']=="Prospect") { echo 'selected="selected"';}?>>Prospect</option>
-	
-	</select>
-	
-	</div>	 -->
-	<div class="col-sm-3 form-group"><label >Search</label>	
-		<input type="text" class="form-control" id="find" name="find" value=""></div>
+							<div class="col-sm-3 form-group"><label >Program Interested</label>
+							<select class="form-control" name="service_interest" >
+								<option value="">Select</option>
+								<?php $ser=$obj->display('dm_service','status=1 order by name');
+								while($ser1=$ser->fetch_array())
+								{
+								?>
+								<option value="<?php echo $ser1['id'];?>"  <?php if($ser1['id']==$_POST['service_interest']) { echo 'selected="selected"';}?>><?php echo $ser1['name'];?></option>
+								<?php } ?>
+								
+							</select>
+							</div>
+							<div class="col-sm-3 form-group"><label >Convert</label>
+							<select class="form-control" name="convet" id="convet" >
+								<option value="">Select</option>
+								<option value="Prospect" <?php if($_POST['convet']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
+								<option value="Not Interested" <?php if($_POST['convet']=="Not Interested") { echo 'selected="selected"';}?>>Not Interested</option>
+								<option value="DNQ" <?php if($_POST['convet']=="Prospect") { echo 'selected="selected"';}?>>Prospect</option>
+								
+								</select>
+								
+								</div>	 -->
+								<div class="col-sm-3 form-group"><label >Search</label>	
+									<input type="text" class="form-control" id="find" name="find" value=""></div>
 
-<div class="col-sm-3 form-group"><label >&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" >
-	</form>
-</div>
-</div>
-<hr />
+							<div class="col-sm-3 form-group"><label >&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" >
+								</form>
+							</div>
+							</div>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body" style="width: 80%;">
 <?php
 if($_SESSION['TYPE']=="IC" || $_SESSION['TYPE']=="AOM" || $_SESSION['TYPE']=="SIC"  || $_SESSION['TYPE']=="MC" || $_SESSION['TYPE']=="BM" || $_SESSION['TYPE']=="ABM" || $_SESSION['TYPE']=="AM"  || $_SESSION['TYPE']=="RM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" ||  $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="HR" ||  $_SESSION["TYPE"]=="TC" ||  $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM") { 
 $query=" and assignTo=".$_SESSION['ID'];
@@ -185,7 +202,7 @@ $query.=" and paidYet=0";
 }
 ?>
 
-			<table data-last-order-identifier="tasks" class="table table-striped table-bordered" id="dataTables-Table_new" style="width:100%">
+			<table data-last-order-identifier="tasks" class="table table-striped table-bordered" id="dataTables-Table_new">
 
 			  <thead>
 
@@ -331,20 +348,20 @@ $("#b<?php echo $row['id'];?>").hover(function () {
       </div>
       <div class="modal-body">
 	  <div class="input-group date" id="datepicker<?php echo $row['id'];?>" data-target-input="nearest">
-                                    <input type="text" class="form-control datetimepicker-input" name="date" data-target="#datepicker<?php echo $row['id'];?>" />
-                                    <div class="input-group-append" data-target="#datepicker<?php echo $row['id'];?>" data-toggle="datetimepicker">
-                                        <div class="input-group-text"><i class="fa fa-calendar"></i></div>
-                                    </div>
-                                </div>
+			<input type="text" class="form-control datetimepicker-input" name="date" data-target="#datepicker<?php echo $row['id'];?>" />
+			<div class="input-group-append" data-target="#datepicker<?php echo $row['id'];?>" data-toggle="datetimepicker">
+				<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+			</div>
+        </div>
       	<!-- <input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id'];?>"> -->
-		  <div class="col-sm-3 form-group"><label >Meeting Type</label>
+		<div class="col-sm-3 form-group"><label >Meeting Type</label>
 		  <select class="form-control" id="mtype<?php echo $row['id'];?>" name="mtype" >
-	<option value="">Select</option>
-	<option value="zoom">Zoom</option>
-	<option value="in_office">In office</option>
-	<option value="walk_in">Walk In</option>
-	</select>
-      </div>
+			<option value="">Select</option>
+			<option value="zoom">Zoom</option>
+			<option value="in_office">In office</option>
+			<option value="walk_in">Walk In</option>
+			</select>
+	  </div>
 	  </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -357,19 +374,17 @@ $("#b<?php echo $row['id'];?>").hover(function () {
 </div>
 <!-- end of modal window -->
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#m<?php echo $row['id'];?>">
-<i class="far fa-calendar-check"></i>
-								</button>
-								<script>
-			
-									$(function(){
-// $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
-$('#datepicker<?php echo $row['id'];?>').datetimepicker({
-        format: 'DD-MM-YYYY',
-        allowInputToggle: true,
-        // defaultDate: moment()
-    });
-});
-									function confirmation(ev,l,c,d,t) {
+<i class="far fa-calendar-check"></i></button>
+	<script>		
+	$(function(){
+	// $('#datepicker<?php echo $row['id'];?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+	$('#datepicker<?php echo $row['id'];?>').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+	});
+	function confirmation(ev,l,c,d,t) {
       ev.preventDefault();
       url = ev.currentTarget.getAttribute('href');
       // var d =$('datepicker<?php echo $row['id'];?>').val();
@@ -384,7 +399,10 @@ $('#datepicker<?php echo $row['id'];?>').datetimepicker({
       cancelButtonText: 'No, cancel!',
       confirmButtonClass: 'btn btn-success',
       cancelButtonClass: 'btn btn-danger',
-      buttonsStyling: false
+	  buttonsStyling: false,
+	  inputValidator: (value) => {
+			return !value && 'You need to write something!'
+		}
     }).then(function (result) {
       if(result.value){
 		$.ajax({
@@ -449,11 +467,19 @@ $('#datepicker<?php echo $row['id'];?>').datetimepicker({
 			  	?>
 			  </tbody>
 			</table>
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
 		</div>
-		</div>
-		</div>
-		</div>
-		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
 
 		
 
@@ -466,9 +492,9 @@ $('#datepicker<?php echo $row['id'];?>').datetimepicker({
    <script>
 $(document).ready(function(){
 	var table = $('#dataTables-Table_new').DataTable({
-		responsive:false,
+		//responsive:false,
 		// "scrollY": 200,
-        "scrollX": true
+        "scrollX": true,
 	});
 
 	 <?php if($_SESSION['TYPE']=="IC" || $_SESSION['TYPE']=="SIC"  || $_SESSION['TYPE']=="MC" || $_SESSION['TYPE']=="BM" || $_SESSION['TYPE']=="ABM" || $_SESSION['TYPE']=="AM"  || $_SESSION['TYPE']=="RM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" ||  $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="HR" ||  $_SESSION["TYPE"]=="TC" ||  $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM") { ?>
