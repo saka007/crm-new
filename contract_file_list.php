@@ -1,18 +1,39 @@
 <?php include_once("head.php"); ?>
-
+<!-- Use only where datatable is required -->
+<!-- DataTables -->
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
-           <!-- Begin Page Content -->
- <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">	
+
+    <!-- Begin Page Content -->
+    <div class="content-wrapper">
+    <section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Contract Management</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+						<li class="breadcrumb-item active">Contract Management</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+    </section>
+    
+    <section class="content">
+		<div class="container-fluid">
 			<div class="row">
-                <div class="col-12">
-
-	<h4 class="mb-3">Upload Contract <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
-
-			<table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<!-- /.card -->
+					<div class="card">
+						<div class="card-header">
+                           <h4 class="mb-3" style="float:right;"> <a href="javascript:void(0);" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newForm">Add New <i class="fa fa-plus"></i></a></h4>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+                          <table class="table table-striped table-bordered display nowrap" id="mydataTable">
 				<thead>
 					<tr>
 					  <th>Program</th>
@@ -34,21 +55,39 @@
 				 <td><?=$pro1['name'];?></td>
 				 <td><?=$con1['name'];?></td>
 				 <td><a href="uploads/documents/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td>
-				 <td style="text-align:right" >
-					 <a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> 
-				 </td>   
+				 
+				 <td>
+				 <p style="text-align:right">
+					<a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
+					<a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> 
+				 </p>
+				 </td>
+
 				</tr>
-											
+				<?php $i++;	} ?>
 
-<?php $i++;} ?>
-				</tbody>
-			</table>
+								</tbody>
+
+							</table>
+
+							<!-- /.table-responsive -->
+
+							<!-- </div> -->
+
+							<!-- /.col-lg-12 -->
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
 		</div>
-	   </div>
-	</div>
- </div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
 </div>
-
 
 <div class="modal" id="newForm">
     <div class="modal-dialog">
@@ -105,57 +144,141 @@
         </div>
     </div>
 </div>
-<?php 	include_once("foot.php");	?>
+<?php include_once("foot.php");	?>
 
-<script src="js/formvalidation.js"></script>
-
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
 <script>
 $(document).ready(function() {
-    $('#popForm').formValidation({
-        framework: 'bootstrap',
-        excluded: ':disabled',
-        icon: {
-            valid: 'fa fa-ok',
-            invalid: 'fa fa-remove',
-            validating: 'fa fa-refresh'
-       },
-        fields: {
-            country: { validators: { notEmpty: { message: 'Required field' }}},
-            program: { validators: { notEmpty: { message: 'Required field' }}},
-            avatar: { validators: { notEmpty: { message: 'Required field' },
-                        file: {
-                             extension: 'doc,docx,pdf',
-                            type: 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf',
-                            message: 'Only pdf,doc or docx file'
-                        }}}
-        }
-    })
-	.on('success.form.fv', function(e) {
-           e.preventDefault();
-			var form_data = new FormData(this);
-            $.ajax({
-                url: 'process/contract_process.php',
-                type: 'POST',
-				dataType: 'json',
-                data: form_data,
-				cache: false,
-       			contentType: false,
-        		processData: false,
-                success: function(result) { 
-					if(result.status=='success')
-					{
-					$('.alert-success').css('display','block');
-					setTimeout(function(){ $('.alert-success').css('display','none');},1000);
-					setTimeout(function(){ location.reload();},1000);
-					}
-					else
-					{
-					$('.alert-danger').css('display','block');
-					setTimeout(function(){ $('.alert-danger').css('display','none');},1000);
-					}
-               }
-            });
+
+	$("#mydataTable").DataTable({
+			 "responsive": true,
+			 "autoWidth": true,
+			// "scrollY": true,
+			//"scrollX": true,
+			// dom: 'Bfprt',
+			// buttons: [{
+			// 	extend: 'excel',
+			// 	title: 'Co Report',
+			// 	messageTop: 'Source Data'
+			// }]
+
         });
+        
+        $('#popForm').validate({
+			rules: {
+				country: {
+					required: true,
+				},
+				program: {
+					required: true,
+				},
+				avatar: {
+					required: true,
+				},
+			},
+			messages: {
+				country: "Country is required",
+				program: "Program is required",
+				avatar: "File is required",
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.form-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) {
+				$(element).addClass('is-invalid');
+			},
+			unhighlight: function(element, errorClass, validClass) {
+				$(element).removeClass('is-invalid');
+			},
+			success: function(label, element) {
+				if ($(element).hasClass("is-invalid")) {
+					$(element).addClass("is-valid");
+				}
+			},
+			submitHandler: function() {
+				var formData = new FormData($('#popForm')[0]);
+				$.ajax({
+					url: 'process/contract_process.php',
+					type: 'POST',
+					enctype: 'multipart/form-data',
+					dataType: 'json',
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(result) {
+						if (result.status == 'success') {
+							$('.alert-success').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-success').css('display', 'none');
+							}, 1000);
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
+						} else {
+							$('.alert-danger').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-danger').css('display', 'none');
+							}, 1000);
+						}
+					},
+					error: function(error) {
+						console.log(error);
+					}
+				});
+			}
+	});
+
+    // $('#popForm').formValidation({
+    //     framework: 'bootstrap',
+    //     excluded: ':disabled',
+    //     icon: {
+    //         valid: 'fa fa-ok',
+    //         invalid: 'fa fa-remove',
+    //         validating: 'fa fa-refresh'
+    //    },
+    //     fields: {
+    //         country: { validators: { notEmpty: { message: 'Required field' }}},
+    //         program: { validators: { notEmpty: { message: 'Required field' }}},
+    //         avatar: { validators: { notEmpty: { message: 'Required field' },
+    //                     file: {
+    //                          extension: 'doc,docx,pdf',
+    //                         type: 'application/msword,application/vnd.openxmlformats-officedocument.wordprocessingml.document,application/pdf',
+    //                         message: 'Only pdf,doc or docx file'
+    //                     }}}
+    //     }
+    // })
+	// .on('success.form.fv', function(e) {
+    //        e.preventDefault();
+	// 		var form_data = new FormData(this);
+    //         $.ajax({
+    //             url: 'process/contract_process.php',
+    //             type: 'POST',
+	// 			dataType: 'json',
+    //             data: form_data,
+	// 			cache: false,
+    //    			contentType: false,
+    //     		processData: false,
+    //             success: function(result) { 
+	// 				if(result.status=='success')
+	// 				{
+	// 				$('.alert-success').css('display','block');
+	// 				setTimeout(function(){ $('.alert-success').css('display','none');},1000);
+	// 				setTimeout(function(){ location.reload();},1000);
+	// 				}
+	// 				else
+	// 				{
+	// 				$('.alert-danger').css('display','block');
+	// 				setTimeout(function(){ $('.alert-danger').css('display','none');},1000);
+	// 				}
+    //            }
+    //         });
+    //     });
 
 	$('body').on('click','.btnDeleteAction',function(){ 
 				 var tr = $(this).closest('tr');
