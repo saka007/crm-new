@@ -41,7 +41,7 @@ include_once("head.php");
 					  <th>From Date</th>
 					  <th>To Date</th>
 					  <th>Type</th>
-					  <th>Approve</th>
+					  <!-- <th>Approve</th> -->
 					  <th>Apply Date</th>
 					  <th>Remark</th>
 					  <!-- <th>File</th> -->
@@ -59,7 +59,7 @@ include_once("head.php");
 				 <td><?=date('d-m-Y',strtotime($res2['fromDate']));?></td>
 				 <td><?=date('d-m-Y',strtotime($res2['toDate']));?></td>
 				 <td><?=$res2['type'];?></td>
-				 <td><?=$res2['approvBy'];?></td>
+				 <!-- <td><?=$res2['approvBy'];?></td> -->
 				 <td><?=date('d-m-Y',strtotime($res2['applyDate']));?></td>
 				 <td><?=$res2['remark'];?></td>
 				 <!-- <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td> -->
@@ -119,15 +119,15 @@ include_once("head.php");
 								<?php } ?>
 						</select>
                     </div>
-                    <div class="form-group col-sm-3">
+                    <!-- <div class="form-group col-sm-3">
                         <label>Approve By</label>
                             <input type="text" class="form-control" name="approvBy" value="<?=$res2['approvBy'];?>"  />
-                    </div>
+                    </div> -->
 
-                    <div class="form-group col-sm-4">
+                    <!-- <div class="form-group col-sm-4">
                         <label>Document to be Uploaded:</label>
                             <input type="file" class="form-control" name="file"  />
-                    </div>
+                    </div> -->
 
                     <div class="form-group col-sm-12">
                         <label>Remark</label>
@@ -167,9 +167,9 @@ include_once("head.php");
 									type: {
 										required: true,
 									},
-									approvBy: {
-										required: true,
-									},
+									// approvBy: {
+									// 	required: true,
+									// },
 
 								},
 								messages: {
@@ -178,7 +178,7 @@ include_once("head.php");
 									fromDate2: "From Date is required",
 									toDate2: "To Date is required",
 									type: "Leave Type is required",
-									approvBy: "Approve By is required",
+									// approvBy: "Approve By is required",
 								},
                             errorElement: 'span',
                             errorPlacement: function(error, element) {
@@ -389,9 +389,9 @@ $(document).ready(function() {
 				type: {
 					required: true,
 				},
-				approvBy: {
-					required: true,
-				},
+				// approvBy: {
+				// 	required: true,
+				// },
 
 			},
 			messages: {
@@ -400,7 +400,7 @@ $(document).ready(function() {
 				fromDate2: "From Date is required",
 				toDate2: "To Date is required",
 				type: "Leave Type is required",
-				approvBy: "Approve By is required",
+				// approvBy: "Approve By is required",
 			},
 			errorElement: 'span',
 			errorPlacement: function(error, element) {

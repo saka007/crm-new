@@ -257,9 +257,9 @@
 																		Details</a>
 																	<?php if ($row['stepComplete'] == 3 && $row['payBalance'] == 0) {
 																	} else { ?>
-																		<!-- <a href="<?php echo ('lead_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
+																		<a href="<?php echo ('new_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
 																			Payment
-																		</a> -->
+																		</a>
 																	<?php } ?>
 																	<a class="btn btn-block bg-gradient-primary customButtonCss <?php if ($agre1['contract'] == "") {
 																																	echo 'disabled';
