@@ -1,23 +1,41 @@
 <?php
 include_once("head.php");	
 ?>
+<!-- DataTables -->
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
 
- <!-- Begin Page Content -->
- <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Apply for leave / History
-		  </h1>
-
-          <div class="row">
-             <div class="col-lg-12">
-	<h4 class="mb-3" >Leaves Taken <a href="javascript:void(0);" class="btn btn-info pull-right" data-toggle="modal" data-target="#newForm"  style="float:right;">Add New <i class="fa fa-plus"></i></a></h4>
-			<table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper">
+	<!-- Content Header (Page header) -->
+	<section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Leave Management</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+						<li class="breadcrumb-item active">Leave Management</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-12">
+					<!-- /.card -->
+					<div class="card">
+						<div class="card-header">
+                        <h4 class="mb-3" style="float:right;"> <a href="javascript:void(0);" class="btn btn-primary pull-right" data-toggle="modal" data-target="#newForm">Add New <i class="fa fa-plus"></i></a></h4>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
+						<table class="table table-striped table-bordered" id="dataTables-Table" style="width:100%">
 				<thead>
 					<tr>
 					  <th>From Date</th>
@@ -45,29 +63,29 @@ include_once("head.php");
 				 <td><?=date('d-m-Y',strtotime($res2['applyDate']));?></td>
 				 <td><?=$res2['remark'];?></td>
 				 <!-- <td><a href="uploads/hr_docs/<?=$res2['file'];?>" target="_blank"><?=$res2['file'];?></a></td> -->
-				 <td style="text-align:right" >
-				 <?php if(strtotime($res2['fromDate']) >= strtotime(date('Y-m-d'))) {?>
-					 <a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
-					 <a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> 
+				 <td>
+				 <?php if(strtotime($res2['fromDate']) >= strtotime(date('Y-m-d'))) { ?>
+					<p style="text-align:right">
+					  <a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?=$res2['id']?>" class="btnEditAction"><i class="fa fa-edit" title="EDIT"></i></a>
+					   <a href="javascript:void(0);" id="<?=$res2['id'];?>" class="btnDeleteAction"><i class="fa fa-trash" title="DELETE"></i></a> 
+					 </p>
 					 <?php } ?>
-				 </td>   
-				</tr>
+				 
+		<div class="modal fade" id="editForm<?=$res2['id']?>" tabindex="-1" role="dialog" >
+		<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+		<div class="modal-header">
+		<h4 class="modal-title">Edit Leave</h4>
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+		</div>
 
-<div class="modal fade" id="editForm<?=$res2['id']?>" tabindex="-1" role="dialog" >
-<div class="modal-dialog modal-lg">
-<div class="modal-content">
-<div class="modal-header">
-<h4 class="modal-title">Edit Leave</h4>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
-</div>
-
-<div class="modal-body">
+			<div class="modal-body">
 			<div class="alert alert-success" id="alert-success<?=$res2['id']?>" style="display:none">Data Saved Successfully.</div>
 			<div class="alert alert-danger" id="alert-danger<?=$res2['id']?>" style="display:none">Somthing error. Value not saved.</div>
-<form id="popForm<?=$res2['id']?>" method="post" class="" action="" enctype="multipart/form-data">
-<input type="hidden" name="id" value="<?=$res2['id']?>" />
-<input type="hidden" name="action" value="edit2" />
-	<div class="row">
+			<form id="popForm<?=$res2['id']?>" method="post" class="" action="" enctype="multipart/form-data">
+			<input type="hidden" name="id" value="<?=$res2['id']?>" />
+			<input type="hidden" name="action" value="edit2" />
+				<div class="row">
                     <div class="form-group col-sm-3">
                         <label>Leave From</label>
 						<div class="input-group date" id="fromDate" data-target-input="nearest">
@@ -117,78 +135,130 @@ include_once("head.php");
                     </div>
                    
 					</div>
-<div class="row">
-	   <div class="form-group col-12">
-			<button type="submit" class="btn btn-primary" >SAVE</button>
-			<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+					<div class="row">
+						<div class="form-group col-12">
+								<button type="submit" class="btn btn-primary" >SAVE</button>
+								<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+							</div>
+					</div>
+					</form>
+					</div>
+					</div>
+					</div>
+					</div>
+					<script>
+					$(document).ready(function() {
+						$('#dob<?=$res2['id']?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+
+                            $('#popForm<?=$res2['id']?>').validate({
+								rules: {
+									fromDate: {
+										required: true,
+									},
+									toDate: {
+										required: true,
+									},
+									fromDate2: {
+										required: true,
+									},
+									toDate2: {
+										required: true,
+									},
+									type: {
+										required: true,
+									},
+									approvBy: {
+										required: true,
+									},
+
+								},
+								messages: {
+									fromDate: "From Date is required",
+									toDate: "To Date is required",
+									fromDate2: "From Date is required",
+									toDate2: "To Date is required",
+									type: "Leave Type is required",
+									approvBy: "Approve By is required",
+								},
+                            errorElement: 'span',
+                            errorPlacement: function(error, element) {
+                                error.addClass('invalid-feedback');
+                                element.closest('.form-group').append(error);
+                            },
+                            highlight: function(element, errorClass, validClass) {
+                                $(element).addClass('is-invalid');
+                            },
+                            unhighlight: function(element, errorClass, validClass) {
+                                $(element).removeClass('is-invalid');
+                            },
+                            success: function(label, element) {
+                                if ($(element).hasClass("is-invalid")) {
+                                    $(element).addClass("is-valid");
+                                }
+                            },
+                            submitHandler: function() {
+                                var formData = new FormData($('#popForm<?= $res2['id'] ?>')[0]);
+                                $.ajax({
+                                    url: 'process/leave_process.php',
+                                    type: 'POST',
+                                    enctype: 'multipart/form-data',
+                                    dataType: 'json',
+                                    data: formData,
+                                    processData: false,
+                                    contentType: false,
+                                    cache: false,
+                                    success: function(result) {
+                                        if (result.status == 'success') {
+                                            $('#alert-success<?= $res2['id'] ?>').css('display', 'block');
+                                            setTimeout(function() {
+                                                $('#alert-success<?= $res2['id']; ?>').css('display', 'none');
+                                            }, 2000);
+                                            setTimeout(function() {
+                                                location.reload();
+                                            }, 2000);
+                                        } else {
+                                            $('#alert-danger<?= $res2['id'] ?>').css('display', 'block');
+                                            setTimeout(function() {
+                                                $('#alert-danger<?= $res2['id']; ?>').css('display', 'none');
+                                            }, 3000);
+                                        }
+                                    },
+                                    error: function(error) {
+                                        console.log(error);
+                                    }
+                                });
+                            }
+                        });
+                        });
+
+                        </script>
+		 					</td>
+										</tr>
+									<?php $i++;
+									} ?>
+
+								</tbody>
+
+							</table>
+
+							<!-- /.table-responsive -->
+
+							<!-- </div> -->
+
+							<!-- /.col-lg-12 -->
+						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
 		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
 </div>
-</form>
-</div>
-</div>
-</div>
-</div>
-<script>
-$(document).ready(function() {
-	$('#dob<?=$res2['id']?>').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-
-$('#popForm<?=$res2['id']?>').formValidation({
-framework: 'bootstrap',
-excluded: ':disabled',
-icon: {
-valid: 'fa fa-ok',
-invalid: 'fa fa-remove',
-validating: 'fa fa-refresh'
-},
-fields: {
-          Leave: { validators: { notEmpty: { message: 'Leave is required' }}},
-            dob: { validators: { notEmpty: { message: 'Date is required' }}},
-            asignTo: { validators: { notEmpty: { message: 'Assign is required' }}}
-}
-})
-.on('success.form.fv', function(e) {
- var formData = new FormData($('#popForm<?=$res2['id']?>')[0]);
-           $.ajax({
-               url: 'process/leave_process.php',
-                type: 'POST',
-				enctype: 'multipart/form-data',
-				dataType: 'json',
-               data: formData,
-			   processData: false,
-            	contentType: false,
-           		 cache: false,
-success: function(result) { 
-	if(result.status=='success')
-	{
-	$('#alert-success<?=$res2['id']?>').css('display','block');
-	setTimeout(function(){ $('#alert-success<?=$res2['id'];?>').css('display','none');},2000);
-	setTimeout(function(){ location.reload();},2000);
-	}
-	else
-	{
-	$('#alert-danger<?=$res2['id']?>').css('display','block');
-	setTimeout(function(){ $('#alert-danger<?=$res2['id'];?>').css('display','none');},3000);
-	}
-}
-});
-});
-});
-</script>											
-<?php $i++;} ?>
-
-				</tbody>
-
-			</table>
-
-			<!-- /.table-responsive -->
-
-</div>
-</div>
-</div>
-</div>
-</div>
-                <!-- /.col-lg-12 -->
-       
 <div class="modal" id="newForm">
     <div class="modal-dialog modal-lg" >
         <div class="modal-content">
@@ -268,8 +338,6 @@ success: function(result) {
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
-
-	<script src="js/formvalidation.js"></script>
 <script>
   $(document).ready(function(){
 	var table = $('#dataTables-Table').DataTable({
@@ -303,50 +371,86 @@ $(document).ready(function() {
 	// $('#toDate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
 	// $('#fromDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
 	// $('#toDate2').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
-	$('#popForm').formValidation({
-        framework: 'bootstrap',
-        excluded: ':disabled',
-        icon: {
-            valid: 'fa fa-ok',
-            invalid: 'fa fa-remove',
-            validating: 'fa fa-refresh'
-        },
-        fields: {
-           fromDate: { validators: { notEmpty: { message: 'From Date is required' }}},
-            toDate: { validators: { notEmpty: { message: 'To Date is required' }}},
-            fromDate2: { validators: { notEmpty: { message: 'From Date is required' }}},
-            toDate2: { validators: { notEmpty: { message: 'To Date is required' }}},
-            type: { validators: { notEmpty: { message: 'Leave Type is required' }}},
-            approvBy: { validators: { notEmpty: { message: 'Approve By is required' }}}
-        }
-    })
-	.on('success.form.fv', function(e) {
-           e.preventDefault();
-		   var formData = new FormData($('#popForm')[0]);
-            $.ajax({
-                url: 'process/leave_process.php',
-                type: 'POST',
-				enctype: 'multipart/form-data',
-				dataType: 'json',
-               data: formData,
-			   processData: false,
-            	contentType: false,
-           		 cache: false,
-                success: function(result) {
-					if(result.status=='success')
-					{
-					$('.alert-success').css('display','block');
-					setTimeout(function(){ $('.alert-success').css('display','none');},1000);
-					setTimeout(function(){ location.reload();},1000);
+		
+		$('#popForm').validate({
+			rules: {
+				fromDate: {
+					required: true,
+				},
+				toDate: {
+					required: true,
+				},
+				fromDate2: {
+					required: true,
+				},
+				toDate2: {
+					required: true,
+				},
+				type: {
+					required: true,
+				},
+				approvBy: {
+					required: true,
+				},
+
+			},
+			messages: {
+				fromDate: "From Date is required",
+				toDate: "To Date is required",
+				fromDate2: "From Date is required",
+				toDate2: "To Date is required",
+				type: "Leave Type is required",
+				approvBy: "Approve By is required",
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.form-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) {
+				$(element).addClass('is-invalid');
+			},
+			unhighlight: function(element, errorClass, validClass) {
+				$(element).removeClass('is-invalid');
+			},
+			success: function(label, element) {
+				if ($(element).hasClass("is-invalid")) {
+					$(element).addClass("is-valid");
+				}
+			},
+			submitHandler: function() {
+				var formData = new FormData($('#popForm')[0]);
+				$.ajax({
+					url: 'process/leave_process.php',
+					type: 'POST',
+					enctype: 'multipart/form-data',
+					dataType: 'json',
+					data: formData,
+					processData: false,
+					contentType: false,
+					cache: false,
+					success: function(result) {
+						if (result.status == 'success') {
+							$('.alert-success').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-success').css('display', 'none');
+							}, 1000);
+							setTimeout(function() {
+								location.reload();
+							}, 1000);
+						} else {
+							$('.alert-danger').css('display', 'block');
+							setTimeout(function() {
+								$('.alert-danger').css('display', 'none');
+							}, 1000);
+						}
+					},
+					error: function(error) {
+						console.log(error);
 					}
-					else
-					{
-					$('.alert-danger').css('display','block');
-				setTimeout(function(){ $('.alert-danger').css('display','none');},1000);
-					}
-               }
-           });
-        });
+				});
+			}
+	});
 
 	$('body').on('click','.btnDeleteAction',function(){ 
 				 var tr = $(this).closest('tr');

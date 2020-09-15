@@ -1,5 +1,5 @@
 <?php 
-include_once("header.php");
+include_once("head.php");
 $lead=$obj->display('dm_lead','id='.$_GET['lead']);
 $lead1=$lead->fetch_array();
 $r=$lead1['region'];
@@ -64,26 +64,47 @@ if($gh->num_rows == 0)
 }
 
 $lead=$obj->display('dm_lead','id='.$_GET['lead']);
+if($lead->num_rows > 0)
+{
 $lead1=$lead->fetch_array();
+}
 
 $cont=$obj->display('dm_contract_file','country='.$lead1['country_interest'].' and service='.$lead1['service_interest']);
+if($cont->num_rows > 0)
+{
 $cont1=$cont->fetch_array();
-
+}
 
 ?>
-		<div class="col-sm-10">
-
-			<form action="" method="post" name="paymentForm " enctype="multipart/form-data">
-			<input type="hidden" name="lead" value="<?php echo $_GET['lead'];?>" />
-		<input type="hidden" id="address" name="address" value="<?php echo $lead1['address'];?>" />
-		
-				
-				<div class="row">
-					<div class="col-sm-12 form-group" style="text-align: center;">
-						<h4 class="h4-color">LEAD PAYMENT</h4>
-					</div>
-					
+    <!-- Begin Page Content -->
+    <div class="content-wrapper">
+    <section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Lead Payment Management</h1>
 				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+						<li class="breadcrumb-item active">Lead Payment Management</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<!-- /.card -->
+					<div class="card card-primary">
+						<div class="card-header">
+                           <h4 class="mb-3">PAYMENT DETAILS</h4>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
  
 				
 
@@ -160,17 +181,25 @@ $cont1=$cont->fetch_array();
 
 							</tr>
 							</table>
-							</div>
+						</div>
 
 					<div class="col-sm-12 form-group">
 					<input type="submit" name="submit" value="SUBMIT" class="btn btn-info" >
 					</div> 	
 			</form>
-			
-			
-			
+		<!-- /.card-body -->
+		</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
 			</div>
-<?php 	include_once("footer.php");	?>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
+<?php 	include_once("foot.php");	?>
    <script>
    	var region=<?php echo $r;?>;
 $(function(){

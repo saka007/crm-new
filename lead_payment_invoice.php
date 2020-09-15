@@ -89,9 +89,9 @@ if ($bran->num_rows) {
 																				echo $gh1['id']; ?><br>
 														<?php
 														if ($r != '6' && $r != '7' && $r != '8') {
-															echo '<b>TRN : </b>  100434250500003</br>';
+															echo '<b>TRN : </b>  1234567890</br>';
 														} elseif ($r == '6') {
-															echo '<b>GSTIN : </b>  27AAGCD8611D1ZU</br>';
+															echo '<b>GSTIN : </b>  1234657890</br>';
 														}
 														?>
 														<b>Address :</b> <?php echo $bran1['address']; ?>

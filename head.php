@@ -128,6 +128,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   #disabled-button-wrapper .btn[disabled] {
     pointer-events: none;
   }
+  .btn-info {
+  color: #fff;
+  background-color: #007bff !important;
+  border-color: #000000 !important;
+  box-shadow: none;
+}
 </style>
 
 <body id="page-top">

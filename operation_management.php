@@ -247,7 +247,7 @@
 														<div class="modal-content">
 															<div class="modal-header">
 																<div style="text-align: center;">
-																	<h4><?php echo $ld . '' . $row["id"] . ' details'; ?></h4>
+																	<h4>Lead <?php echo $ld . '' . $row["id"] . ' details'; ?></h4>
 																</div>
 																<button type="button" class="close" data-dismiss="modal">&times;</button>
 															</div>
@@ -257,9 +257,9 @@
 																		Details</a>
 																	<?php if ($row['stepComplete'] == 3 && $row['payBalance'] == 0) {
 																	} else { ?>
-																		<a href="<?php echo ('lead_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
+																		<!-- <a href="<?php echo ('lead_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
 																			Payment
-																		</a>
+																		</a> -->
 																	<?php } ?>
 																	<a class="btn btn-block bg-gradient-primary customButtonCss <?php if ($agre1['contract'] == "") {
 																																	echo 'disabled';

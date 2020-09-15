@@ -53,31 +53,41 @@ if($gh->num_rows == 0)
 
 ?>
 
- <!-- Begin Page Content -->
- <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <div class="content-header">
-        <div class="container-fluid">
+    <!-- Begin Page Content -->
+    <div class="content-wrapper">
+    <section class="content-header">
+		<div class="container-fluid">
+			<div class="row mb-2">
+				<div class="col-sm-6">
+					<h1>Lead Payment Management</h1>
+				</div>
+				<div class="col-sm-6">
+					<ol class="breadcrumb float-sm-right">
+						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
+						<li class="breadcrumb-item active">Lead Payment Management</li>
+					</ol>
+				</div>
+			</div>
+		</div><!-- /.container-fluid -->
+	</section>
+	
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
+					<!-- /.card -->
+					<div class="card card-primary">
+						<div class="card-header">
+                           <h4 class="mb-3">PAYMENT DETAILS</h4>
+						</div>
+						<!-- /.card-header -->
+						<div class="card-body">
 
-          <!-- Page Heading -->
-          <h1 class="h3 mb-4 text-gray-800">Generate Invoice</h1>
-
-          <div class="row">
-             <div class="col-lg-12">
-		<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3" style="color:#2cb674;">View Lead</h4></div></div> -->
-              </br>
               <form action="" method="post" name="paymentForm " enctype="multipart/form-data">
 			<input type="hidden" name="lead" value="<?php echo $_GET['lead'];?>" />
 		<input type="hidden" id="address" name="address" value="<?php echo $lead1['address'];?>" />
 		
 				
-				<div class="row">
-					<div class="col-sm-12 form-group" style="text-align: center;">
-						<h4 class="h4-color">PAYMENT DETAILS</h4>
-					</div>
-					
-				</div>
- 
 				
 
 				<div class="col-sm-12">
@@ -166,16 +176,18 @@ if($gh->num_rows == 0)
 					</div> 	
 			</form>
 
-              </div>
-                </div>
-                </div>
-              </div>
-
-            </div>
-
-          </div>
-
-
+            	<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
       <!-- End of Main Content -->
 	  <?php include_once('foot.php'); ?>
 	  
