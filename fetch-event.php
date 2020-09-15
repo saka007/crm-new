@@ -7,7 +7,7 @@ while($lead1=$lead->fetch_array()) {
     // $con_date = $date->format('Y-m-d H:i:s');
 
     $file_data_array[] = array(
-        "title" => $lead1["leadid"],
+        "title" => "Lead ID: ".$lead1["leadid"],
         "start" => $og_date,
         "end"   => $og_date,
         "backgroundColor" => "green", 
