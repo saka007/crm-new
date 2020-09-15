@@ -205,8 +205,8 @@
 											}
 
 											$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
-											if($ser->num_rows > 0){
-											$ser1 = $ser->fetch_array();
+											if ($ser->num_rows > 0) {
+												$ser1 = $ser->fetch_array();
 											}
 											$ctr = $obj->display("dm_country_proces", "id=" . $row["country_interest"]);
 											$ctr1 = $ctr->fetch_array();
@@ -264,10 +264,10 @@
 																	<a class="btn btn-block bg-gradient-primary customButtonCss <?php if ($agre1['contract'] == "") {
 																																	echo 'disabled';
 																																} ?>" href="<?php if ($agre1['contract'] != "") {
-																																																	?>uploads/file/<?php echo $agre1['contract'];
-																																																	} else {
-																																																		echo "#";
-																																																	} ?>" target="_blank">Agreement
+																																			?>uploads/file/<?php echo $agre1['contract'];
+																																																				} else {
+																																																					echo "#";
+																																																				} ?>" target="_blank">Agreement
 																	</a>
 																	<a class="btn btn-block bg-gradient-primary customButtonCss" href="lead_receipts.php?lead=<?php echo $row['id']; ?>">
 																		Receipts
@@ -306,6 +306,12 @@
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js "></script>
 <?php
 include_once("foot.php"); ?>
 

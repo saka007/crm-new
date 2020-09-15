@@ -1,6 +1,19 @@
 <?php
 include_once("head.php");
 ?>
+<style>
+	.excelButton .buttons-html5 {
+		color: #fff;
+		background-color: #007bff;
+		border-color: #007bff;
+		box-shadow: none;
+		position: absolute;
+		margin-top: -61px;
+		padding: 3px;
+		border: 1px solid transparent;
+		padding: .375rem .75rem;
+	}
+</style>
 <!-- Use only where datatable is required -->
 <!-- DataTables -->
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -67,7 +80,7 @@ include_once("head.php");
                     } ?>
                     <div class="card">
                         <div class="card-header">
-                            <h3 class="card-title">User Login/ Logoff activities</h3>
+                        <h3 style="margin-bottom: 20px;" class="card-title"></h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -146,12 +159,23 @@ include_once("head.php");
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js "></script>
 <?php include_once("foot.php");  ?>
 <script>
     $(function() {
         $("#userActivity").DataTable({
             "responsive": true,
             "autoWidth": false,
+            "dom": '<"excelButton "B><"row"<"col-md-6"l><"col-md-6"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
+			buttons: [{
+				extend: 'excel',
+				title: 'User activity Data'
+			}, ]
         });
     });
     //Date range picker
