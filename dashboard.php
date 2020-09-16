@@ -31,6 +31,7 @@ span.fc-title {
           <div class="col-sm-6">
             <h1 class="m-0 text-dark">Dashboard</h1>
           </div><!-- /.col -->
+
         </div><!-- /.row -->
       </div><!-- /.container-fluid -->
     </div>
@@ -47,9 +48,7 @@ span.fc-title {
 
               <div class="info-box-content">
                 <span class="info-box-text">Total Leads</span>
-                <span class="info-box-number">
-                  10,000
-                </span>
+                <span class="info-box-number"><?=$cl1total['count'];?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -62,7 +61,7 @@ span.fc-title {
 
               <div class="info-box-content">
                 <span class="info-box-text">Hot Leads</span>
-                <span class="info-box-number">5,000</span>
+                <span class="info-box-number"><?=$cl1['count'];?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
@@ -78,7 +77,7 @@ span.fc-title {
             <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span> 
                <div class="info-box-content">
                 <span class="info-box-text">Total Clients</span>
-                <span class="info-box-number">2,000</span>
+                <span class="info-box-number"><?=$cln1['count'];?></span>
               </div>
               
               <!-- /.info-box-content -->

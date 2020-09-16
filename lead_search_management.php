@@ -67,7 +67,8 @@ if ($_SESSION['TYPE']=="SA"){
 								Total Leads    </p>
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
-							<h3 class="bold no-mtop"><?=$toth1['count'];?></h3>
+							<!-- <h3 class="bold no-mtop"><?=$toth1['count'];?></h3> -->
+							<h3 class="bold no-mtop"><?=$cl1['count'];?></h3>
 							<p style="color:#03A9F4" class="font-medium no-mbot">
 								Hot Leads      </p>
 							</div>
@@ -399,10 +400,7 @@ $("#b<?php echo $row['id'];?>").hover(function () {
       cancelButtonText: 'No, cancel!',
       confirmButtonClass: 'btn btn-success',
       cancelButtonClass: 'btn btn-danger',
-	  buttonsStyling: false,
-	  inputValidator: (value) => {
-			return !value && 'You need to write something!'
-		}
+      buttonsStyling: false
     }).then(function (result) {
       if(result.value){
 		$.ajax({
