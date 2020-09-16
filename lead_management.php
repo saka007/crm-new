@@ -464,7 +464,7 @@ $('#leadForm').validate({
 				if ($(element).hasClass("is-invalid")) {
 					$(element).addClass("is-valid");
 				}
-			},
+			}, 
 			// submitHandler: function() {
 			// 	var formData = new FormData($('#leadForm')[0]);
 			// 	$.ajax({

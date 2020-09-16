@@ -143,257 +143,261 @@ include_once("head.php");
 												<a href="javascript:void(0);" data-toggle="modal" data-target="#editForm<?= $res2['id'] ?>" class="btn btn-primary btn-sm"><i class="fa fa-edit" title="EDIT"></i>Edit</a>
 
 												<a href="javascript:void(0);" id="<?= $res2['id']; ?>" class="btnDeleteAction btn btn-danger btn-sm"><i class="fa fa-trash" title="DELETE"></i>Delete</a>
-											</td>
 
 
-											<div class="modal fade" id="editForm<?= $res2['id'] ?>" tabindex="-1" role="dialog">
-												<div class="modal-dialog modal-lg">
-													<div class="modal-content">
-														<div class="modal-header">
-															<h4 class="modal-title">Edit Employee</h4>
-															<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+
+												<div class="modal fade" id="editForm<?= $res2['id'] ?>" tabindex="-1" role="dialog">
+													<div class="modal-dialog modal-lg">
+														<div class="modal-content">
+															<div class="modal-header">
+																<h4 class="modal-title">Edit Employee</h4>
+																<button type="button" class="close" data-dismiss="modal" aria-label="Close">&times;</button>
+															</div>
+
+															<div class="modal-body">
+																<div class="alert alert-success" id="alert-success<?= $res2['id'] ?>" style="display:none">Data Saved Successfully.</div>
+																<div class="alert alert-danger" id="alert-danger<?= $res2['id'] ?>" style="display:none">Somthing error. Value not saved.</div>
+
+																<form id="popForm<?= $res2['id'] ?>" method="post" class="" action="" enctype="multipart/form-data">
+																	<input type="hidden" name="id" value="<?= $res2['id'] ?>" />
+																	<input type="hidden" name="action" value="edit" />
+
+																	<div class="row">
+																		<div class="col-12">
+																			<h4>
+																				<i class="fas fa-users"></i> Basic details
+																			</h4>
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>Name</label>
+																			<input type="text" class="form-control" name="name" value="<?= $res2['name'] ?>" />
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Email</label>
+																			<input type="text" class="form-control" name="email" value="<?= $res2['email'] ?>" />
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>Mobile</label>
+																			<input type="text" class="form-control" name="mobile" value="<?= $res2['mobile'] ?>" />
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>Photo</label>
+																			<div class="input-group">
+																				<div class="custom-file">
+																					<input type="file" class="custom-file-input" name="photo">
+																					<label class="custom-file-label">Choose file</label>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="form-group col-sm-8">
+																			<label>Address</label>
+																			<input type="text" class="form-control" name="address" value="<?= $res2['address'] ?>" />
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>Date of Joining</label>
+																			<div class="input-group date" id="dob<?= $res2['id'] ?>" data-target-input="nearest">
+																				<input type="text" class="form-control datetimepicker-input" name="dob<?= $res2['id'] ?>" data-target="#dob<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['dob'])) ?>" />
+																				<div class="input-group-append" data-target="#dob<?= $res2['id'] ?>" data-toggle="datetimepicker">
+																					<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+																				</div>
+																			</div>
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>DOB</label>
+																			<div class="input-group date" id="doj<?= $res2['id'] ?>" data-target-input="nearest">
+																				<input type="text" class="form-control datetimepicker-input" name="doj<?= $res2['id'] ?>" data-target="#doj<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['doj'])) ?>" />
+																				<div class="input-group-append" data-target="#doj<?= $res2['id'] ?>" data-toggle="datetimepicker">
+																					<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Nationality</label>
+																			<input type="text" class="form-control" name="nationality" value="<?= $res2['nationality']; ?>" />
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>password</label>
+																			<input type="text" class="form-control" name="password" value="" />
+																		</div>
+																		<div class="col-12">
+																			<h4>
+																				<i class="fas fa-users"></i> Management details
+																			</h4>
+																		</div>
+																		<div class="form-group col-sm-4">
+																			<label>Role</label>
+																			<select type="text" class="form-control" name="role">
+																				<?php
+																				$reg = $obj->display("dm_role", "status=1 order by name ASC");
+																				while ($reg2 = $reg->fetch_array()) {
+																				?>
+																					<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['role']) {
+																																	echo 'selected="selected"';
+																																} ?>><?php echo $reg2['name']; ?></option>
+																				<?php } ?>
+																			</select>
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Branch</label>
+																			<select type="text" class="form-control" name="branch">
+																				<?php
+																				$reg = $obj->display("dm_branch", "status=1 order by name ASC");
+																				while ($reg2 = $reg->fetch_array()) {
+																				?>
+																					<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['branch']) {
+																																	echo 'selected="selected"';
+																																} ?>><?php echo $reg2['name']; ?></option>
+																				<?php } ?>
+																			</select>
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Department</label>
+																			<select type="text" class="form-control" name="department">
+																				<?php
+																				$reg = $obj->display("dm_department", "status=1 order by name ASC");
+																				while ($reg2 = $reg->fetch_array()) {
+																				?>
+																					<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['department']) {
+																																	echo 'selected="selected"';
+																																} ?>><?php echo $reg2['name']; ?></option>
+																				<?php } ?>
+																			</select>
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Passport No.</label>
+																			<input type="text" class="form-control" name="ppNo" value="<?= $res2['ppNo'] ?>" />
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Visa Exp.</label>
+																			<div class="input-group date" id="visaExp<?= $res2['id'] ?>" data-target-input="nearest">
+																				<input type="text" class="form-control datetimepicker-input" name="visaExp<?= $res2['id'] ?>" data-target="#visaExp<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['visaExp'])) ?>" />
+																				<div class="input-group-append" data-target="#visaExp<?= $res2['id'] ?>" data-toggle="datetimepicker">
+																					<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+																				</div>
+																			</div>
+																		</div>
+
+																		<div class="form-group col-sm-4">
+																			<label>Emirates ID</label>
+																			<input type="text" class="form-control" name="EID" value="<?= $res2['EID']; ?>" />
+																		</div>
+																	</div>
+															</div>
+															<div class="modal-footer justify-content-between">
+																<button type="submit" class="btn btn-primary">SAVE</button>
+																<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+															</div>
+
+															</form>
+
+
+
 														</div>
-
-														<div class="modal-body">
-															<div class="alert alert-success" id="alert-success<?= $res2['id'] ?>" style="display:none">Data Saved Successfully.</div>
-															<div class="alert alert-danger" id="alert-danger<?= $res2['id'] ?>" style="display:none">Somthing error. Value not saved.</div>
-
-															<form id="popForm<?= $res2['id'] ?>" method="post" class="" action="" enctype="multipart/form-data">
-																<input type="hidden" name="id" value="<?= $res2['id'] ?>" />
-																<input type="hidden" name="action" value="edit" />
-
-																<div class="row">
-																	<div class="col-12">
-																		<h4>
-																			<i class="fas fa-users"></i> Basic details
-																		</h4>
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>Name</label>
-																		<input type="text" class="form-control" name="name" value="<?= $res2['name'] ?>" />
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Email</label>
-																		<input type="text" class="form-control" name="email" value="<?= $res2['email'] ?>" />
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>Mobile</label>
-																		<input type="text" class="form-control" name="mobile" value="<?= $res2['mobile'] ?>" />
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>Photo</label>
-																		<div class="input-group">
-																			<div class="custom-file">
-																				<input type="file" class="custom-file-input" name="photo">
-																				<label class="custom-file-label">Choose file</label>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="form-group col-sm-8">
-																		<label>Address</label>
-																		<input type="text" class="form-control" name="address" value="<?= $res2['address'] ?>" />
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>Date of Joining</label>
-																		<div class="input-group date" id="dob<?= $res2['id'] ?>" data-target-input="nearest">
-																			<input type="text" class="form-control datetimepicker-input" name="dob<?= $res2['id'] ?>" data-target="#dob<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['dob'])) ?>" />
-																			<div class="input-group-append" data-target="#dob<?= $res2['id'] ?>" data-toggle="datetimepicker">
-																				<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-																			</div>
-																		</div>
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>DOB</label>
-																		<div class="input-group date" id="doj<?= $res2['id'] ?>" data-target-input="nearest">
-																			<input type="text" class="form-control datetimepicker-input" name="doj<?= $res2['id'] ?>" data-target="#doj<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['doj'])) ?>" />
-																			<div class="input-group-append" data-target="#doj<?= $res2['id'] ?>" data-toggle="datetimepicker">
-																				<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Nationality</label>
-																		<input type="text" class="form-control" name="nationality" value="<?= $res2['nationality']; ?>" />
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>password</label>
-																		<input type="text" class="form-control" name="password" value="" />
-																	</div>
-																	<div class="col-12">
-																		<h4>
-																			<i class="fas fa-users"></i> Management details
-																		</h4>
-																	</div>
-																	<div class="form-group col-sm-4">
-																		<label>Role</label>
-																		<select type="text" class="form-control" name="role">
-																			<?php
-																			$reg = $obj->display("dm_role", "status=1 order by name ASC");
-																			while ($reg2 = $reg->fetch_array()) {
-																			?>
-																				<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['role']) {
-																																echo 'selected="selected"';
-																															} ?>><?php echo $reg2['name']; ?></option>
-																			<?php } ?>
-																		</select>
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Branch</label>
-																		<select type="text" class="form-control" name="branch">
-																			<?php
-																			$reg = $obj->display("dm_branch", "status=1 order by name ASC");
-																			while ($reg2 = $reg->fetch_array()) {
-																			?>
-																				<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['branch']) {
-																																echo 'selected="selected"';
-																															} ?>><?php echo $reg2['name']; ?></option>
-																			<?php } ?>
-																		</select>
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Department</label>
-																		<select type="text" class="form-control" name="department">
-																			<?php
-																			$reg = $obj->display("dm_department", "status=1 order by name ASC");
-																			while ($reg2 = $reg->fetch_array()) {
-																			?>
-																				<option value="<?php echo $reg2['id']; ?>" <?php if ($reg2['id'] == $res2['department']) {
-																																echo 'selected="selected"';
-																															} ?>><?php echo $reg2['name']; ?></option>
-																			<?php } ?>
-																		</select>
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Passport No.</label>
-																		<input type="text" class="form-control" name="ppNo" value="<?= $res2['ppNo'] ?>" />
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Visa Exp.</label>
-																		<div class="input-group date" id="visaExp<?= $res2['id'] ?>" data-target-input="nearest">
-																			<input type="text" class="form-control datetimepicker-input" name="visaExp<?= $res2['id'] ?>" data-target="#visaExp<?= $res2['id'] ?>" value="<?= date('d-m-Y', strtotime($res2['visaExp'])) ?>" />
-																			<div class="input-group-append" data-target="#visaExp<?= $res2['id'] ?>" data-toggle="datetimepicker">
-																				<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-																			</div>
-																		</div>
-																	</div>
-
-																	<div class="form-group col-sm-4">
-																		<label>Emirates ID</label>
-																		<input type="text" class="form-control" name="EID" value="<?= $res2['EID']; ?>" />
-																	</div>
-																</div>
-														</div>
-														<div class="modal-footer justify-content-between">
-															<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-															<button type="submit" class="btn btn-primary">SAVE</button>
-														</div>
-
-														</form>
-
-
 
 													</div>
 
 												</div>
 
-											</div>
+												<script>
+													$(document).ready(function() {
+														$('#dob<?= $res2['id'] ?>').datetimepicker({
+															format: 'DD-MM-YYYY',
+															allowInputToggle: true,
+														});
+														$('#doj<?= $res2['id'] ?>').datetimepicker({
+															format: 'DD-MM-YYYY',
+															allowInputToggle: true,
+														});
+														$('#visaExp<?= $res2['id'] ?>').datetimepicker({
+															format: 'DD-MM-YYYY',
+															allowInputToggle: true,
+														});
+														$('#popForm<?= $res2['id'] ?>').validate({
+															rules: {
+																name: {
+																	required: true,
+																},
 
-											<script>
-												$(document).ready(function() {
-													$('#dob<?= $res2['id'] ?>').datetimepicker({
-														format: 'DD-MM-YYYY',
-														allowInputToggle: true,
-													});
-													$('#doj<?= $res2['id'] ?>').datetimepicker({
-														format: 'DD-MM-YYYY',
-														allowInputToggle: true,
-													});
-													$('#visaExp<?= $res2['id'] ?>').datetimepicker({
-														format: 'DD-MM-YYYY',
-														allowInputToggle: true,
-													});
-													$('#popForm<?= $res2['id'] ?>').validate({
-														rules: {
-															name: {
-																required: true,
+																dob: {
+																	required: true,
+																},
+																role: {
+																	required: true,
+																},
+																branch: {
+																	required: true,
+																},
+																dob: {
+																	required: true,
+																},
 															},
-
-															dob: {
-																required: true,
+															messages: {
+																name: "The name is required",
+																dob: "Date of joining required",
+																doj: "Date of birth required",
+																role: "Role is required",
+																branch: "Branch is required",
 															},
-															role: {
-																required: true,
+															errorElement: 'span',
+															errorPlacement: function(error, element) {
+																error.addClass('invalid-feedback');
+																element.closest('.form-group').append(error);
 															},
-															branch: {
-																required: true,
+															highlight: function(element, errorClass, validClass) {
+																$(element).addClass('is-invalid');
 															},
-															dob: {
-																required: true,
+															unhighlight: function(element, errorClass, validClass) {
+																$(element).removeClass('is-invalid');
 															},
-														},
-														messages: {
-															name: "The name is required",
-															dob: "Date of joining required",
-															doj: "Date of birth required",
-															role: "Role is required",
-															branch: "Branch is required",
-														},
-														errorElement: 'span',
-														errorPlacement: function(error, element) {
-															error.addClass('invalid-feedback');
-															element.closest('.form-group').append(error);
-														},
-														highlight: function(element, errorClass, validClass) {
-															$(element).addClass('is-invalid');
-														},
-														unhighlight: function(element, errorClass, validClass) {
-															$(element).removeClass('is-invalid');
-														},
-														success: function(label, element) {
-															if ($(element).hasClass("is-invalid")) {
-																$(element).addClass("is-valid");
-															}
-														},
-														submitHandler: function() {
-															var formData = new FormData($('#popForm<?= $res2['id'] ?>')[0]);
-															$.ajax({
-																url: 'process/employe_process.php',
-																type: 'POST',
-																enctype: 'multipart/form-data',
-																dataType: 'json',
-																data: formData,
-																processData: false,
-																contentType: false,
-																cache: false,
-																success: function(result) {
-																	if (result.status == 'success') {
-																		$('#alert-success<?= $res2['id'] ?>').css('display', 'block');
-																		setTimeout(function() {
-																			$('#alert-success<?= $res2['id']; ?>').css('display', 'none');
-																		}, 2000);
-																		setTimeout(function() {
-																			location.reload();
-																		}, 2000);
-																	} else {
-																		$('#alert-danger<?= $res2['id'] ?>').css('display', 'block');
-																		setTimeout(function() {
-																			$('#alert-danger<?= $res2['id']; ?>').css('display', 'none');
-																		}, 3000);
-																	}
+															success: function(label, element) {
+																if ($(element).hasClass("is-invalid")) {
+																	$(element).addClass("is-valid");
 																}
-															});
-														}
-													})
-												});
-											</script>
+															},
+															submitHandler: function() {
+																var formData = new FormData($('#popForm<?= $res2['id'] ?>')[0]);
+																$.ajax({
+																	url: 'process/employe_process.php',
+																	type: 'POST',
+																	enctype: 'multipart/form-data',
+																	dataType: 'json',
+																	data: formData,
+																	processData: false,
+																	contentType: false,
+																	cache: false,
+																	success: function(result) {
+																		if (result.status == 'success') {
+																			$('#alert-success<?= $res2['id'] ?>').css('display', 'block');
+																			setTimeout(function() {
+																				$('#alert-success<?= $res2['id']; ?>').css('display', 'none');
+																			}, 2000);
+																			setTimeout(function() {
+																				location.reload();
+																			}, 2000);
+																		} else {
+																			$('#alert-danger<?= $res2['id'] ?>').css('display', 'block');
+																			setTimeout(function() {
+																				$('#alert-danger<?= $res2['id']; ?>').css('display', 'none');
+																			}, 3000);
+																		}
+																	}
+																});
+															}
+														})
+													});
+												</script>
+
+											</td>
 
 										</tr>
+
+
 
 
 
@@ -576,8 +580,8 @@ include_once("head.php");
 					</div>
 			</div>
 			<div class="modal-footer justify-content-between">
-				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 				<button type="submit" class="btn btn-primary">SAVE</button>
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
 			</div>
 			</form>
 
@@ -589,6 +593,12 @@ include_once("head.php");
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.3/jszip.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.html5.min.js"></script>
+<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.print.min.js "></script>
 <?php include_once("foot.php");	?>
 <script>
 	$(document).ready(function() {
