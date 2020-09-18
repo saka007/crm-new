@@ -2,17 +2,17 @@
 include_once("head.php");
 ?>
 <style>
-	.excelButton .buttons-html5 {
-		color: #fff;
-		background-color: #007bff;
-		border-color: #007bff;
-		box-shadow: none;
-		position: absolute;
-		margin-top: -61px;
-		padding: 3px;
-		border: 1px solid transparent;
-		padding: .375rem .75rem;
-	}
+    .excelButton .buttons-html5 {
+        color: #fff;
+        background-color: #007bff;
+        border-color: #007bff;
+        box-shadow: none;
+        position: absolute;
+        margin-top: -61px;
+        padding: 3px;
+        border: 1px solid transparent;
+        padding: .375rem .75rem;
+    }
 </style>
 <!-- Use only where datatable is required -->
 <!-- DataTables -->
@@ -68,19 +68,66 @@ include_once("head.php");
                                     </div>
                                 </div>
                             </div>
+                            <?php if ($_SESSION['ID'] == '1' || $_SESSION['ID'] == '2') { ?>
+                                <div class="col-sm-3 form-group"><label>Select Employee</label>
+                                    <select class="form-control select2" name="employee" id="employee" style="width: 100%;">
+                                        <option value="">Select</option>
+                                        <?php $sou = $obj->display('dm_employee', 'status=1 order by name');
+                                        while ($sou1 = $sou->fetch_array()) {
+                                        ?>
+                                            <option value="<?php echo $sou1['id']; ?>" <?php if ($sou1['id'] == $_POST['employee']) {
+                                                                                            echo 'selected="selected"';
+                                                                                        } ?>><?php echo $sou1['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                                <div class="col-sm-2 form-group"><label>Region</label>
+                                    <select class="form-control" name="region" id="region">
+                                        <option value="">Select</option>
+                                        <?php $sou = $obj->display('dm_region', 'status=1 order by name');
+                                        while ($sou1 = $sou->fetch_array()) {
+                                        ?>
+                                            <option value="<?php echo $sou1['id']; ?>" <?php if ($sou1['id'] == $_POST['region']) {
+                                                                                            echo 'selected="selected"';
+                                                                                        } ?>><?php echo $sou1['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
+                            <?php if ($_SESSION['ID'] == '3') { ?>
+                                <div class="col-sm-3 form-group"><label>Select Employee</label>
+                                    <select class="form-control select2" name="employee" id="employee" style="width: 100%;">
+                                        <option value="">Select</option>
+                                        <?php $sou = $obj->display('dm_employee', 'status=1 and region = "' . $_SESSION['region'] . '" order by name');
+                                        while ($sou1 = $sou->fetch_array()) {
+                                        ?>
+                                            <option value="<?php echo $sou1['id']; ?>" <?php if ($sou1['id'] == $_POST['employee']) {
+                                                                                            echo 'selected="selected"';
+                                                                                        } ?>><?php echo $sou1['name']; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            <?php } ?>
                             <div class="col-sm-3 form-group">
                                 <label>&nbsp;</label><br />
                                 <input type="submit" class="btn btn-primary" name="search" value="Search"></div>
                         </div>
                     </form>
                     <?php
-                    $query = "";
+                    if ($_POST['region']) {
+                        $query .= " and region=" . $_POST['region'] . "";
+                    }
+
                     if ($_POST) {
-                        $query = " and created_at >= '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and created_at <='" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
-                    } ?>
+                        $query .= " and created_at >= '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and created_at <='" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
+                    } else {
+                        $query = " and created_at = '" . date('Y-m-d') . "'";
+                    }
+
+                    ?>
                     <div class="card">
                         <div class="card-header">
-                        <h3 style="margin-bottom: 20px;" class="card-title"></h3>
+                            <h3 style="margin-bottom: 20px;" class="card-title"></h3>
                         </div>
                         <!-- /.card-header -->
                         <div class="card-body">
@@ -99,9 +146,9 @@ include_once("head.php");
                                 <tbody>
                                     <?php
                                     $i = 1;
-                                    $res = $obj->display("employee_activity", "emp_id=" . $_SESSION['ID'] . " " . $query . " order by created_at DESC");
+                                    $res = $obj->display("employee_activity", "emp_id=" . ($_POST['employee'] ? $_POST['employee'] : $_SESSION['ID']) . " " . $query . " order by created_at DESC");
+                                    // $res = $obj->display("employee_activity", "emp_id=" . $_SESSION['ID'] . " " . $query . " order by created_at DESC", true);
                                     while ($data = $res->fetch_array()) {
-
                                         if (($data['log_out_time'] == 0)) {
                                             $workHourDiff = 'Missed';
                                         } else {
@@ -172,10 +219,10 @@ include_once("head.php");
             "responsive": true,
             "autoWidth": false,
             "dom": '<"excelButton "B><"row"<"col-md-6"l><"col-md-6"f>>rt<"row"<"col-md-6"i><"col-md-6"p>>',
-			buttons: [{
-				extend: 'excel',
-				title: 'User activity Data'
-			}, ]
+            buttons: [{
+                extend: 'excel',
+                title: 'User activity Data'
+            }, ]
         });
     });
     //Date range picker

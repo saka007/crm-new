@@ -6,24 +6,22 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-if($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE'] == "SA") {
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
+} else {
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor=' . $_SESSION['ID']);
 }
-else{
-  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor='.$_SESSION['ID']);
-}
-if($cl->num_rows >0 ){
-$cl1 = $cl->fetch_array();
+if ($cl->num_rows > 0) {
+  $cl1 = $cl->fetch_array();
 }
 
-if($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE'] == "SA") {
   $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
+} else {
+  $cln = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet!=0 and counsilor=' . $_SESSION['ID']);
 }
-else{
-  $cln = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet!=0 and counsilor='.$_SESSION['ID']);
-}
-if($cln->num_rows >0 ){
-$cln1 = $cln->fetch_array();
+if ($cln->num_rows > 0) {
+  $cln1 = $cln->fetch_array();
 }
 // echo $cl1['count'];
 
@@ -78,6 +76,9 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   <link rel="stylesheet" href="theme/plugins/fontawesome-free/css/all.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <!-- Select2 -->
+  <link rel="stylesheet" href="theme/plugins/select2/css/select2.min.css">
+  <link rel="stylesheet" href="theme/plugins/select2-bootstrap4-theme/select2-bootstrap4.min.css">
   <!-- Tempusdominus Bbootstrap 4 -->
   <link rel="stylesheet" href="theme/plugins/tempusdominus-bootstrap-4/css/tempusdominus-bootstrap-4.min.css">
   <!-- iCheck -->
@@ -106,8 +107,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
   <!-- <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> -->
   <!-- daterangepicker -->
-<script src="theme/plugins/moment/moment.min.js"></script>
-<script src="theme/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="theme/plugins/moment/moment.min.js"></script>
+  <script src="theme/plugins/daterangepicker/daterangepicker.js"></script>
 
 </head>
 <style>
@@ -128,12 +129,13 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   #disabled-button-wrapper .btn[disabled] {
     pointer-events: none;
   }
+
   .btn-info {
-  color: #fff;
-  background-color: #007bff !important;
-  border-color: #000000 !important;
-  box-shadow: none;
-}
+    color: #fff;
+    background-color: #007bff !important;
+    border-color: #000000 !important;
+    box-shadow: none;
+  }
 </style>
 
 <body id="page-top">
@@ -289,56 +291,56 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   </a>
                 </li> -->
                 <li class="nav-item">
-              <a class="nav-link" href="region_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Region Management</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="branch_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Branch Management</span></a>
-            </li>
+                  <a class="nav-link" href="region_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Region Management</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="branch_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Branch Management</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="department_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Department Management</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="service_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Service Management</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="department_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Department Management</span></a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="service_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Service Management</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="country_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Country Management</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="country_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Country Management</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="enquiry_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Lead Inquiry Management</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="enquiry_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Lead Inquiry Management</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="source_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Lead Source Management</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="source_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Lead Source Management</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="contract_file_list.php">
-                <i class="fas fa-globe"></i>
-                <span>Manage Agreements</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="contract_file_list.php">
+                    <i class="fas fa-globe"></i>
+                    <span>Manage Agreements</span></a>
+                </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="role_list.php">
-                <i class="fas fa-user"></i>
-                <span>Access Hierarchy Management</span></a>
-            </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="role_list.php">
+                    <i class="fas fa-user"></i>
+                    <span>Access Hierarchy Management</span></a>
+                </li>
               </ul>
             </li>
 
@@ -348,7 +350,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Lead Management
                   <i class="fas fa-angle-left right"></i>
-                  <span class="badge badge-info right"><?=$cl1['count'];?></span>
+                  <span class="badge badge-info right"><?= $cl1['count']; ?></span>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -379,7 +381,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Client Management
                   <i class="fas fa-angle-left right"></i>
-                  <span class="badge badge-info right"><?=$cln1['count'];?></span>
+                  <span class="badge badge-info right"><?= $cln1['count']; ?></span>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -389,7 +391,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Client Data</p>
                   </a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                   <a href="lead_agree_upload_list.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Agreement Upload</p>
@@ -416,7 +418,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Leave request
                   <i class="fas fa-angle-left right"></i>
-                  <!-- <span class="badge badge-info right  "><?=$cln1['count'];?></span> -->
+                  <!-- <span class="badge badge-info right  "><?= $cln1['count']; ?></span> -->
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -426,7 +428,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Manage Leaves</p>
                   </a>
                 </li>
-                 <!-- <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p></p>
@@ -447,7 +449,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Report
                   <i class="fas fa-angle-left right"></i>
-                  <!-- <span class="badge badge-info right"><?=$cln1['count'];?></span> -->
+                  <!-- <span class="badge badge-info right"><?= $cln1['count']; ?></span> -->
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -457,7 +459,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Sales Report</p>
                   </a>
                 </li>
-                 <!-- <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p></p>
@@ -503,7 +505,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               </ul>
             </li>
 
-            
+
 
           </ul>
         </nav>

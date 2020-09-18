@@ -15,6 +15,7 @@ if ($_POST['log_out_time'] == 'true') {
 
 $data = array(
     'emp_id' => $_SESSION['ID'],
+    'region' => $_SESSION['REGION'],
     'log_in_time' => $log_in_time,
     'log_out_time' => $log_out_time,
     'created_at' => $today,
@@ -29,7 +30,7 @@ if ($log_out_time) {
 
 
 if ($res) {
-    $data = array("status" => "success" , );
+    $data = array("status" => "success",);
 } else {
     $data = array("status" => "failed");
 }
