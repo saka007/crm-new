@@ -8,14 +8,17 @@ include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
 if ($_SESSION['TYPE'] == "SA") {
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
-} else {
-  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor=' . $_SESSION['ID']);
+  $cltotal = $obj->display3('select count(*) as count from dm_lead');
 }
 if ($cl->num_rows > 0) {
   $cl1 = $cl->fetch_array();
 }
 
-if ($_SESSION['TYPE'] == "SA") {
+if($cltotal->num_rows >0 ){
+  $cl1total = $cltotal->fetch_array();
+}
+
+if($_SESSION['TYPE']=="SA"){
   $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
 } else {
   $cln = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet!=0 and counsilor=' . $_SESSION['ID']);
@@ -273,7 +276,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-fw fa-envelope"></i>
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li> -->
-
+<?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -291,58 +294,60 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   </a>
                 </li> -->
                 <li class="nav-item">
-                  <a class="nav-link" href="region_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Region Management</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="branch_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Branch Management</span></a>
-                </li>
+              <a class="nav-link" href="region_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Region Management</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="branch_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Branch Management</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="department_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Department Management</span></a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="service_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Service Management</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="department_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Department Management</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="service_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Service Management</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="country_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Country Management</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="country_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Country Management</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="enquiry_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Lead Inquiry Management</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="enquiry_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Lead Inquiry Management</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="source_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Lead Source Management</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="source_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Lead Source Management</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="contract_file_list.php">
-                    <i class="fas fa-globe"></i>
-                    <span>Manage Agreements</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="contract_file_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Manage Agreements</span></a>
+            </li>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="role_list.php">
-                    <i class="fas fa-user"></i>
-                    <span>Access Hierarchy Management</span></a>
-                </li>
+            <li class="nav-item">
+              <a class="nav-link" href="role_list.php">
+                <i class="fas fa-user nav-icon"></i>
+                <span>Access Hierarchy Management</span></a>
+            </li>
               </ul>
             </li>
+
+<?php } ?>
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -405,12 +410,13 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-
+            <?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item active">
               <a class="nav-link" href="employe_list.php">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Employee Management</span></a>
             </li>
+            <?php } ?>
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -442,7 +448,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-
+            <?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -473,6 +479,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
+
+            <?php } ?>
 
             <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">

@@ -43,7 +43,8 @@
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
-						<li class="breadcrumb-item active">Client Data</li>
+						<li class="breadcrumb-item active">Client Data </li>
+						<!-- <?php var_dump($_SESSION);?> -->
 					</ol>
 				</div>
 			</div>
@@ -150,17 +151,17 @@
 										$query = "1=1";
 										$query .= " and feeagreedate between '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and '" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
 									}
-									if ($_SESSION['TYPE'] == "CPO" || $_SESSION['TYPE'] == "PDC" || $_SESSION['TYPE'] == "MBI" || $_SESSION['TYPE'] == "SCPO" || $_SESSION['TYPE'] == "AOM" || $_SESSION['TYPE'] == "CPM" || $_SESSION['TYPE'] == "OC") {
-										$query .= " and assignTo=" . $_SESSION['ID'];
-									}
-									if ($_SESSION['TYPE'] == "IC" || $_SESSION['TYPE'] == "SIC"  || $_SESSION['TYPE'] == "MC" || $_SESSION['TYPE'] == "BM" || $_SESSION['TYPE'] == "ABM" || $_SESSION['TYPE'] == "AM"  || $_SESSION['TYPE'] == "RM" || $_SESSION["TYPE"] == "RMSM" || $_SESSION["TYPE"] == "HR" || $_SESSION["TYPE"] == "TC") {
-										$query .= " and Counsilor=" . $_SESSION['ID'];
+									// if ($_SESSION['TYPE'] == "CPO" || $_SESSION['TYPE'] == "PDC" || $_SESSION['TYPE'] == "MBI" || $_SESSION['TYPE'] == "SCPO" || $_SESSION['TYPE'] == "AOM" || $_SESSION['TYPE'] == "CPM" || $_SESSION['TYPE'] == "OC") {
+									// 	$query .= " and assignTo=" . $_SESSION['ID'];
+									// }
+									if ($_SESSION['TYPE'] == "IC") {
+										$query .= " and Counsilor=". $_SESSION['ID'];
 									}
 
-									if ($_SESSION['TYPE'] == "SA"  || $_SESSION["TYPE"] == "RMO") {
+									if ($_SESSION['TYPE'] == "SA"  || $_SESSION["TYPE"] == "RM") {
 										$query .= "";
 									}
-									if ($_SESSION['TYPE'] == "RT") {
+									if ($_SESSION['TYPE'] == "BM") {
 										$query .= " and branch=" . $_SESSION['BRANCH'];
 									}
 									if ($_POST['counsilor'] != "") {
@@ -257,9 +258,9 @@
 																		Details</a>
 																	<?php if ($row['stepComplete'] == 3 && $row['payBalance'] == 0) {
 																	} else { ?>
-																		<!-- <a href="<?php echo ('lead_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
+																		<a href="<?php echo ('new_payment.php?lead=' . $row["id"]); ?>" class="btn btn-block bg-gradient-primary customButtonCss">
 																			Payment
-																		</a> -->
+																		</a>
 																	<?php } ?>
 																	<a class="btn btn-block bg-gradient-primary customButtonCss <?php if ($agre1['contract'] == "") {
 																																	echo 'disabled';

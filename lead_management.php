@@ -401,9 +401,9 @@ $('#leadForm').validate({
 				mobile: {
 					required: true,
 				},
-				phone: {
-					required: true,
-				},
+				// phone: {
+				// 	required: true,
+				// },
 				nationality: {
 					required: true,
 				},
@@ -464,39 +464,39 @@ $('#leadForm').validate({
 				if ($(element).hasClass("is-invalid")) {
 					$(element).addClass("is-valid");
 				}
-			},
-			submitHandler: function() {
-				var formData = new FormData($('#leadForm')[0]);
-				$.ajax({
-					url: 'lead_management.php',
-					type: 'POST',
-					enctype: 'multipart/form-data',
-					dataType: 'json',
-					data: formData,
-					processData: false,
-					contentType: false,
-					cache: false,
-					success: function(result) {
-						if (result.status == 'success') {
-							$('.alert-success').css('display', 'block');
-							setTimeout(function() {
-								$('.alert-success').css('display', 'none');
-							}, 1000);
-							setTimeout(function() {
-								location.reload();
-							}, 1000);
-						} else {
-							$('.alert-danger').css('display', 'block');
-							setTimeout(function() {
-								$('.alert-danger').css('display', 'none');
-							}, 1000);
-						}
-					},
-					error: function(error) {
-						console.log(error);
-					}
-				});
-			}
+			}, 
+			// submitHandler: function() {
+			// 	var formData = new FormData($('#leadForm')[0]);
+			// 	$.ajax({
+			// 		//url: 'lead_management.php',
+			// 		type: 'POST',
+			// 		enctype: 'multipart/form-data',
+			// 		dataType: 'json',
+			// 		data: formData,
+			// 		processData: false,
+			// 		contentType: false,
+			// 		cache: false,
+			// 		success: function(result) {
+			// 			if (result.status == 'success') {
+			// 				$('.alert-success').css('display', 'block');
+			// 				setTimeout(function() {
+			// 					$('.alert-success').css('display', 'none');
+			// 				}, 1000);
+			// 				setTimeout(function() {
+			// 					location.reload();
+			// 				}, 1000);
+			// 			} else {
+			// 				$('.alert-danger').css('display', 'block');
+			// 				setTimeout(function() {
+			// 					$('.alert-danger').css('display', 'none');
+			// 				}, 1000);
+			// 			}
+			// 		},
+			// 		error: function(error) {
+			// 			console.log(error);
+			// 		}
+			// 	});
+			// }
 	});
 
 	$('#dob').datetimepicker({
