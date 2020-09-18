@@ -401,9 +401,9 @@ $('#leadForm').validate({
 				mobile: {
 					required: true,
 				},
-				phone: {
-					required: true,
-				},
+				// phone: {
+				// 	required: true,
+				// },
 				nationality: {
 					required: true,
 				},

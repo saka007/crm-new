@@ -276,7 +276,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-fw fa-envelope"></i>
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li> -->
-
+<?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -347,6 +347,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               </ul>
             </li>
 
+<?php } ?>
+
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -408,12 +410,13 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-
+            <?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item active">
               <a class="nav-link" href="employe_list.php">
                 <i class="fas fa-fw fa-users"></i>
                 <span>Employee Management</span></a>
             </li>
+            <?php } ?>
 
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
@@ -445,7 +448,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-
+            <?php if($_SESSION['TYPE']=="SA") { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -476,6 +479,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
+
+            <?php } ?>
 
             <li class="nav-item active">
               <a class="nav-link" href="user_activity.php">

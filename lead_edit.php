@@ -390,7 +390,7 @@ $reg1 = $reg->fetch_array();
 										<option value="">Select</option>
 										<!-- <option value="Suhail" selected>Suhail</option> -->
 										<?php
-										if($_SESSION["TYPE"]=="IC" || $_SESSION["TYPE"]=="SIC" || $_SESSION["TYPE"]=="MC" || $_SESSION["TYPE"]=="BM" || $_SESSION["TYPE"]=="ABM" || $_SESSION["TYPE"]=="RM" || $_SESSION["TYPE"]=="AM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="HR" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="TC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM" || $_SESSION["TYPE"]=="AOM")
+										if($_SESSION["TYPE"]=="IC" || $_SESSION["TYPE"]=="BM" || $_SESSION["TYPE"]=="RM")
 {
 $emp=$obj->display('dm_employee','id='.$_SESSION["ID"]);
 $emp1=$emp->fetch_array();
@@ -398,13 +398,13 @@ $emp1=$emp->fetch_array();
 	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_SESSION['ID']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
 <?php
 }
-else if($_SESSION["TYPE"]=="SA" || $_SESSION["TYPE"]=="RT")
+else if($_SESSION["TYPE"]=="SA")
 {
-$emp=$obj->display('dm_employee','role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 order by name');
+$emp=$obj->display('dm_employee','role in (2,3,4)  order by name');
 while($emp1=$emp->fetch_array())
 {
 ?>
-	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_SESSION['ID']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
+	<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$lead1['Counsilor']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
 	<?php }
 }
 
