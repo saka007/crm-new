@@ -89,7 +89,7 @@
 							<div class="col-sm-2 form-group"><label>Agreement Number</label>
 								<input class="form-control" name="agree" id="agree">
 							</div>
-
+<?php if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM") { ?>
 							<div class="col-sm-2 form-group"><label>Region</label>
 								<select class="form-control" name="region" id="region">
 									<option value="">Select</option>
@@ -102,6 +102,7 @@
 									<?php } ?>
 								</select>
 							</div>
+							<?php } ?>
 
 							<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-primary" name="search" value="Search"></div>
 						</div>

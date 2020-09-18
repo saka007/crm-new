@@ -205,7 +205,7 @@ $reg1 = $reg->fetch_array();
 									</select>
 								</div>
 								<div class="col-sm-4 form-group"><label>Country</label>
-									<select class="form-control" name="country_interest">
+									<select class="form-control select2" name="country_interest">
 										<option value="">Select</option>
 										<?php $cnt = $obj->display('dm_country_proces', 'status=1 order by name');
 										while ($cnt1 = $cnt->fetch_array()) {
@@ -224,7 +224,7 @@ $reg1 = $reg->fetch_array();
 							<div class="row">
 
 								<div class="col-sm-4 form-group"><label >Program Interested</label>
-<select class="form-control" name="service_interest">
+<select class="form-control select2" name="service_interest">
 	<option value="">Select</option>
 	<?php $ser = $obj->display('dm_service', 'status=1 order by name');
 	 while ($ser1 = $ser->fetch_array()) {
