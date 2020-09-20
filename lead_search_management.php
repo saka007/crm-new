@@ -116,16 +116,16 @@ if ($_SESSION['TYPE']=="SA"){
 								<?php } ?>
 								</select>
 							</div> -->
-							<!-- <div class="col-sm-3 form-group"><label >Mode of Enquiry</label>
-							<select class="form-control" name="enquiry">
-								<option value="">Select</option>
-								<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
-								<option value="Email" <?php if($_POST['enquiry']=="Email") { echo 'selected="selected"';}?>>Email</option>
-								<option value="Walkin" <?php if($_POST['enquiry']=="Walkin") { echo 'selected="selected"';}?>>Walkin</option>
-								
+							 <div class="col-sm-3 form-group"><label >Type of lead</label>
+							<select class="form-control" name="typeofl">
+							<option value="">Select</option>
+								<option value="Hot" <?php if($_POST['typeofl']=="Hot") { echo 'selected="selected"';}?>>Hot</option>
+								<option value="Cold" <?php if($_POST['typeofl']=="Cold") { echo 'selected="selected"';}?>>Cold</option>
+								<option value="Warm" <?php if($_POST['typeofl']=="Warm") { echo 'selected="selected"';}?>>Warm</option>
+								<option value="DNQ" <?php if($_POST['typeofl']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
 								</select>
 								
-								</div>			 -->
+								</div>		
 
 							<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
 							<select class="form-control" name="country_interest" >
@@ -191,6 +191,7 @@ $query.=" and paidYet=0";
 if($_POST['find']==""){
 $query .= " and regdate between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."'";}
 if($_POST['market_source']!="") { $query.=" and market_source='".$_POST['market_source']."'";}
+if($_POST['typeofl']!="") { $query.=" and lead_category='".$_POST['typeofl']."'";}
 if($_POST['enquiry']!="") { $query.=" and enquiry='".$_POST['enquiry']."'";}
 if($_POST['country_interest']!="") { $query.=" and country_interest='".$_POST['country_interest']."'";}
 if($_POST['service_interest']!="") { $query.=" and service_interest='".$_POST['service_interest']."'";}
