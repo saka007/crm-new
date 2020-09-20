@@ -1,5 +1,14 @@
 <?php include_once("head.php");
 
+if ($_SESSION['TYPE']=="SA"){
+  $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
+  $toth1 = $toth->fetch_array();
+}
+else{
+$toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor='.$_SESSION["ID"]);
+$toth1 = $toth->fetch_array();
+}
+
 $ie = $obj->display('ielts', 'id=1');
 if ($ie->num_rows) {
 	$ie1 = $ie->fetch_array();
@@ -61,7 +70,7 @@ span.fc-title {
 
               <div class="info-box-content">
                 <span class="info-box-text">Hot Leads</span>
-                <span class="info-box-number"><?=$cl1['count'];?></span>
+                <span class="info-box-number"><?=$toth1['count'];?></span>
               </div>
               <!-- /.info-box-content -->
             </div>

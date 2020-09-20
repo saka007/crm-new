@@ -21,6 +21,8 @@ $data = array(
 	'agreeDate' => date('Y-m-d'),
 	'payType' => $_POST['payCategory'],
 	"status" => 'Active',
+	'lead_category' => 'client',
+	'notf'  =>  1,
 	"dueDate" => date('Y-m-d',strtotime($_POST['nextPayDate']))
 	);
 
