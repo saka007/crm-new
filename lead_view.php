@@ -8,11 +8,11 @@ if (isset($_GET['lead'])) {
 
 	$sou = $obj->display('dm_source', 'id=' . $lead1['market_source']);
 	$sou1 = $sou->fetch_array();
-	if ($row['service_interest'] != "") {
+	if ($lead1['service_interest'] != "") {
 		$ser = $obj->display('dm_service', 'id=' . $lead1["service_interest"]);
 		$ser1 = $ser->fetch_array();
 	}
-	if ($row['country_interest'] != "") {
+	if ($lead1['country_interest'] != "") {
 		$ctr = $obj->display("dm_country_proces", "id=" . $lead1["country_interest"]);
 		$ctr1 = $ctr->fetch_array();
 	}

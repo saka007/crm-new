@@ -253,8 +253,8 @@ $query.=" and T1.date between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and
 			      <th>Marketing Source</th>
 			      <th>Name of Client</th>
 			      <th>Counselor</th>
-			      <th>Retainer</th>
-			      <th>Professional</th>
+			      <th>Fee Paid</th>
+			      <!-- <th>Professional</th> -->
 			      <th>Tax</th>
 			      <th>Total</th>
 			      <th>Mode of Payment</th>
@@ -299,7 +299,7 @@ $sr=$obj->display('dm_source','id='.$row['source']);$sr1=$sr->fetch_array();
 								<td><?php echo $sr1['name'];?></td>
 								<td><?php echo $row['fname']." ".$row['lname']; ?></td>
 								<td><?php echo $em1['name'];?></td>
-						    	<td><?php if($row['payCategory']=="Retainer") { echo $row['amount']; $retTot=$retTot+$row['amount'];} ?></td>
+						    	
 						    	<td><?php if($row['payCategory']!="Retainer") { echo $row['amount']; $proTot=$proTot+$row['amount'];} ?></td>
 						    	<td><?php echo $row['tax']; ?></td>
 
@@ -368,7 +368,7 @@ $sr=$obj->display('dm_source','id='.$row['source']);$sr1=$sr->fetch_array();
 			  	?>
 			  </tbody>
 			  <tfoot>
-			  <tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>Total</th><th><?=number_format($retTot);?></th><th><?=number_format($proTot);?></th><th><?=number_format($taxTot);?></th><th><?=number_format($allTot);?></th><th><?=number_format($conv,2).'AED';?></th></tr>
+			  <tr><th></th><th></th><th></th><th></th><th></th><th></th><th></th><th>Total</th><th><?=number_format($retTot);?></th><th><?=number_format($proTot);?></th><th><?=number_format($taxTot);?></th><th><?=number_format($allTot);?></th><th><?=number_format($conv,2).'AED';?></th></tr>
 			  </tfoot>
 			</table>
 <?php 

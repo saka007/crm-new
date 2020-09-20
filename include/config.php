@@ -51,7 +51,7 @@ public function display($table,$condition=null)
 
 public function display2($table,$value,$condition)
 {
-    // echo "select ".$value." from ".$table." where ".$condition;die;
+    // echo "select ".$value." from ".$table." where ".$condition;
 	return $this->conn->query("select ".$value." from ".$table." where ".$condition);
 }
 
@@ -70,7 +70,7 @@ public function update($table, $data, $cond)
 	for($i=0;$i<count($data);$i++)
 	{
 	$value=$this->conn->real_escape_string($values[$i]);
-	// echo "UPDATE $table SET $fields[$i]='$value' where $cond";die;
+	// echo "UPDATE $table SET $fields[$i]='$value' where $cond";
     $result=$this->conn->query("UPDATE $table SET $fields[$i]='$value' where $cond" );
 	}
 	return $result;

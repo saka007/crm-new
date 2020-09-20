@@ -4,12 +4,12 @@ include_once("head.php");
 if ($_POST['save'] || $_POST['submit']) {
 	$emp = $obj->display('dm_employee', 'id=' . $_POST['assign']);
 	$emp1 = $emp->fetch_array();
-	if ($_POST['service_interest']) {
-		$data2 = array(
-			'service_interest'  =>  $_POST['service_interest']
-		);
-		$obj->update('dm_lead', $data2, 'id=' . $_POST['id']);
-	}
+	// if ($_POST['service_interest']) {
+	// 	$data2 = array(
+	// 		'service_interest'  =>  $_POST['service_interest']
+	// 	);
+	// 	$obj->update('dm_lead', $data2, 'id=' . $_POST['id']);
+	// }
 
 	if ($_POST['dob'] != "") {
 		$dob = date('Y-m-d', strtotime($_POST['dob']));
