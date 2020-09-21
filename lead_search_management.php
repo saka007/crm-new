@@ -5,6 +5,7 @@ if ($_SESSION['TYPE']=="SA"){
 	$totl1 = $totl->fetch_array();
 	}
 	else{
+		echo "sas";
 		$totl = $obj->display3('select count(*) as count from dm_lead WHERE counsilor='.$_SESSION["ID"]);
 		$totl1 = $totl->fetch_array();
 	}

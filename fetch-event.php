@@ -1,6 +1,11 @@
 <?php
 include_once("include/config.php");
-$lead=$obj->display('appointments');
+if ($_SESSION['TYPE']=="SA"){
+    $lead=$obj->display('appointments');
+}
+else{
+    $lead=$obj->display('appointments','counsilorid='.$_SESSION["ID"]);
+}
 while($lead1=$lead->fetch_array()) {
     $og_date = $lead1["date"];
     // $date = DateTime::createFromFormat('Y-m-d', $og_date);

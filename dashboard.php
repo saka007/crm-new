@@ -3,11 +3,18 @@
 if ($_SESSION['TYPE']=="SA"){
   $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
   $toth1 = $toth->fetch_array();
+
+  $tot_sale= $obj->display3('select SUM(paidYet) as total_sale from dm_lead');
+  $tot_sale1 = $tot_sale->fetch_array();
 }
 else{
 $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor='.$_SESSION["ID"]);
 $toth1 = $toth->fetch_array();
+
+  $tot_sale= $obj->display3('select SUM(paidYet) as total_sale from dm_lead where counsilor='.$_SESSION["ID"]);
+  $tot_sale1 = $tot_sale->fetch_array();
 }
+
 
 $ie = $obj->display('ielts', 'id=1');
 if ($ie->num_rows) {
@@ -100,7 +107,7 @@ span.fc-title {
 
               <div class="info-box-content">
                 <span class="info-box-text">Sales</span>
-                <span class="info-box-number">760</span>
+                <span class="info-box-number"><?=$tot_sale1['total_sale'];?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
