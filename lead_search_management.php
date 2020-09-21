@@ -349,8 +349,8 @@ $("#b<?php echo $row['id'];?>").hover(function () {
         </button>
       </div>
       <div class="modal-body">
-	  <div class="input-group date" id="datepicker<?php echo $row['id'];?>" data-target-input="nearest">
-			<input type="text" class="form-control datetimepicker-input" name="date" data-target="#datepicker<?php echo $row['id'];?>" />
+	  <div class="input-group date" data-target-input="nearest">
+			<input type="text" id="datepicker<?php echo $row['id'];?>" class="form-control datetimepicker-input" name="date" data-target="#datepicker<?php echo $row['id'];?>" />
 			<div class="input-group-append" data-target="#datepicker<?php echo $row['id'];?>" data-toggle="datetimepicker">
 				<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 			</div>
