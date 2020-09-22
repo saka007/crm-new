@@ -68,7 +68,7 @@ include_once("head.php");
                                     </div>
                                 </div>
                             </div>
-                            <?php if ($_SESSION['ID'] == '1' || $_SESSION['ID'] == '2') { ?>
+                            <?php if ($_SESSION['TYPE'] == 'SA' || $_SESSION['TYPE'] == 'RM') { ?>
                                 <div class="col-sm-3 form-group"><label>Select Employee</label>
                                     <select class="form-control select2" name="employee" id="employee" style="width: 100%;">
                                         <option value="">Select</option>
@@ -94,11 +94,11 @@ include_once("head.php");
                                     </select>
                                 </div>
                             <?php } ?>
-                            <?php if ($_SESSION['ID'] == '3') { ?>
+                            <?php if ($_SESSION['TYPE'] == 'BM') { ?>
                                 <div class="col-sm-3 form-group"><label>Select Employee</label>
                                     <select class="form-control select2" name="employee" id="employee" style="width: 100%;">
                                         <option value="">Select</option>
-                                        <?php $sou = $obj->display('dm_employee', 'status=1 and region = "' . $_SESSION['region'] . '" order by name');
+                                        <?php $sou = $obj->display('dm_employee', 'status=1 and region = "' . $_SESSION['REGION'] . '" order by name');
                                         while ($sou1 = $sou->fetch_array()) {
                                         ?>
                                             <option value="<?php echo $sou1['id']; ?>" <?php if ($sou1['id'] == $_POST['employee']) {
@@ -114,14 +114,47 @@ include_once("head.php");
                         </div>
                     </form>
                     <?php
+                    $query = "1=1";
                     if ($_POST['region']) {
                         $query .= " and region=" . $_POST['region'] . "";
                     }
 
-                    if ($_POST) {
-                        $query .= " and created_at >= '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and created_at <='" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
-                    } else {
-                        $query = " and created_at = '" . date('Y-m-d') . "'";
+                    if ($_POST['sdate']) {
+                        $query .= " and created_at >= '" . date('Y-m-d', strtotime($_POST["sdate"])) . "'";
+                    }
+
+                    if ($_POST['edate']) {
+                        $query .= " and created_at <='" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
+                    }
+
+                    if ($_SESSION['TYPE'] == 'SA' || $_SESSION['TYPE'] == 'RM') {
+                        if (!$_POST) {
+                            $query .= " and created_at = '" . date('Y-m-d') . "'";
+                        }
+                        if ($_POST['employee']) {
+                            $query .= " and emp_id=" . $_POST['employee'] . "";
+                        }
+                    }
+
+                    if ($_SESSION['TYPE'] == 'BM' || $_SESSION['TYPE'] == 'IC') {
+                        if ($_SESSION['TYPE'] == 'BM') {
+                            if ($_POST['employee']) {
+                                $query .= " and emp_id=" . $_POST['employee'] . "";
+                            }
+                            if (!$_POST) {
+                                $query .= " and emp_id=" . $_SESSION['ID'] . " and created_at = '" . date('Y-m-d') . "'";
+                            } else if (!$_POST['employee']) {
+                                $query .= " and emp_id=" . $_SESSION['ID'] . "";
+                            }
+                        }
+
+                        if ($_SESSION['TYPE'] == 'IC') {
+                            if (!$_POST) {
+                                $query .= " and emp_id=" . $_SESSION['ID'] . " and created_at = '" . date('Y-m-d') . "'";
+                            } else {
+                                $query .= " and emp_id=" . $_SESSION['ID'] . "";
+                            }
+                        }
                     }
 
                     ?>
@@ -134,55 +167,65 @@ include_once("head.php");
                             <table id="userActivity" class="table table-bordered table-striped">
                                 <thead>
                                     <tr>
+                                        <th>Name</th>
+                                        <th>Region</th>
                                         <th>Login Started</th>
                                         <th>Log off</th>
                                         <th>Total Working Hours</th>
                                         <th>Break in Time</th>
                                         <th>Break out Time</th>
                                         <th>Total Break Hours</th>
-                                        <!-- <th>Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <?php
                                     $i = 1;
-                                    $res = $obj->display("employee_activity", "emp_id=" . ($_POST['employee'] ? $_POST['employee'] : $_SESSION['ID']) . " " . $query . " order by created_at DESC");
-                                    // $res = $obj->display("employee_activity", "emp_id=" . $_SESSION['ID'] . " " . $query . " order by created_at DESC", true);
-                                    while ($data = $res->fetch_array()) {
-                                        if (($data['log_out_time'] == 0)) {
-                                            $workHourDiff = 'Missed';
-                                        } else {
-                                            if (isset($data['log_out_time']) && isset($data['log_in_time'])) {
-                                                $workHourDiff = round((strtotime($data['log_out_time']) - strtotime($data['log_in_time'])) / 3600, 1);
-                                            } else {
+                                    $res = $obj->display("employee_activity", "" . $query . " order by created_at DESC");
+                                    if ($res->num_rows) {
+                                        while ($data = $res->fetch_array()) {
+                                            if (($data['log_out_time'] == 0)) {
                                                 $workHourDiff = 'Missed';
+                                            } else {
+                                                if (isset($data['log_out_time']) && isset($data['log_in_time'])) {
+                                                    $workHourDiff = round((strtotime($data['log_out_time']) - strtotime($data['log_in_time'])) / 3600, 1);
+                                                } else {
+                                                    $workHourDiff = 'Missed';
+                                                }
                                             }
-                                        }
 
 
-                                        if (!empty($data['break_out_time'])) {
-                                            if (isset($data['break_out_time']) && isset($data['break_in_time'])) {
-                                                $time1 = strtotime($data['break_in_time']);
-                                                $time2 = strtotime($data['break_out_time']);
-                                                $breakDiff = round(abs($time2 - $time1) / 3600, 2);
+                                            if (!empty($data['break_out_time'])) {
+                                                if (isset($data['break_out_time']) && isset($data['break_in_time'])) {
+                                                    $time1 = strtotime($data['break_in_time']);
+                                                    $time2 = strtotime($data['break_out_time']);
+                                                    $breakDiff = round(abs($time2 - $time1) / 3600, 2);
+                                                }
+                                            } else {
+                                                $breakDiff = 'Missed';
                                             }
-                                        } else {
-                                            $breakDiff = 'Missed';
-                                        }
 
 
                                     ?>
-                                        <tr>
-                                            <td><?= $data['log_in_time']; ?></td>
-                                            <td><?= $data['log_out_time'] == 0 ? '' : $data['log_out_time']; ?></td>
-                                            <td><?= $workHourDiff; ?></td>
-                                            <td><?= $data['break_in_time']; ?></td>
-                                            <td><?= $data['break_out_time']; ?></td>
-                                            <td><?= $breakDiff; ?></td>
-                                            <!-- <td><?= '' ?></td> -->
-                                        </tr>
+                                            <tr>
+
+                                                <td><?php $con = $obj->display('dm_employee', 'id=' . $data["emp_id"]);
+                                                    $con1 = $con->fetch_array();
+                                                    echo $con1["name"]; ?></td>
+                                                <td><?php
+                                                    $con = $obj->display('dm_region', 'id=' . $data["region"]);
+                                                    $reg = $con->fetch_array();
+                                                    echo $reg["name"]; ?></td>
+                                                <td><?= $data['log_in_time']; ?></td>
+                                                <td><?= $data['log_out_time'] == 0 ? '' : $data['log_out_time']; ?></td>
+                                                <td><?= $workHourDiff; ?></td>
+                                                <td><?= $data['break_in_time']; ?></td>
+                                                <td><?= $data['break_out_time']; ?></td>
+                                                <td><?= $breakDiff; ?></td>
+
+                                            </tr>
 
                                     <?php $i++;
+                                        }
                                     } ?>
                                 </tbody>
                             </table>
