@@ -195,7 +195,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
         <li class="nav-item" id="disabled-button-wrapper" <?php if ($loginEntryRecorded < 1) { ?> data-title="Enabled after Login hour activity is started" <?php } ?>>
           <button id="timerBtn" class="btn btn-primary" type="button" onclick="breakTimerToggle(myVar)" <?php if ($loginEntryRecorded < 1 || $user_activity['break_out_time'] || $logoutEntryRecorded) {
                                                                                                         ?> disabled <?php } ?>>
-            <?php echo ($user_activity['break_out_time'] || $user_activity['break_in_time']) ? 'Stop Timer' : 'Start Timer'; ?></button>
+            <?php echo ($user_activity['break_out_time'] || $user_activity['break_in_time']) ? 'Stop Lunch Timer' : 'Start Lunch Timer'; ?></button>
         </li>
 
         <!-- Notifications Dropdown Menu -->
@@ -578,8 +578,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           return false;
         }
         if (confirm("You want to " + btn.innerHTML.trim())) {
-          if (btn.innerHTML.trim() == "Start Timer") {
-            btn.innerHTML = "Stop Timer";
+          if (btn.innerHTML.trim() == "Start Lunch Timer") {
+            btn.innerHTML = "Stop Lunch Timer";
           } else {
             btn.disabled = true;
             isDisabled = true;

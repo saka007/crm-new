@@ -6,7 +6,7 @@ $data = array(
 	'counsilorid' => $_REQUEST['emp'],
 	'booked' => 1,
 	'type' =>$_REQUEST['type'],
-	'region' => $_REQUEST['REGION']
+	'region' => $_REQUEST['region']
 	 );
 // print_r($data);die;
 // echo date('Y-m-d',strtotime($_REQUEST['date']));die;
@@ -19,13 +19,13 @@ if(isset($_REQUEST['l'])){
 		'done' => 1, 
 	);
 	$obj->update('appointments',$data,'id='.$_REQUEST['l']);
-	header("location: lead_appointment_new.php");
+	header("location: book_meetings.php");
 }
 if(isset($_REQUEST['ld'])){
 	$data = array(
 		'not_done' =>1 , 
 	);
 	$obj->update('appointments',$data,'id='.$_REQUEST['ld']);
-	header('location: lead_appointment_new.php');
+	header('location: book_meetings.php');
 }
 ?>

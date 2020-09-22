@@ -98,17 +98,21 @@ $ndone1 = $ndone->fetch_array();
                                         <th>Client Name</th>
                                         <th>Date</th>
                                         <th>Status</th>
+                                        <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
+		      	<th>Click if Appointment Done</th>
+		      	<th>Click if Appointment Not Done</th>
+		      <?php } ?>
                                         <th>Mode of Meeting</th>
                                         <!-- <th>Action</th> -->
                                     </tr>
                                 </thead>
                                 <tbody>
                                    <?php
-                                   if($_SESSION['TYPE']=="SA"){
-                                    $meet = $obj->display3('SELECT *,a.type as mtype FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id');
+                                   if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+                                    $meet = $obj->display3('SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id');
                                    }
                                    else{
-                                   $meet = $obj->display3('SELECT *,a.type as mtype FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id WHERE a.counsilorid='.$_SESSION['ID']);
+                                   $meet = $obj->display3('SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id WHERE a.counsilorid='.$_SESSION['ID']);
                                    }
                                    if($meet->num_rows > 0) {
                                       $i=1;
@@ -119,6 +123,10 @@ $ndone1 = $ndone->fetch_array();
                                       <td><?=$row['fname'].''.$row['lname'];?></td>
                                       <td><?=$row['date'];?></td>
                                       <td><?php if($row['done']==1) { echo "Done"; } else { echo "Not Done"; }?></td>
+                                      <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
+						    	<td><a href="appointment.php?l=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a></td>
+						    	<td><a href="appointment.php?ld=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a></td>
+						    <?php } ?>
                                       <td><?=$row['mtype'];?></td>
                                     </tr>
 
@@ -147,5 +155,35 @@ $(document).ready(function(){
 	});
 
 });
+
+</script>
+
+<script>
+
+function confirmation(ev) {
+      ev.preventDefault();
+      // var d = $('#datepicker').val();
+      url = ev.currentTarget.getAttribute('href');
+      Swal.fire({
+      title: 'Are You sure.',
+      type: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+      confirmButtonClass: 'btn btn-success',
+      cancelButtonClass: 'btn btn-danger',
+      buttonsStyling: false
+    }).then(function (result) {
+      if(result.value){
+      Swal.fire('Done','Updated.');
+      window.location.href= url;
+    }
+    else{
+      Swal.fire('Cancelled');
+    }
+    });
+}
 
 </script>

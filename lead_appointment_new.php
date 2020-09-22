@@ -35,7 +35,7 @@
 			      <th>Country</th>
 			      <th>Counsellor</th>
 		      	<th>Appointment Date</th>
-		      	<?php if($_SESSION['TYPE']=='RT' || $_SESSION['TYPE']=='SA'){ ?>
+		      	<?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA'){ ?>
 		      	<th>Click if Appointment Done</th>
 		      	<th>Click if Appointment Not Done</th>
 		      <?php } ?>

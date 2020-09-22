@@ -178,12 +178,17 @@ if ($_SESSION['TYPE']=="SA"){
 if($_SESSION['TYPE']=="IC" || $_SESSION['TYPE']=="AOM" || $_SESSION['TYPE']=="SIC"  || $_SESSION['TYPE']=="MC" || $_SESSION['TYPE']=="BM" || $_SESSION['TYPE']=="ABM" || $_SESSION['TYPE']=="AM"  || $_SESSION['TYPE']=="RM" || $_SESSION["TYPE"]=="FMP" || $_SESSION["TYPE"]=="DGM" || $_SESSION["TYPE"]=="CPO" || $_SESSION["TYPE"]=="SCPO" || $_SESSION["TYPE"]=="CPM" ||  $_SESSION["TYPE"]=="OM" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="MBI" || $_SESSION["TYPE"]=="PDC" || $_SESSION["TYPE"]=="OC" || $_SESSION["TYPE"]=="HR" ||  $_SESSION["TYPE"]=="TC" ||  $_SESSION["TYPE"]=="RMO" || $_SESSION["TYPE"]=="RMSM") { 
 $query=" and assignTo=".$_SESSION['ID'];
 }
-if($_SESSION['TYPE']=="SA") { 
-
+if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM") { 
+	// echo"sa";
 $query="";
 }
-if($_SESSION['TYPE']=="RT") { 
-$query=" and branch=".$_SESSION['BRANCH'];
+// if($_SESSION['TYPE']=="RT") { 
+// $query=" and branch=".$_SESSION['BRANCH'];
+// }
+if($_SESSION['TYPE']=="BM"){
+	// echo "h";die;
+	$query.=" and region=".$_SESSION['REGION'];
+	// print_r($query);die;
 }
 if($_POST)
 {
@@ -193,9 +198,6 @@ if($_POST['find']==""){
 $query .= " and regdate between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."'";}
 if($_POST['market_source']!="") { $query.=" and market_source='".$_POST['market_source']."'";}
 if($_POST['typeofl']!="") { $query.=" and lead_category='".$_POST['typeofl']."'";}
-if($_SESSION['TYPE']=="BM"){
-	$query.=" and region=".$_SESSION['region'];
-}
 if($_POST['enquiry']!="") { $query.=" and enquiry='".$_POST['enquiry']."'";}
 if($_POST['country_interest']!="") { $query.=" and country_interest='".$_POST['country_interest']."'";}
 if($_POST['service_interest']!="") { $query.=" and service_interest='".$_POST['service_interest']."'";}
@@ -205,7 +207,9 @@ if($_POST['find']!=""){ if (is_numeric($_POST['find'])){ $query .= " and mobile 
 else
 {
 $query.=" and paidYet=0";
+// print_r($query);die;
 }
+// print_r($_SESSION);
 ?>
 
 			<table data-last-order-identifier="tasks" class="table table-striped table-bordered" id="dataTables-Table_new">
@@ -247,7 +251,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM
 		// echo $query;
 	}
 	else{
-					$result = $obj->display('dm_lead','1=1 and paidYet=0  order by regdate desc limit 0,100');
+					$result = $obj->display('dm_lead','1=1'.$query.' order by regdate desc limit 0,100');
 				}
 				}
 				else
@@ -375,7 +379,7 @@ $("#b<?php echo $row['id'];?>").hover(function () {
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 		<!-- appointment.php?lead=<?php echo $row['id'];  ?>&counsilor=<?php echo $row['Counsilor']; ?>&date= -->
-	    <a href="#" onclick="confirmation(event,<?php echo $row['id'];  ?>,<?php echo $row['Counsilor']; ?>,$('#datepicker<?php echo $row['id'];?>').val(),$('#mtype<?php echo $row['id'];?>').val())" class="btn btn-primary">Book</a>
+	    <a href="#" onclick="confirmation(event,<?php echo $row['id'];  ?>,<?php echo $row['Counsilor']; ?>,$('#datepicker<?php echo $row['id'];?>').val(),$('#mtype<?php echo $row['id'];?>').val(),<?php echo $row['region']; ?>)" class="btn btn-primary">Book</a>
       </div>
     </div>
   </div>
@@ -392,8 +396,10 @@ $("#b<?php echo $row['id'];?>").hover(function () {
 			// defaultDate: moment()
 		});
 	});
-	function confirmation(ev,l,c,d,t) {
+	function confirmation(ev,l,c,d,t,r) {	
       ev.preventDefault();
+	  if(!d){Swal.fire('Sohail/Vamshi MC date Daal');return false;}
+	  if(!t){Swal.fire('Sohail/Vamshi MC type select kar');return false;}
       url = ev.currentTarget.getAttribute('href');
       // var d =$('datepicker<?php echo $row['id'];?>').val();
       // console.log(d);
@@ -413,7 +419,7 @@ $("#b<?php echo $row['id'];?>").hover(function () {
 		$.ajax({
  		url:'appointment.php',
  		method:'POST',
- 		data:{lead:l,type:t,date:d,emp:c},
+ 		data:{lead:l,type:t,date:d,emp:c,region:r},
  		sucess:function(data)
  		{
  			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')
