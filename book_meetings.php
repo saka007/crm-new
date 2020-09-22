@@ -1,27 +1,39 @@
 <?php
 include_once("head.php");
-if ($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments`');
 $tots1 = $tots->fetch_array();
 }
-else{
-$tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID']);
+else if ($_SESSION['TYPE']=="BM") {
+$tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE region='.$_SESSION['REGION']);
 $tots1 = $tots->fetch_array();
 }
-if ($_SESSION['TYPE']=="SA"){
+else  {
+  $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID']);
+  $tots1 = $tots->fetch_array();
+  }
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done=1');
 $mdone1 = $mdone->fetch_array();
 }
-else{
+else if ($_SESSION['TYPE']=="BM"){
+  $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE region='.$_SESSION['REGION'].' and done=1');
+$mdone1 = $mdone->fetch_array();
+}
+else {
 $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done=1');
 $mdone1 = $mdone->fetch_array();
 }
 
-if ($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done is NULL');
 $ndone1 = $ndone->fetch_array();
 }
-else{
+else if ($_SESSION['TYPE']=="BM"){
+  $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE region='.$_SESSION['REGION'].' and done is NULL');
+$ndone1 = $ndone->fetch_array();
+}
+else {
 $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done is NULL');
 $ndone1 = $ndone->fetch_array();
 }

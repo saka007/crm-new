@@ -193,6 +193,9 @@ if($_POST['find']==""){
 $query .= " and regdate between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."'";}
 if($_POST['market_source']!="") { $query.=" and market_source='".$_POST['market_source']."'";}
 if($_POST['typeofl']!="") { $query.=" and lead_category='".$_POST['typeofl']."'";}
+if($_SESSION['TYPE']=="BM"){
+	$query.=" and region=".$_SESSION['region'];
+}
 if($_POST['enquiry']!="") { $query.=" and enquiry='".$_POST['enquiry']."'";}
 if($_POST['country_interest']!="") { $query.=" and country_interest='".$_POST['country_interest']."'";}
 if($_POST['service_interest']!="") { $query.=" and service_interest='".$_POST['service_interest']."'";}
@@ -237,7 +240,7 @@ $query.=" and paidYet=0";
 			  <tbody>
 
 <?php 
-if ($_SESSION['TYPE']=="SA")
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM")
 {
 	if($_POST){
 		$result = $obj->display('dm_lead','1=1'.$query.' limit 0,10');
@@ -272,6 +275,7 @@ if ($_SESSION['TYPE']=="SA")
 							if($row['type']=="work") {$ld="DMW";}
 							if($row['type']=="Business") {$ld="DMB";}
 							if($row['type']=="Skill") {$ld="DMS";}
+							
 if($row['service_interest']!=""){							
 $ser=$obj->display('dm_service','id='.$row["service_interest"]); 	$ser1=$ser->fetch_array();}
 if($row['country_interest']!=""){
@@ -318,10 +322,11 @@ $em=$obj->display('dm_employee','id='.$row['Counsilor']); $em1=$em->fetch_array(
                 </div>
                 <div class="modal-body">
 				<?php 
-				$rem=$obj->display('dm_lead_remark','lead='.$row["id"]); while($rem1=$rem->fetch_array()) 
+				$rem=$obj->display('dm_lead_remark','lead='.$row["id"]); if ($rem->num_rows > 0) { while($rem1=$rem->fetch_array()) 
 				{
 						echo $rem1['remark'].'-'.date('d/m/Y',strtotime($rem1['date'])).'<br>';
 				}
+			}
 				?>
 				</div>  
             </div>

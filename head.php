@@ -25,7 +25,7 @@ if($_SESSION['TYPE']=="SA"){
   $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
 }
 else{
-  $cln = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet!=0 and counsilor='.$_SESSION['ID']);
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and counsilor='.$_SESSION['ID']);
 }
 if($cln->num_rows >0 ){
 $cln1 = $cln->fetch_array();
