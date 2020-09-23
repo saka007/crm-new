@@ -79,7 +79,7 @@
 						if($_SESSION['TYPE']!="BM") {
 						?>		 -->
 
-						<!-- <div class="col-sm-2 form-group"><label>Region</label>
+						<div class="col-sm-2 form-group"><label>Region</label>
 						<select class="form-control" name="region" id="region" >
 							<option value="">Select</option>
 							<?php $sou=$obj->display('dm_region','status=1 '.$region.' order by name');
@@ -89,7 +89,7 @@
 							<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 							<?php } ?>
 							</select>
-						</div> -->
+						</div> 
 						<!-- <?php if($_SESSION['ID']!='6' && $_SESSION['ID']!='25'){?>
 						<div class="col-sm-2 form-group"><label>UAE Or Overseas</label>
 						<select class="form-control" name="gcc" id="region" >
@@ -176,7 +176,7 @@
 							</select>
 						</div> -->
 
-						<!-- <div class="col-sm-3 form-group"><label>Counselor</label>
+						 <div class="col-sm-3 form-group"><label>Counselor</label>
 						<select class="form-control" name="counsilor" id="counsilor" >
 							<option value="">Select</option>
 						<?php 
@@ -191,7 +191,7 @@
 						</select>
 						</div>
 
-						<?php } ?> -->
+						<!-- <?php } ?> --> 
 
 						<!-- <div class="col-sm-3 form-group"><label>Jan Sales</label>
 						<select class="form-control" name="jan" id="jan" >
