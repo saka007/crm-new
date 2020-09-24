@@ -2,41 +2,159 @@
 include_once("head.php");
 if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments`');
+if ($tots->num_rows > 0){
 $tots1 = $tots->fetch_array();
+}
 }
 else if ($_SESSION['TYPE']=="BM") {
 $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE region='.$_SESSION['REGION']);
+if ($tots->num_rows > 0){
 $tots1 = $tots->fetch_array();
-}
+}}
 else  {
   $tots= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID']);
+  if ($tots->num_rows > 0){
   $tots1 = $tots->fetch_array();
-  }
+  }}
+  if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+    $toto= $obj->display3('SELECT COUNT(*) as count FROM `appointments` where type="in_office"');
+    if ($toto->num_rows > 0){
+    $toto1 = $toto->fetch_array();
+    }}
+    else if ($_SESSION['TYPE']=="BM") {
+    $toto= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="in_office" and region='.$_SESSION['REGION']);
+    if ($toto->num_rows > 0){
+    $toto1 = $toto->fetch_array();
+    }}
+    else  {
+      $toto= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="in_office" and counsilorid='.$_SESSION['ID']);
+      if ($toto->num_rows > 0){
+      $toto1 = $toto->fetch_array();
+      }}
+      if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+        $totz= $obj->display3('SELECT COUNT(*) as count FROM `appointments` where type="zoom"');
+        if ($totz->num_rows > 0){
+        $totz1 = $totz->fetch_array();
+        }}
+        else if ($_SESSION['TYPE']=="BM") {
+        $totz= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="zoom" and region='.$_SESSION['REGION']);
+        if ($totz->num_rows > 0){
+        $totz1 = $totz->fetch_array();
+        }}
+        else  {
+          $totz= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="zoom" and counsilorid='.$_SESSION['ID']);
+          if ($totz->num_rows > 0){
+          $totz1 = $totz->fetch_array();
+          }}
 if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done=1');
-$mdone1 = $mdone->fetch_array();
-}
+  if ($mdone->num_rows > 0){
+  $mdone1 = $mdone->fetch_array();
+}}
 else if ($_SESSION['TYPE']=="BM"){
   $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE region='.$_SESSION['REGION'].' and done=1');
-$mdone1 = $mdone->fetch_array();
-}
+  if ($mdone->num_rows > 0){
+  $mdone1 = $mdone->fetch_array();
+}}
 else {
 $mdone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done=1');
+if ($mdone->num_rows > 0){
 $mdone1 = $mdone->fetch_array();
-}
+}}
+
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+  $mdoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and done=1');
+  if ($mdoneo->num_rows > 0){
+  $mdoneo1 = $mdoneo->fetch_array();
+}}
+else if ($_SESSION['TYPE']=="BM"){
+  $mdoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and region='.$_SESSION['REGION'].' and done=1');
+  if ($mdoneo->num_rows > 0){
+  $mdoneo1 = $mdoneo->fetch_array();
+}}
+else {
+$mdoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and counsilorid='.$_SESSION['ID'].' and done=1');
+if ($mdoneo->num_rows > 0){
+$mdoneo1 = $mdoneo->fetch_array();
+}}
+
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+  $mdonez = $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and done=1');
+  if ($mdonez->num_rows > 0){
+  $mdonez1 = $mdonez->fetch_array();
+}}
+else if ($_SESSION['TYPE']=="BM"){
+  $mdonez= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and region='.$_SESSION['REGION'].' and done=1');
+  if ($mdonez->num_rows > 0){
+  $mdonez1 = $mdonez->fetch_array();
+}}
+else {
+$mdonez= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and counsilorid='.$_SESSION['ID'].' and done=1');
+if ($mdonez->num_rows > 0){
+$mdonez1 = $mdonez->fetch_array();
+}}
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+  $ndoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and done is NULL');
+  if ($ndoneo->num_rows > 0){
+  $ndoneo1 = $ndoneo->fetch_array();
+}}
+else if ($_SESSION['TYPE']=="BM"){
+  $ndoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and region='.$_SESSION['REGION'].' and done is NULL');
+  if ($ndoneo->num_rows > 0){
+  $ndoneo1 = $ndoneo->fetch_array();
+}}
+else {
+$ndoneo= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="in_office" and counsilorid='.$_SESSION['ID'].' and done is NULL');
+if ($ndoneo->num_rows > 0){
+$ndoneo1 = $ndoneo->fetch_array();
+}}
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+  $ndonez= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and done is NULL');
+  if ($ndonez->num_rows > 0){
+  $ndonez1 = $ndonez->fetch_array();
+}}
+else if ($_SESSION['TYPE']=="BM"){
+  $ndonez= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and region='.$_SESSION['REGION'].' and done is NULL');
+  if ($ndonez->num_rows > 0){
+  $ndonez1 = $ndonez->fetch_array();
+}}
+else {
+$ndonez= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE type="zoom" and counsilorid='.$_SESSION['ID'].' and done is NULL');
+if ($ndonez->num_rows > 0){
+$ndonez1 = $ndonez->fetch_array();
+}}
 
 if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE done is NULL');
-$ndone1 = $ndone->fetch_array();
-}
+  if ($ndone->num_rows > 0){
+  $ndone1 = $ndone->fetch_array();
+}}
 else if ($_SESSION['TYPE']=="BM"){
   $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE region='.$_SESSION['REGION'].' and done is NULL');
-$ndone1 = $ndone->fetch_array();
-}
+  if ($ndone->num_rows > 0){
+  $ndone1 = $ndone->fetch_array();
+}}
 else {
 $ndone= $obj->display3('SELECT COUNT(*)  as count FROM `appointments` WHERE counsilorid='.$_SESSION['ID'].' and done is NULL');
+if ($ndone->num_rows > 0){
 $ndone1 = $ndone->fetch_array();
-}
+}}
+
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+  $totwk= $obj->display3('SELECT COUNT(*) as count FROM `appointments` where type="walk_in"');
+  if ($totwk->num_rows > 0){
+  $totwk1 = $totwk->fetch_array();
+  }}
+  else if ($_SESSION['TYPE']=="BM") {
+  $totwk= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="walk_in" and region='.$_SESSION['REGION']);
+  if ($totwk->num_rows > 0){
+  $totwk1 = $totwk->fetch_array();
+  }}
+  else  {
+    $totwk= $obj->display3('SELECT COUNT(*) as count FROM `appointments` WHERE type="walk_in" and counsilorid='.$_SESSION['ID']);
+    if ($totwk->num_rows > 0){
+    $totwk1 = $totwk->fetch_array();
+    }}
 
 ?>
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
@@ -59,19 +177,24 @@ $ndone1 = $ndone->fetch_array();
 
              <div class="row">
       <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$tots1['count'];?></h3>
+      <h3 class="bold no-mtop"><?php echo $tots1['count'];?> (<?=$totz1['count'];?>/<?=$toto1['count'];?>)</h3>
       <p style="color:#989898" class="font-medium no-mbot">
-        Total Meetings Booked    </p>
+        Total Meetings Booked (Zoom/Office)    </p>
           </div>
         <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$mdone1['count'];?></h3>
+      <h3 class="bold no-mtop"><?=$mdone1['count'];?> (<?=$mdonez1['count'];?>/<?=$mdoneo1['count'];?>)</h3>
       <p style="color:#03A9F4" class="font-medium no-mbot">
-        Meeting Done      </p>
+        Meeting Done (Zoom/Office)  </p>
     </div>
         <div class="col-md-2 col-xs-6 border-right">
-      <h3 class="bold no-mtop"><?=$ndone1['count'];?></h3>
+      <h3 class="bold no-mtop"><?=$ndone1['count'];?> (<?=$ndonez1['count'];?>/<?=$ndoneo1['count'];?>)</h3>
       <p style="color:#2d2d2d" class="font-medium no-mbot">
-        Meetings Yet to Done     </p>
+        Meetings Yet to Done (Zoom/Office) </p>
+    </div>
+    <div class="col-md-2 col-xs-6 border-right">
+      <h3 class="bold no-mtop"><?=$totwk1['count'];?></h3>
+      <p style="color:#2d2d2d" class="font-medium no-mbot">
+        Walk-in </p>
     </div>
         <!-- <div class="col-md-2 col-xs-6 border-right">
       <h3 class="bold no-mtop">11</h3>

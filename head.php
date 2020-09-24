@@ -10,6 +10,11 @@ if($_SESSION['TYPE']=="SA"){
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
   $cltotal = $obj->display3('select count(*) as count from dm_lead');
 }
+else if($_SESSION['TYPE']=="BM"){
+  // echo "sas";
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and region='.$_SESSION['REGION']);
+  // $totl1 = $totl->fetch_array();
+}
 else{
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor='.$_SESSION['ID']);
 }

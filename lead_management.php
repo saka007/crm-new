@@ -314,8 +314,8 @@ if ($_POST['save'] || $_POST['submit']) {
 											<option value="DNQ_AGE">DNQ AGE</option>
 											<option value="DNQ_Qualification">DNQ Qualification</option>
 											<option value="no_response">No Response</option>
+											<option value="not_interested">Not Interested</option>
 										</select>
-
 									</div>
 									<div class="col-sm-4 form-group"><label>Lead Enquiry Source</label>
 										<select class="form-control" name="enquiry" required>
