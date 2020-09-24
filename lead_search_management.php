@@ -1,30 +1,39 @@
 <?php include_once("head.php");	
 
-if ($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 	$totl = $obj->display3('select count(*) as count from dm_lead');
 	$totl1 = $totl->fetch_array();
 	}
 	else{
-		echo "sas";
+		// echo "sas";
 		$totl = $obj->display3('select count(*) as count from dm_lead WHERE counsilor='.$_SESSION["ID"]);
 		$totl1 = $totl->fetch_array();
 	}
-	if ($_SESSION['TYPE']=="SA"){
+	if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM") {
 	  $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
 	  $toth1 = $toth->fetch_array();
 	}
-	else{
+	else {
 	$toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor='.$_SESSION["ID"]);
 	$toth1 = $toth->fetch_array();
 	}
 	
-	if ($_SESSION['TYPE']=="SA"){
+	if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 	  $totw= $obj->display3('select count(*) as count from dm_lead where lead_category="Warm"');
 	$totw1 = $totw->fetch_array();
 	}
 	else{
 	$totw= $obj->display3('select count(*) as count from dm_lead where lead_category="Warm" and counsilor='.$_SESSION["ID"]);
 	$totw1 = $totw->fetch_array();
+	}
+
+	if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+	  $totcold=$obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" ');
+	$totcold1 = $totcold->fetch_array();
+	}
+	else{
+	$totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and counsilor='.$_SESSION["ID"]);
+	$totcold1 = $totcold->fetch_array();
 	}
 
 	// $data = array(
@@ -69,14 +78,19 @@ if ($_SESSION['TYPE']=="SA"){
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
 							<!-- <h3 class="bold no-mtop"><?=$toth1['count'];?></h3> -->
-							<h3 class="bold no-mtop"><?=$cl1['count'];?></h3>
+							<h3 class="bold no-mtop"><?=$toth1['count'];?></h3>
 							<p style="color:#03A9F4" class="font-medium no-mbot">
 								Hot Leads      </p>
 							</div>
-								<div class="col-md-2 col-xs-6 border-right">
+							<div class="col-md-2 col-xs-6 border-right">
 							<h3 class="bold no-mtop"><?=$totw1['count'];?></h3>
 							<p style="color:#2d2d2d" class="font-medium no-mbot">
 								Warm Leads     </p>
+							</div>
+							<div class="col-md-2 col-xs-6 border-right">
+							<h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
+							<p style="color:#2d2d2d" class="font-medium no-mbot">
+								Other Leads     </p>
 							</div>
 							</div>
 
@@ -106,7 +120,7 @@ if ($_SESSION['TYPE']=="SA"){
                                 </div>
                             </div>
 
-							<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
+							<div class="col-sm-3 form-group"><label >Marketing Source</label>
 							<select class="form-control" name="market_source" >
 								<option value="">Select</option>
 								<?php $sou=$obj->display('dm_source','status=1 order by name');
@@ -116,7 +130,7 @@ if ($_SESSION['TYPE']=="SA"){
 								<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 								<?php } ?>
 								</select>
-							</div> -->
+							</div>
 							 <div class="col-sm-3 form-group"><label >Type of lead</label>
 							<select class="form-control" name="typeofl">
 							<option value="">Select</option>
@@ -126,8 +140,24 @@ if ($_SESSION['TYPE']=="SA"){
 								<option value="DNQ" <?php if($_POST['typeofl']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
 								</select>
 								
-								</div>		
+								</div>	
+						<?php if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM"){ ?>
+								 <div class="col-sm-3 form-group"><label>Counsultant</label>
+						<select class="form-control" name="counsilor" id="counsilor" >
+							<option value="">Select</option>
+						<?php 
+						if($_POST['region']!="") { $qry=" and region=".$_POST['region'];}
+						$emp=$obj->display('dm_employee','status=1 and (role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 || role=33)order by name'.$qry);
+						while($emp1=$emp->fetch_array())
+						{
+						?>
+							<option value="<?php echo $emp1['id'];?>" <?php if($emp1['id']==$_POST['counsilor']) {?> selected="selected" <?php } ?>><?php echo $emp1['name'];?></option>
+							<?php }
+						?>
+						</select>
+						</div>
 
+					   <?php } ?>
 							<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
 							<select class="form-control" name="country_interest" >
 								<option value="">Select</option>
@@ -165,7 +195,7 @@ if ($_SESSION['TYPE']=="SA"){
 								
 								</div>	 -->
 								<div class="col-sm-3 form-group"><label >Search</label>	
-									<input type="text" class="form-control" id="find" name="find" value=""></div>
+									<input type="text" class="form-control" id="find" name="find" value="" placeholder="email or mobile or name"></div>
 
 							<div class="col-sm-3 form-group"><label >&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" >
 								</form>
@@ -202,7 +232,8 @@ if($_POST['enquiry']!="") { $query.=" and enquiry='".$_POST['enquiry']."'";}
 if($_POST['country_interest']!="") { $query.=" and country_interest='".$_POST['country_interest']."'";}
 if($_POST['service_interest']!="") { $query.=" and service_interest='".$_POST['service_interest']."'";}
 if($_POST['convet']!="") { $query.=" and convet='".$_POST['convet']."'";}
-if($_POST['find']!=""){ if (is_numeric($_POST['find'])){ $query .= " and mobile like '%".$_POST['find']."%'"; }else{$query .=" and email like '%".$_POST['find']."%'"; } }
+if($_POST['counsilor']!="") { $query.=" and counsilor='".$_POST['counsilor']."'";}
+if($_POST['find']!=""){ if (is_numeric($_POST['find'])){ $query .= " and mobile like '%".$_POST['find']."%'"; }else{$query .=" and ( email like '%".$_POST['find']."%' or fname like '%".$_POST['find']."%')"; } }
 }
 else
 {
@@ -328,7 +359,7 @@ $em=$obj->display('dm_employee','id='.$row['Counsilor']); $em1=$em->fetch_array(
 				<?php 
 				$rem=$obj->display('dm_lead_remark','lead='.$row["id"]); if ($rem->num_rows > 0) { while($rem1=$rem->fetch_array()) 
 				{
-						echo $rem1['remark'].'-'.date('d/m/Y',strtotime($rem1['date'])).'<br>';
+						echo $rem1['remark'].' added By '.$rem1['emp'].'  -'.date('d/m/Y',strtotime($rem1['date'])).'<br>';
 				}
 			}
 				?>
