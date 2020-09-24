@@ -556,13 +556,11 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
           cancelButtonClass: 'btn btn-danger',
           buttonsStyling: false
         }).then(function(result) {
-          // alert(result.value);
           if (result.value) {
             if (action === 'login') {
               log_in_time = true;
             } else {
-              // alert(btn.disabled);
-              if (btn.disabled == false) {
+              if (btn.innerHTML.trim() == "Stop Lunch Timer" && btn.disabled == false) {
                 Swal.fire('Cancelled', 'Your Break timer is running please stop and then log off');
                 return false;
               }
