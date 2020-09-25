@@ -95,7 +95,7 @@ if ($_POST['save'] || $_POST['submit']) {
 		}
 
 		if ($_POST['submit']) {
-			header("location:lead_assesment_form.php?lead=" . $odr);
+			//header("location:lead_assesment_form.php?lead=" . $odr);
 
 			/*if($_POST['service_interest'] == 5) {
 			header("location:lead_assesment_form.php?lead=".$odr."&type=Student");
