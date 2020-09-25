@@ -62,10 +62,10 @@ if ($_POST['save'] || $_POST['submit']) {
 
 		if ($_POST['remark'] != "") {
 			$data4 = array(
-				'lead'  =>  $odr,
-				'date'  =>  date('Y-m-d'),
-				'remark'  =>  $_POST['remark'],
-				'emp' => $_SESSION['LOG_USER']
+				'`lead`'  =>  $_POST['id'],
+				'`date`'  =>  date('Y-m-d'),
+				'`remark`'  =>  $_POST['remark'],
+				'`emp`' => $_SESSION['LOG_USER']
 			);
 			$obj->insert('dm_lead_remark', $data4);
 		}
@@ -151,7 +151,7 @@ if ($_POST['save'] || $_POST['submit']) {
 								</div>
 								<div class="row">
 									<div class="col-sm-4 form-group"><label>Email</label><input type="text" class="form-control" id="email" name="email" required></div>
-									<div class="col-sm-4 form-group"><label>Contact No</label><input type="text" class="form-control" id="mobile" name="mobile"></div>
+									<div class="col-sm-4 form-group"><label>Contact No</label><input type="text" class="form-control" id="mobile" name="mobile" required></div>
 									<div class="col-sm-4 form-group"><label>Alternate No.</label><input type="text" class="form-control" id="phone" name="phone" maxlength="12"></div>
 								</div>
 								<div class="row">
@@ -239,7 +239,7 @@ if ($_POST['save'] || $_POST['submit']) {
 	</div> -->
 
 									<div class="col-sm-4 form-group"><label>Source</label>
-										<select class="form-control" name="market_source" required>
+										<select class="form-control" name="market_source" >
 											<option value="">Select</option>
 											<?php $sou = $obj->display('dm_source', 'status=1 order by name');
 											while ($sou1 = $sou->fetch_array()) {
@@ -315,10 +315,12 @@ if ($_POST['save'] || $_POST['submit']) {
 											<option value="DNQ_Qualification">DNQ Qualification</option>
 											<option value="no_response">No Response</option>
 											<option value="not_interested">Not Interested</option>
+											<option value="call_back">Call Back</option>
+											<option value="invalid_number">Invalid Number</option>
 										</select>
 									</div>
 									<div class="col-sm-4 form-group"><label>Lead Enquiry Source</label>
-										<select class="form-control" name="enquiry" required>
+										<select class="form-control" name="enquiry">
 											<option value="">Select</option>
 											<?php $en = $obj->display('dm_enquiry', 'status=1 order by name');
 											while ($en1 = $en->fetch_array()) {
@@ -334,19 +336,29 @@ if ($_POST['save'] || $_POST['submit']) {
 										<select class="form-control" name="assign">
 											<option value="">Select</option>
 											<?php
-											if ($_SESSION["TYPE"] == "IC" || $_SESSION["TYPE"] == "SIC" || $_SESSION["TYPE"] == "MC" || $_SESSION["TYPE"] == "BM" || $_SESSION["TYPE"] == "ABM" || $_SESSION["TYPE"] == "RM" || $_SESSION["TYPE"] == "AM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" || $_SESSION["TYPE"] == "FMP" || $_SESSION["TYPE"] == "DGM" || $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "HR" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "TC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "RMO" || $_SESSION["TYPE"] == "RMSM" || $_SESSION["TYPE"] == "AOM") {
+											 if ($_SESSION["TYPE"] == "SA" || $_SESSION["TYPE"] == "RM") {
+												$emp = $obj->display('dm_employee', 'role!=1 order by name');
+												while ($emp1 = $emp->fetch_array()) {
+												?>
+													<option value="<?php echo $emp1['id']; ?>" ><?php echo $emp1['name']; ?></option>
+											<?php }
+											}
+
+											else if ($_SESSION["TYPE"] == "BM") {
+												$emp = $obj->display('dm_employee', 'region=' . $_SESSION["REGION"] .' order by name');
+												while ($emp1 = $emp->fetch_array()) {
+												?>
+													<option value="<?php echo $emp1['id']; ?>" ><?php echo $emp1['name']; ?></option>
+											<?php }
+											}
+											else {
 												$emp = $obj->display('dm_employee', 'id=' . $_SESSION["ID"]);
 												$emp1 = $emp->fetch_array();
 											?>
 												<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_SESSION['ID']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
 												<?php
-											} else if ($_SESSION["TYPE"] == "SA" || $_SESSION["TYPE"] == "RT") {
-												$emp = $obj->display('dm_employee', 'role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 order by name');
-												while ($emp1 = $emp->fetch_array()) {
-												?>
-													<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_SESSION['ID']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
-											<?php }
-											}
+											} 
+											
 											?>
 										</select>
 									</div>
@@ -384,7 +396,7 @@ if ($_POST['save'] || $_POST['submit']) {
 	}
 </style>
 <?php include_once('foot.php'); ?>
-
+<?php if ($_SESSION["TYPE"] == "SA" || $_SESSION["TYPE"] == "RM") { ?>
 <script type="text/javascript">
 	$(document).ready(function() {
 		$('#leadForm').validate({
@@ -392,9 +404,140 @@ if ($_POST['save'] || $_POST['submit']) {
 				fname: {
 					required: true,
 				},
-				mname: {
+				// mname: {
+				// 	required: true,
+				// },
+				email: {
+					required: true,
+					email: true,
+				},
+				mobile: {
 					required: true,
 				},
+				// phone: {
+				// 	required: true,
+				// },
+				// nationality: {
+				// 	required: true,
+				// },
+				// gender: {
+				// 	required: true,
+				// },
+				// country_interest: {
+				// 	required: true,
+				// },
+				// service_interest: {
+				// 	required: true,
+				// },
+				// relative: {
+				// 	required: true,
+				// },
+				// market_source: {
+				// 	required: true,
+				// },
+				// lead_category: {
+				// 	required: true,
+				// },
+				// enquiry: {
+				// 	required: true,
+				// },
+				// assign: {
+				// 	required: true,
+				// },
+
+			},
+			messages: {
+				fname: "First name is required",
+				// mname: "Middle name is required",
+				email: "Email name is required",
+				mobile: "Contact number is required",
+				// phone: "Alternate number is required",
+				// nationality: "Nationality is required",
+				// gender: "Gender is required",
+				// country_interest: "Country is required",
+				// service_interest: "Service/Program is required",
+				// relative: "Relative is required",
+				// market_source: "Source is required",
+				// lead_category: "Lead category is required",
+				// enquiry: "Inquiry is required",
+				//assign: "Assign is required",
+			},
+			errorElement: 'span',
+			errorPlacement: function(error, element) {
+				error.addClass('invalid-feedback');
+				element.closest('.form-group').append(error);
+			},
+			highlight: function(element, errorClass, validClass) {
+				$(element).addClass('is-invalid');
+			},
+			unhighlight: function(element, errorClass, validClass) {
+				$(element).removeClass('is-invalid');
+			},
+			success: function(label, element) {
+				if ($(element).hasClass("is-invalid")) {
+					$(element).addClass("is-valid");
+				}
+			},
+			// submitHandler: function() {
+			// 	var formData = new FormData($('#leadForm')[0]);
+			// 	$.ajax({
+			// 		//url: 'lead_management.php',
+			// 		type: 'POST',
+			// 		enctype: 'multipart/form-data',
+			// 		dataType: 'json',
+			// 		data: formData,
+			// 		processData: false,
+			// 		contentType: false,
+			// 		cache: false,
+			// 		success: function(result) {
+			// 			if (result.status == 'success') {
+			// 				$('.alert-success').css('display', 'block');
+			// 				setTimeout(function() {
+			// 					$('.alert-success').css('display', 'none');
+			// 				}, 1000);
+			// 				setTimeout(function() {
+			// 					location.reload();
+			// 				}, 1000);
+			// 			} else {
+			// 				$('.alert-danger').css('display', 'block');
+			// 				setTimeout(function() {
+			// 					$('.alert-danger').css('display', 'none');
+			// 				}, 1000);
+			// 			}
+			// 		},
+			// 		error: function(error) {
+			// 			console.log(error);
+			// 		}
+			// 	});
+			// }
+		});
+
+		$('#dob').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
+		$('#mobiles').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
+	});
+</script>
+<?php } else { ?>
+
+	<script type="text/javascript">
+	$(document).ready(function() {
+		$('#leadForm').validate({
+			rules: {
+				fname: {
+					required: true,
+				},
+				// mname: {
+				// 	required: true,
+				// },
 				email: {
 					required: true,
 					email: true,
@@ -436,7 +579,7 @@ if ($_POST['save'] || $_POST['submit']) {
 			},
 			messages: {
 				fname: "First name is required",
-				mname: "Middle name is required",
+				// mname: "Middle name is required",
 				email: "Email name is required",
 				mobile: "Contact number is required",
 				phone: "Alternate number is required",
@@ -513,7 +656,10 @@ if ($_POST['save'] || $_POST['submit']) {
 		});
 
 	});
+</script>
 
+<?php }?>
+<script>
 	function showDiv(divId, element) {
 		document.getElementById(divId).style.display = element.value == 1 ? 'block' : 'none';
 	}
