@@ -6,18 +6,22 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-if($_SESSION['TYPE']=="SA"){
+if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
   $cltotal = $obj->display3('select count(*) as count from dm_lead');
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
 }
 else if($_SESSION['TYPE']=="BM"){
-  // echo "sas";
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and region='.$_SESSION['REGION']);
-  // $totl1 = $totl->fetch_array();
+  $cltotal = $obj->display3('select count(*) as count from dm_lead where region='.$_SESSION['REGION']);
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and region='.$_SESSION['REGION']);
 }
 else{
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor='.$_SESSION['ID']);
+  $cltotal = $obj->display3('select count(*) as count from dm_lead where counsilor='.$_SESSION['ID']);
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and counsilor='.$_SESSION['ID']);
 }
+
 if($cl->num_rows >0 ){
 $cl1 = $cl->fetch_array();
 }
@@ -26,12 +30,6 @@ if($cltotal->num_rows >0 ){
   $cl1total = $cltotal->fetch_array();
 }
 
-if($_SESSION['TYPE']=="SA"){
-  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
-}
-else{
-  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and counsilor='.$_SESSION['ID']);
-}
 if($cln->num_rows >0 ){
 $cln1 = $cln->fetch_array();
 }
