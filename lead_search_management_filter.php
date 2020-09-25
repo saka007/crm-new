@@ -56,9 +56,45 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $totcold1 = $totcold->fetch_array();
 }
   else{
-  $totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor='.$_SESSION["ID"]);
+    $totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor='.$_SESSION["ID"]);
   $totcold1 = $totcold->fetch_array();
   }
+
+
+  if ($_GET['cat']!='') {
+    if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+        if ($_GET['cat'] == 'new') {
+            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0');
+            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+        else {
+          $totc = $obj->display3('select count(*) as count from dm_lead where lead_category='.$_GET['cat']);
+          if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+        
+    } else if ($_SESSION['TYPE'] == "BM") {
+        if ($_GET['cat'] == 'new') {
+            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and region=' . $_SESSION["REGION"]);
+            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+        else {
+            $totc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category='.$_GET['cat'].' and region=' . $_SESSION["REGION"]);
+            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+        
+    } else {
+        if ($_GET['cat'] == 'new') {
+            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and counsilor=' . $_SESSION["ID"]);
+            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+        else {
+            $totc = $obj->display3('select count(*) as count from dm_lead where lead_category='.$_GET['cat'].' and counsilor=' . $_SESSION["ID"]);
+            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        }
+    }
+  }
+  
+
 
 // $data = array(
 //    			'notf'  =>  1
@@ -76,7 +112,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1>Lead Management</h1>
+					<h1><?php echo ucfirst($_GET['cat']); ?> Lead Management</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -95,11 +131,13 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
-								<div class="col-md-2 col-xs-6 border-right">
-									<h3 class="bold no-mtop"><?= $totl1['count']; ?></h3>
+                                
+                                <div class="col-md-2 col-xs-6 border-right">
+									<h3 class="bold no-mtop"><?= $totc1['count']; ?></h3>
 									<p style="color:#989898" class="font-medium no-mbot">
 										Total Leads </p>
-								</div>
+                                </div>
+                                <?php /* ?>
 								<div class="col-md-2 col-xs-6 border-right">
 									<h3 class="bold no-mtop"><?= $cl1['count']; ?></h3>
 									<p style="color:#989898" class="font-medium no-mbot">
@@ -123,18 +161,17 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 										Cold Leads </p>
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
-							<h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
-							<p style="color:#2d2d2d" class="font-medium no-mbot">
-								Other Leads     </p>
+                                    <h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
+                                    <p style="color:#2d2d2d" class="font-medium no-mbot">
+                                        Other Leads </p>
+                                </div>
+                                <?php */?>
 							</div>
-							
-							</div>
-
-							<div class="row">
+							<!-- <div class="row">
 								<div class="col-lg-12 col-md-12 col-sm-12">
 									
 								</div>
-							</div>
+							</div> -->
 						</div>
 						<!-- /.card-header -->
 						<div class="card-body" style="width: 100%;">
@@ -221,21 +258,52 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 								<tbody>
 
 									<?php
-									// if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "BM") {
-									// 	if ($_POST) {
-									// 		$result = $obj->display('dm_lead', '1=1' . $query . ' limit 0,10');
-									// 		// echo $query;
-									// 	} else {
-									// 		$result = $obj->display('dm_lead', '1=1' . $query . ' order by regdate desc limit 0,100');
-									// 	}
-									// } else {
+                                        // if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "BM") {
+                                        // 	if ($_POST) {
+                                        // 		$result = $obj->display('dm_lead', '1=1' . $query . ' limit 0,10');
+                                        // 		// echo $query;
+                                        // 	} else {
+                                        // 		$result = $obj->display('dm_lead', '1=1' . $query . ' order by regdate desc limit 0,100');
+                                        // 	}
+                                        // } else {
 										// echo $query;
 										// if ($_POST) {
 										// 	$result = $obj->display('dm_lead', '1=1' . $query);
 										// } else {
 										// 	$result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
                                         // }
-                                        $result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
+                                        if ($_GET['cat'] == 'New') {
+                                            $result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'Warm') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="Warm"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'Hot') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="Hot"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'Cold') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="Cold"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'DNQ') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="DNQ"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'DNQ_AGE') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="DNQ_AGE"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'DNQ_Qualification') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="DNQ_Qualification"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'no_response') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="no_response"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'not_interested') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="not_interested"' . $query);
+                                        }
+                                        else {
+                                            $result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
+                                        }
+
+                                        
 									// }
 									if ($result->num_rows > 0) {
 
@@ -375,11 +443,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 														function confirmation(ev, l, c, d, t, r) {
 															ev.preventDefault();
 															if (!d) {
-																Swal.fire('Sohail/Vamshi MC date Daal');
+																Swal.fire('Please enter date');
 																return false;
 															}
 															if (!t) {
-																Swal.fire('Sohail/Vamshi MC type select kar');
+																Swal.fire('Please enter type');
 																return false;
 															}
 															url = ev.currentTarget.getAttribute('href');
