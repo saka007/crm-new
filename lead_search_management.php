@@ -127,11 +127,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 							<p style="color:#2d2d2d" class="font-medium no-mbot">
 								Other Leads     </p>
 							</div>
-							<div class="col-md-2 col-xs-6 border-right">
-							<h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
-							<p style="color:#2d2d2d" class="font-medium no-mbot">
-								Other Leads     </p>
-							</div>
+							
 							</div>
 
 							<div class="row">
