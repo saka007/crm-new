@@ -405,17 +405,21 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
 											if ($row['service_interest'] != "") {
 												$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
-												$ser1 = $ser->fetch_array();
+												if ($ser->num_rows > 0) { $ser1 = $ser->fetch_array(); }
 											}
 											if ($row['country_interest'] != "") {
 												$ctr = $obj->display("dm_country_proces", "id=" . $row["country_interest"]);
-												$ctr1 = $ctr->fetch_array();
+												if ($ctr->num_rows > 0) { $ctr1 = $ctr->fetch_array(); }
 											}
 											$mak = $obj->display("dm_source", "id=" . $row["market_source"]);
-											$mak1 = $mak->fetch_array();
-											$em = $obj->display('dm_employee', 'id=' . $row['Counsilor']);
-											$em1 = $em->fetch_array();
+											if ($mak->num_rows > 0) {
+											  $mak1 = $mak->fetch_array();
+											}
 
+											$em = $obj->display('dm_employee', 'id=' . $row['Counsilor']);
+											if ($em->num_rows > 0) {
+											 $em1 = $em->fetch_array();
+											}
 
 									?>
 
