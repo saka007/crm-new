@@ -73,10 +73,10 @@ if ($_POST['save'] || $_POST['submit']) {
 		);
 		$obj->update('dm_lead', $data, 'id=' . $_POST['id']);
 		$data4 = array(
-			'lead'  =>  $_POST['id'],
-			'date'  =>  date('Y-m-d'),
-			'remark'  =>  $_POST['remark'],
-			'emp' => $_SESSION['LOG_USER']
+			'`lead`'  =>  $_POST['id'],
+			'`date`'  =>  date('Y-m-d'),
+			'`remark`'  =>  $_POST['remark'],
+			'`emp`' => $_SESSION['LOG_USER']
 		);
 		$obj->insert('dm_lead_remark', $data4);
 	}
