@@ -136,7 +136,17 @@ if (isset($_GET['lead'])) {
 							<div class="col-sm-4 form-group"><label>Convert</label><br /><?php echo $lead1['convet']; ?></div>
 						</div>
 						<div class="row">
-							<div class="col-sm-12 form-group"><label>Remark</label><br /><?php echo $lead1['remark']; ?></div>
+							<div class="col-sm-12 form-group"><label>Remark</label><br />
+							<?php
+							 $rem = $obj->display('dm_lead_remark', '`lead`=' . $_GET['lead']);
+							 if ($rem->num_rows > 0) {
+								 while ($rem1 = $rem->fetch_array()) {
+									 echo $rem1['remark'] . ' added By ' . $rem1['emp'] . '  -' . date('d/m/Y', strtotime($rem1['date'])) . '<br>';
+								 }
+							 }
+							 else { echo "No Remarks";}
+							 ?>
+							 </div>
 						</div>
 					</div>
 					<!-- /.card-body -->
