@@ -258,7 +258,13 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
             <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
           </div>
           <div class="info">
-            <a href="#" class="d-block"><?php echo $_SESSION['LOG_USER'];?></a>
+            <?php 
+              $user_designation = $obj->display3('select name from dm_role where id='.$_SESSION['ROLE']);
+              if ($user_designation->num_rows) {
+                  $user_designation1 = $user_designation->fetch_array();
+                 }
+            ?>
+            <a href="#" class="d-block"><?php echo $_SESSION['LOG_USER'] ." <br><i> ". $user_designation1['name'];?></i></a>
           </div>
         </div>
 
