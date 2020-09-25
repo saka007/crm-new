@@ -7,14 +7,21 @@ if (isset($_GET['lead'])) {
 	$lead1 = $lead->fetch_array();
 
 	$sou = $obj->display('dm_source', 'id=' . $lead1['market_source']);
-	$sou1 = $sou->fetch_array();
+	if ($sou->num_rows) {
+	 $sou1 = $sou->fetch_array();
+	}
 	if ($lead1['service_interest'] != "") {
 		$ser = $obj->display('dm_service', 'id=' . $lead1["service_interest"]);
-		$ser1 = $ser->fetch_array();
+		if ($ser->num_rows) {
+			$ser1 = $ser->fetch_array();
+		}
+		
 	}
 	if ($lead1['country_interest'] != "") {
 		$ctr = $obj->display("dm_country_proces", "id=" . $lead1["country_interest"]);
-		$ctr1 = $ctr->fetch_array();
+		if ($ctr->num_rows) {
+			$ctr1 = $ctr->fetch_array();
+		}
 	}
 }
 
