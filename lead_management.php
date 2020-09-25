@@ -62,7 +62,7 @@ if ($_POST['save'] || $_POST['submit']) {
 
 		if ($_POST['remark'] != "") {
 			$data4 = array(
-				'`lead`'  =>  $_POST['id'],
+				'`lead`'  =>  $odr,
 				'`date`'  =>  date('Y-m-d'),
 				'`remark`'  =>  $_POST['remark'],
 				'`emp`' => $_SESSION['LOG_USER']
