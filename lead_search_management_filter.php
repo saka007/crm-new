@@ -1,99 +1,111 @@
 <?php include_once("head.php");
 
-if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
-	$totl = $obj->display3('select count(*) as count from dm_lead');
-	$totl1 = $totl->fetch_array();
-} else if ($_SESSION['TYPE'] == "BM") {
-	// echo "sas";
-	$totl = $obj->display3('select count(*) as count from dm_lead WHERE region=' . $_SESSION["REGION"]);
-	$totl1 = $totl->fetch_array();
-} else {
-	// echo "sas";
-	$totl = $obj->display3('select count(*) as count from dm_lead WHERE counsilor=' . $_SESSION["ID"]);
-	$totl1 = $totl->fetch_array();
-}
-if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
-	$toth = $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
-	$toth1 = $toth->fetch_array();
-} else if ($_SESSION['TYPE'] == "BM") {
-	// echo "sas";
-	$toth = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Hot" and region=' . $_SESSION["REGION"]);
-	$toth1 = $totl->fetch_array();
-} else {
-	$toth = $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor=' . $_SESSION["ID"]);
-	$toth1 = $toth->fetch_array();
-}
+// if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+// 	$totl = $obj->display3('select count(*) as count from dm_lead');
+// 	$totl1 = $totl->fetch_array();
+// } else if ($_SESSION['TYPE'] == "BM") {
+// 	// echo "sas";
+// 	$totl = $obj->display3('select count(*) as count from dm_lead WHERE region=' . $_SESSION["REGION"]);
+// 	$totl1 = $totl->fetch_array();
+// } else {
+// 	// echo "sas";
+// 	$totl = $obj->display3('select count(*) as count from dm_lead WHERE counsilor=' . $_SESSION["ID"]);
+// 	$totl1 = $totl->fetch_array();
+// }
+// if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+// 	$toth = $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
+// 	$toth1 = $toth->fetch_array();
+// } else if ($_SESSION['TYPE'] == "BM") {
+// 	// echo "sas";
+// 	$toth = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Hot" and region=' . $_SESSION["REGION"]);
+// 	$toth1 = $totl->fetch_array();
+// } else {
+// 	$toth = $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor=' . $_SESSION["ID"]);
+// 	$toth1 = $toth->fetch_array();
+// }
 
-if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
-	$totw = $obj->display3('select count(*) as count from dm_lead where lead_category="Warm"');
-	$totw1 = $totw->fetch_array();
-} else if ($_SESSION['TYPE'] == "BM") {
-	// echo "sas";
-	$totw = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Warm" and region=' . $_SESSION["REGION"]);
-	$totw1 = $totl->fetch_array();
-} else {
-	$totw = $obj->display3('select count(*) as count from dm_lead where lead_category="Warm" and counsilor=' . $_SESSION["ID"]);
-	$totw1 = $totw->fetch_array();
-}
-if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
-	$totc = $obj->display3('select count(*) as count from dm_lead where lead_category="Cold"');
-	$totc1 = $totc->fetch_array();
-} else if ($_SESSION['TYPE'] == "BM") {
-	// echo "sas";
-	$totc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Cold" and region=' . $_SESSION["REGION"]);
-	$totc1 = $totc->fetch_array();
-} else {
-	$totc = $obj->display3('select count(*) as count from dm_lead where lead_category="Cold" and counsilor=' . $_SESSION["ID"]);
-	$totc1 = $totc->fetch_array();
-}
-if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
-	$totcold=$obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
-  $totcold1 = $totcold->fetch_array();
-  }
-  else if ($_SESSION['TYPE'] == "BM") {
-	// echo "sas";
-	$totcold=$obj->display3('select count(*) as count from dm_lead where region='.$_SESSION['REGION'].' and lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
-  $totcold1 = $totcold->fetch_array();
-}
-  else{
-    $totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor='.$_SESSION["ID"]);
-  $totcold1 = $totcold->fetch_array();
-  }
+// if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+// 	$totw = $obj->display3('select count(*) as count from dm_lead where lead_category="Warm"');
+// 	$totw1 = $totw->fetch_array();
+// } else if ($_SESSION['TYPE'] == "BM") {
+// 	// echo "sas";
+// 	$totw = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Warm" and region=' . $_SESSION["REGION"]);
+// 	$totw1 = $totl->fetch_array();
+// } else {
+// 	$totw = $obj->display3('select count(*) as count from dm_lead where lead_category="Warm" and counsilor=' . $_SESSION["ID"]);
+// 	$totw1 = $totw->fetch_array();
+// }
+// if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+// 	$totc = $obj->display3('select count(*) as count from dm_lead where lead_category="Cold"');
+// 	$totc1 = $totc->fetch_array();
+// } else if ($_SESSION['TYPE'] == "BM") {
+// 	// echo "sas";
+// 	$totc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Cold" and region=' . $_SESSION["REGION"]);
+// 	$totc1 = $totc->fetch_array();
+// } else {
+// 	$totc = $obj->display3('select count(*) as count from dm_lead where lead_category="Cold" and counsilor=' . $_SESSION["ID"]);
+// 	$totc1 = $totc->fetch_array();
+// }
+// if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+// 	$totcold=$obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
+//   $totcold1 = $totcold->fetch_array();
+//   }
+//   else if ($_SESSION['TYPE'] == "BM") {
+// 	// echo "sas";
+// 	$totcold=$obj->display3('select count(*) as count from dm_lead where region='.$_SESSION['REGION'].' and lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
+//   $totcold1 = $totcold->fetch_array();
+// }
+//   else{
+//     $totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor='.$_SESSION["ID"]);
+//   $totcold1 = $totcold->fetch_array();
+//   }
 
-
-  if ($_GET['cat']!='') {
-    if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
-        if ($_GET['cat'] == 'new') {
-            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0');
-            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+  $lead_cat = $_GET['cat'];
+  if(isset($lead_cat)) {
+      if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+        if ($lead_cat != 'new') {
+            $totleadc = $obj->display3('select count(*) as count from dm_lead where lead_category="'.$lead_cat.'"');
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
         else {
-          $totc = $obj->display3('select count(*) as count from dm_lead where lead_category='.$_GET['cat']);
-          if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+            $totleadc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0');
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
         
     } else if ($_SESSION['TYPE'] == "BM") {
-        if ($_GET['cat'] == 'new') {
-            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and region=' . $_SESSION["REGION"]);
-            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        if ($lead_cat != 'new') {
+            $totleadc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="'.$lead_cat.'" and region=' . $_SESSION["REGION"]);
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
         else {
-            $totc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category='.$_GET['cat'].' and region=' . $_SESSION["REGION"]);
-            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
-        }
+            $totleadc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and region=' . $_SESSION["REGION"]);
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
+         }
         
     } else {
-        if ($_GET['cat'] == 'new') {
-            $totc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and counsilor=' . $_SESSION["ID"]);
-            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+        if ($lead_cat != 'new') {
+            $totleadc = $obj->display3('select count(*) as count from dm_lead where lead_category="'.$lead_cat.'" and counsilor=' . $_SESSION["ID"]);
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
         else {
-            $totc = $obj->display3('select count(*) as count from dm_lead where lead_category='.$_GET['cat'].' and counsilor=' . $_SESSION["ID"]);
-            if ($totc->num_rows > 0) { $totc1 = $totc->fetch_array(); }
+            $totleadc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0 and counsilor=' . $_SESSION["ID"]);
+            if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
     }
   }
-  
+//   else {
+//     if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+//         if ($_GET['cat'] == 'new') {
+//             $totleadc = $obj->display3('select count(*) as count from dm_lead where notf=0 and paidYet=0');
+//             if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
+//         }
+//         else {
+//           $totleadc = $obj->display3('select count(*) as count from dm_lead where lead_category='.$lead_cat.' and region=' . $_SESSION["REGION"]);
+//           if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
+//         }
+        
+//     } 
+//   }
 
 
 // $data = array(
@@ -112,7 +124,16 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 		<div class="container-fluid">
 			<div class="row mb-2">
 				<div class="col-sm-6">
-					<h1><?php echo ucfirst($_GET['cat']); ?> Lead Management</h1>
+
+                    <h1><?php 
+                        $str = $_GET['cat'];
+                       if (preg_match('/^[a-z]+_[a-z]+$/i', $str)) {
+                          echo ucfirst(str_replace("_"," ", $str));
+                        } else {
+                            echo ucfirst($str); 
+                        }
+                   
+                    ?> Lead Management</h1>
 				</div>
 				<div class="col-sm-6">
 					<ol class="breadcrumb float-sm-right">
@@ -133,7 +154,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 							<div class="row">
                                 
                                 <div class="col-md-2 col-xs-6 border-right">
-									<h3 class="bold no-mtop"><?= $totc1['count']; ?></h3>
+									<h3 class="bold no-mtop"><?= $totleadc1['count']; ?></h3>
 									<p style="color:#989898" class="font-medium no-mbot">
 										Total Leads </p>
                                 </div>
