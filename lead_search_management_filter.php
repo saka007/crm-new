@@ -132,202 +132,60 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
 							<div class="row">
 								<div class="col-lg-12 col-md-12 col-sm-12">
-									<!-- <div class="row"><div class="col-sm-6"><h4 class="mb-3">View Lead</h4></div></div> -->
-									<form name="search" action="" method="post">
-										<div class="row">
-											<div class="col-sm-2 form-group">
-												<label>Start Date</label>
-												<div class="input-group date" id="sdate" data-target-input="nearest">
-													<input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
-																																							else  echo date('d-m-Y') ?>" />
-													<div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
-														<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-													</div>
-												</div>
-
-											</div>
-											<div class="col-sm-2 form-group"><label>End Date</label>
-												<div class="input-group date" id="edate" data-target-input="nearest">
-													<input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
-																																							else  echo date('d-m-Y') ?>" />
-													<div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
-														<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-													</div>
-												</div>
-											</div>
-
-											<div class="col-sm-3 form-group"><label>Marketing Source</label>
-												<select class="form-control" name="market_source">
-													<option value="">Select</option>
-													<?php $sou = $obj->display('dm_source', 'status=1 order by name');
-													while ($sou1 = $sou->fetch_array()) {
-													?>
-														<option value="<?php echo $sou1['id']; ?>" <?php if ($sou1['id'] == $_POST['market_source']) {
-																										echo 'selected="selected"';
-																									} ?>><?php echo $sou1['name']; ?></option>
-													<?php } ?>
-												</select>
-											</div>
-											<div class="col-sm-3 form-group"><label>Type of lead</label>
-												<select class="form-control" name="typeofl">
-													<option value="">Select</option>
-													<option value="Hot" <?php if ($_POST['typeofl'] == "Hot") {
-																			echo 'selected="selected"';
-																		} ?>>Hot</option>
-													<option value="Cold" <?php if ($_POST['typeofl'] == "Cold") {
-																				echo 'selected="selected"';
-																			} ?>>Cold</option>
-													<option value="Warm" <?php if ($_POST['typeofl'] == "Warm") {
-																				echo 'selected="selected"';
-																			} ?>>Warm</option>
-													<option value="DNQ" <?php if ($_POST['typeofl'] == "DNQ") {
-																			echo 'selected="selected"';
-																		} ?>>DNQ</option>
-													<option value="DNQ_AGE" <?php if ($_POST['typeofl'] == "DNQ_AGE") {
-																			echo 'selected="selected"';
-																		} ?>>DNQ AGE</option>
-													<option value="DNQ_Qualification" <?php if ($_POST['typeofl'] == "DNQ_Qualification") {
-																			echo 'selected="selected"';
-																		} ?>>DNQ Qualification</option>
-													<option value="no_response" <?php if ($_POST['typeofl'] == "no_response") {
-																			echo 'selected="selected"';
-																		} ?>>No Response</option>
-													<option value="not_interested" <?php if ($_POST['typeofl'] == "not_interested") {
-																			echo 'selected="selected"';
-																		} ?>>Not Interested</option>
-												</select>
-
-											</div>
-											<?php if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM") { ?>
-											<div class="col-sm-3 form-group"><label>Counsultant</label>
-												<select class="form-control" name="counsilor" id="counsilor">
-													<option value="">Select</option>
-													<?php
-													if ($_POST['region'] != "") {
-														$qry = " and region=" . $_POST['region'];
-													}
-													if ($_SESSION['TYPE']=="BM"){
-														$qry = " and region=" . $_SESSION['REGION'];
-													}
-													$emp = $obj->display('dm_employee', 'status=1 '. $qry .' order by name');
-													while ($emp1 = $emp->fetch_array()) {
-													?>
-														<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_POST['counsilor']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
-													<?php }
-													?>
-												</select>
-											</div>
-													<?php } ?> 
-
-
-											<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
-							<select class="form-control" name="country_interest" >
-								<option value="">Select</option>
-								
-							<?php $cnt = $obj->display('dm_country_proces', 'status=1 order by name');
-							while ($cnt1 = $cnt->fetch_array()) {
-							?>
-								<option value="<?php echo $cnt1['id']; ?>"  <?php if ($cnt1['id'] == $_POST['country_interest']) {
-																				echo 'selected="selected"';
-																			} ?>><?php echo $cnt1['name']; ?></option>
-								<?php } ?>		
-								</select>
-								
-								</div>
-
-							<div class="col-sm-3 form-group"><label >Program Interested</label>
-							<select class="form-control" name="service_interest" >
-								<option value="">Select</option>
-								<?php $ser = $obj->display('dm_service', 'status=1 order by name');
-								while ($ser1 = $ser->fetch_array()) {
-								?>
-								<option value="<?php echo $ser1['id']; ?>"  <?php if ($ser1['id'] == $_POST['service_interest']) {
-																				echo 'selected="selected"';
-																			} ?>><?php echo $ser1['name']; ?></option>
-								<?php } ?>
-								
-							</select>
-							</div>
-							<div class="col-sm-3 form-group"><label >Convert</label>
-							<select class="form-control" name="convet" id="convet" >
-								<option value="">Select</option>
-								<option value="Prospect" <?php if ($_POST['convet'] == "DNQ") {
-																echo 'selected="selected"';
-															} ?>>DNQ</option>
-								<option value="Not Interested" <?php if ($_POST['convet'] == "Not Interested") {
-																	echo 'selected="selected"';
-																} ?>>Not Interested</option>
-								<option value="DNQ" <?php if ($_POST['convet'] == "Prospect") {
-														echo 'selected="selected"';
-													} ?>>Prospect</option>
-								
-								</select>
-								
-								</div>	 -->
-											<div class="col-sm-3 form-group"><label>Search</label>
-												<input type="text" class="form-control" id="find" name="find" value="" placeholder="email or mobile or name"></div>
-
-											<div class="col-sm-3 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search">
-									</form>
+									
 								</div>
 							</div>
 						</div>
 						<!-- /.card-header -->
-						<div class="card-body" style="width: 80%;">
+						<div class="card-body" style="width: 100%;">
 							<?php
-							if ($_SESSION['TYPE'] == "IC" || $_SESSION['TYPE'] == "AOM" || $_SESSION['TYPE'] == "SIC"  || $_SESSION['TYPE'] == "MC" || $_SESSION['TYPE'] == "BM" || $_SESSION['TYPE'] == "ABM" || $_SESSION['TYPE'] == "AM"  || $_SESSION['TYPE'] == "RM" || $_SESSION["TYPE"] == "FMP" || $_SESSION["TYPE"] == "DGM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" ||  $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "HR" ||  $_SESSION["TYPE"] == "TC" ||  $_SESSION["TYPE"] == "RMO" || $_SESSION["TYPE"] == "RMSM") {
+							if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+                                $query = "";
+							}
+							else if ($_SESSION['TYPE'] == "BM") {
+                                 $query .= " and region=" . $_SESSION['REGION'];
+							}
+							else {
 								$query = " and assignTo=" . $_SESSION['ID'];
 							}
-							if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "BM") {
-								// echo"sa";
-								$query = "";
-							}
-							// if($_SESSION['TYPE']=="RT") { 
-							// $query=" and branch=".$_SESSION['BRANCH'];
-							// }
-							if ($_SESSION['TYPE'] == "BM") {
-								// echo "h";die;
-								$query .= " and region=" . $_SESSION['REGION'];
-								// print_r($query);die;
-							}
-							if ($_POST) {
+							// if ($_POST) {
 
-								$query .= " and paidYet=0";
-								if ($_POST['find'] == "") {
-									$query .= " and regdate between '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and '" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
-								}
-								if ($_POST['market_source'] != "") {
-									$query .= " and market_source='" . $_POST['market_source'] . "'";
-								}
-								if ($_POST['typeofl'] != "") {
-									$query .= " and lead_category='" . $_POST['typeofl'] . "'";
-								}
-								if ($_POST['enquiry'] != "") {
-									$query .= " and enquiry='" . $_POST['enquiry'] . "'";
-								}
-								if ($_POST['country_interest'] != "") {
-									$query .= " and country_interest='" . $_POST['country_interest'] . "'";
-								}
-								if ($_POST['service_interest'] != "") {
-									$query .= " and service_interest='" . $_POST['service_interest'] . "'";
-								}
-								if ($_POST['convet'] != "") {
-									$query .= " and convet='" . $_POST['convet'] . "'";
-								}
-								if ($_POST['counsilor'] != "") {
-									$query .= " and counsilor='" . $_POST['counsilor'] . "'";
-								}
-								if ($_POST['find'] != "") {
-									if (is_numeric($_POST['find'])) {
-										$query .= " and mobile like '%" . $_POST['find'] . "%'";
-									} else {
-										$query .= " and ( email like '%" . $_POST['find'] . "%' or fname like '%" . $_POST['find'] . "%')";
-									}
-								}
-							} else {
+							// 	$query .= " and paidYet=0";
+							// 	if ($_POST['find'] == "") {
+							// 		$query .= " and regdate between '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and '" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
+							// 	}
+							// 	if ($_POST['market_source'] != "") {
+							// 		$query .= " and market_source='" . $_POST['market_source'] . "'";
+							// 	}
+							// 	if ($_POST['typeofl'] != "") {
+							// 		$query .= " and lead_category='" . $_POST['typeofl'] . "'";
+							// 	}
+							// 	if ($_POST['enquiry'] != "") {
+							// 		$query .= " and enquiry='" . $_POST['enquiry'] . "'";
+							// 	}
+							// 	if ($_POST['country_interest'] != "") {
+							// 		$query .= " and country_interest='" . $_POST['country_interest'] . "'";
+							// 	}
+							// 	if ($_POST['service_interest'] != "") {
+							// 		$query .= " and service_interest='" . $_POST['service_interest'] . "'";
+							// 	}
+							// 	if ($_POST['convet'] != "") {
+							// 		$query .= " and convet='" . $_POST['convet'] . "'";
+							// 	}
+							// 	if ($_POST['counsilor'] != "") {
+							// 		$query .= " and counsilor='" . $_POST['counsilor'] . "'";
+							// 	}
+							// 	if ($_POST['find'] != "") {
+							// 		if (is_numeric($_POST['find'])) {
+							// 			$query .= " and mobile like '%" . $_POST['find'] . "%'";
+							// 		} else {
+							// 			$query .= " and ( email like '%" . $_POST['find'] . "%' or fname like '%" . $_POST['find'] . "%')";
+							// 		}
+							// 	}
+							//} else {
 								$query .= " and paidYet=0";
 								// print_r($query);die;
-							}
+							//}
 							// print_r($_SESSION);
 							?>
 
@@ -372,37 +230,18 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 									// 	}
 									// } else {
 										// echo $query;
-										if ($_POST) {
-											$result = $obj->display('dm_lead', '1=1' . $query);
-										} else {
-											$result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
-										}
+										// if ($_POST) {
+										// 	$result = $obj->display('dm_lead', '1=1' . $query);
+										// } else {
+										// 	$result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
+                                        // }
+                                        $result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
 									// }
 									if ($result->num_rows > 0) {
 
 										$i = 1;
-
 										while ($row = $result->fetch_assoc()) {
-
-											$result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
-											$lead1   = $result1->fetch_array();
-
-											if ($row['type'] == "Student") {
-												$ld = "DMC";
-											}
-											if ($row['type'] == "Visit") {
-												$ld = "DMV";
-											}
-											if ($row['type'] == "work") {
-												$ld = "DMW";
-											}
-											if ($row['type'] == "Business") {
-												$ld = "DMB";
-											}
-											if ($row['type'] == "Skill") {
-												$ld = "DMS";
-											}
-
+											
 											if ($row['service_interest'] != "") {
 												$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
 												if ($ser->num_rows > 0) { $ser1 = $ser->fetch_array(); }
@@ -536,11 +375,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 														function confirmation(ev, l, c, d, t, r) {
 															ev.preventDefault();
 															if (!d) {
-																Swal.fire('Please enter date');
+																Swal.fire('Sohail/Vamshi MC date Daal');
 																return false;
 															}
 															if (!t) {
-																Swal.fire('Please enter type');
+																Swal.fire('Sohail/Vamshi MC type select kar');
 																return false;
 															}
 															url = ev.currentTarget.getAttribute('href');
@@ -622,7 +461,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 			"scrollX": true,
 		});
 
-		//  <?php if ($_SESSION['TYPE'] == "IC" || $_SESSION['TYPE'] == "SIC"  || $_SESSION['TYPE'] == "MC" || $_SESSION['TYPE'] == "BM" || $_SESSION['TYPE'] == "ABM" || $_SESSION['TYPE'] == "AM"  || $_SESSION['TYPE'] == "RM" || $_SESSION["TYPE"] == "FMP" || $_SESSION["TYPE"] == "DGM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" ||  $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "HR" ||  $_SESSION["TYPE"] == "TC" ||  $_SESSION["TYPE"] == "RMO" || $_SESSION["TYPE"] == "RMSM") { ?>
+		//  <?php if ($_SESSION['TYPE'] == "IC" || $_SESSION['TYPE'] == "SIC"  || $_SESSION['TYPE'] == "MC" || $_SESSION['TYPE'] == "BM" || $_SESSION['TYPE'] == "ABM" || $_SESSION['TYPE'] == "AM"  || $_SESSION['TYPE'] == "RM") { ?>
 		//     table.columns([4,5,6]).visible(false);
 		//  <?php } ?>
 
