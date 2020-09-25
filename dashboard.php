@@ -76,8 +76,8 @@ span.fc-title {
               <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
               <div class="info-box-content">
-                <span class="info-box-text">Hot Leads</span>
-                <span class="info-box-number"><?=$toth1['count'];?></span>
+                <span class="info-box-text">New Leads</span>
+                <span class="info-box-number"><?=$cl1['count'];?></span>
               </div>
               <!-- /.info-box-content -->
             </div>
