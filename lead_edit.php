@@ -378,6 +378,12 @@ $reg1 = $reg->fetch_array();
 										<option value="no_response" <?php if ($lead1['lead_category'] == "no_response") {
 																echo 'selected="selected"';
 															} ?>>No Response</option>
+										<option value="call_back" <?php if ($lead1['lead_category'] == "call_back") {
+																echo 'selected="selected"';
+															} ?>>Call Back</option>
+										<option value="invalid_number" <?php if ($lead1['lead_category'] == "invalid_number") {
+																echo 'selected="selected"';
+															} ?>>Invalid Number</option>
 									</select>
 
 								</div>
@@ -417,7 +423,7 @@ $reg1 = $reg->fetch_array();
 											<?php
 										}}
 										 else if ($_SESSION["TYPE"] == "SA" || $_SESSION["TYPE"] == "RM") {
-											$emp = $obj->display('dm_employee', 'role in (2,3,4)  order by name');
+											$emp = $obj->display('dm_employee', 'role!=1  order by name');
 											while ($emp1 = $emp->fetch_array()) {
 											?>
 												<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $lead1['Counsilor']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
