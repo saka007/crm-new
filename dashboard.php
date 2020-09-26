@@ -132,13 +132,15 @@ span.fc-title {
           <div class="col-md-12">
             <div class="card">
               <div class="card-header">
-                <h5 class="card-title">Meeting Calender</h5>
+               
               </div>
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
                   <div class="col-md-6">
-                    <div class="cal" id="calendar" ></div>
+                   <h3 class="card-title">Meeting Calender</h3>
+                   <br>
+                    <div class="cal fc fc-ltr fc-bootstrap" id="calendar" ></div>
                   </div>
                   <div class="col-md-6">
                   </div>
