@@ -109,9 +109,20 @@ if (isset($_GET['lead'])) {
 
 						<div class="row">
 
-							<div class="col-sm-4 form-group"><label>Appointment</label><br /><?php echo $lead1['appointment']; ?></div>
+							<div class="col-sm-4 form-group"><label>Appointment</label><br />
+							   <?php 		  
+									$appt = $obj->display('appointments', 'booked=1 and leadid=' . $_GET['lead']);
+									if ($appt->num_rows > 0) {
+										while ($appt1 = $appt->fetch_array()) {
+											echo $appt1['date'].'<br>';
+										}
+									}
+									else { echo "No Appointments";}
+							
+							   ?>
+						    </div>
 
-							<div class="col-sm-4 form-group"><label>Follow Up</label><br /><?php echo $lead1['followup']; ?></div>
+							<!-- <div class="col-sm-4 form-group"><label>Follow Up</label><br /><?php // echo $lead1['followup']; ?></div> -->
 
 							<div class="col-sm-4 form-group"><label>Mode of Enquiry</label><br /><?php echo $lead1['enquiry']; ?></div>
 
