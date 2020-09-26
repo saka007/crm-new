@@ -1,7 +1,10 @@
 <?php
 include_once("include/config.php");
-if ($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
     $lead=$obj->display('appointments');
+}
+else if ($_SESSION['TYPE']=="BM"){
+    $lead=$obj->display('appointments','region='.$_SESSION["REGION"]);
 }
 else{
     $lead=$obj->display('appointments','counsilorid='.$_SESSION["ID"]);
@@ -12,7 +15,7 @@ while($lead1=$lead->fetch_array()) {
     // $con_date = $date->format('Y-m-d H:i:s');
 
     $file_data_array[] = array(
-        "title" => "Lead ID: ".$lead1["leadid"],
+        "title" => $lead1["leadid"],
         "start" => $og_date,
         "end"   => $og_date,
         "backgroundColor" => "green", 
