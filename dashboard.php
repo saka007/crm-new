@@ -1,18 +1,25 @@
 <?php include_once("head.php");
 
-if ($_SESSION['TYPE']=="SA"){
+if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
   $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot"');
-  $toth1 = $toth->fetch_array();
+  if ($toth->num_rows) { $toth1 = $toth->fetch_array(); }
 
   $tot_sale= $obj->display3('select SUM(paidYet) as total_sale from dm_lead');
-  $tot_sale1 = $tot_sale->fetch_array();
+  if ($tot_sale->num_rows) {  $tot_sale1 = $tot_sale->fetch_array(); }
 }
+else if ($_SESSION['TYPE']=="BM"){
+  $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and region='.$_SESSION["REGION"]);
+  if ($toth->num_rows) { $toth1 = $toth->fetch_array(); }
+  
+    $tot_sale= $obj->display3('select SUM(paidYet) as total_sale from dm_lead where region='.$_SESSION["REGION"]);
+    if ($tot_sale->num_rows) {  $tot_sale1 = $tot_sale->fetch_array(); }
+  }
 else{
 $toth= $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor='.$_SESSION["ID"]);
-$toth1 = $toth->fetch_array();
+if ($toth->num_rows) { $toth1 = $toth->fetch_array(); }
 
   $tot_sale= $obj->display3('select SUM(paidYet) as total_sale from dm_lead where counsilor='.$_SESSION["ID"]);
-  $tot_sale1 = $tot_sale->fetch_array();
+  if ($tot_sale->num_rows) {  $tot_sale1 = $tot_sale->fetch_array(); }
 }
 
 
