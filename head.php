@@ -599,7 +599,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
                 <p>
-                  Extra Features
+                  Login/Logout
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -608,14 +608,14 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   <a onclick="userActivity('login')" id="loginStart" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0)
                                                                                                         ? 'nav-link disable' : 'nav-link'; ?>">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Login Hour Start</p>
+                    <p>Log In</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a onclick="userActivity('logout')" id="loginEnd" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0 && $logoutEntryRecorded < 1)
                                                                                                         ? 'nav-link' : 'nav-link disable'; ?>">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Loggedoff</p>
+                    <p>Log Out</p>
                   </a>
                 </li>
               </ul>
