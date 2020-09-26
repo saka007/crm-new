@@ -72,7 +72,8 @@
             if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
         }
         
-    } else if ($_SESSION['TYPE'] == "BM") {
+    }
+     else if ($_SESSION['TYPE'] == "BM") {
         if ($lead_cat != 'new') {
             $totleadc = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="'.$lead_cat.'" and region=' . $_SESSION["REGION"]);
             if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
@@ -82,7 +83,8 @@
             if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
          }
         
-    } else {
+    } 
+    else {
         if ($lead_cat != 'new') {
             $totleadc = $obj->display3('select count(*) as count from dm_lead where lead_category="'.$lead_cat.'" and counsilor=' . $_SESSION["ID"]);
             if ($totleadc->num_rows > 0) { $totleadc1 = $totleadc->fetch_array(); }
@@ -320,6 +322,12 @@
                                         }
                                         else if($_GET['cat'] == 'not_interested') {
                                             $result = $obj->display('dm_lead', '1=1 and lead_category="not_interested"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'call_back') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="call_back"' . $query);
+                                        }
+                                        else if($_GET['cat'] == 'invalid_number') {
+                                            $result = $obj->display('dm_lead', '1=1 and lead_category="invalid_number"' . $query);
                                         }
                                         else {
                                             $result = $obj->display('dm_lead', '1=1 and notf=0' . $query);

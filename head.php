@@ -432,6 +432,20 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Not Inerested</p>
                   </a>
                 </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=call_back" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Call Back</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=invalid_number" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Invalid Number</p>
+                  </a>
+                </li>
                 
               </ul>
             </li>
