@@ -45,6 +45,10 @@ span.fc-title {
     margin-left: 5px;
     line-height: 20px;
 }
+.cal {
+    border: 2px solid powderblue;
+    border-radius: 10px;
+}
 </style>
 <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -133,9 +137,10 @@ span.fc-title {
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-12">
-                  <div id="calendar"></div>
-                    <!-- /.progress-group -->
+                  <div class="col-md-6">
+                    <div class="cal" id="calendar" ></div>
+                  </div>
+                  <div class="col-md-6">
                   </div>
                   <!-- /.col -->
                 </div>
