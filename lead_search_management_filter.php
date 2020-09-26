@@ -152,12 +152,13 @@
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
-                                
-                                <div class="col-md-2 col-xs-6 border-right">
-									<h3 class="bold no-mtop"><?= $totleadc1['count']; ?></h3>
-									<p style="color:#989898" class="font-medium no-mbot">
-										Total Leads </p>
+                               <div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $totleadc1['count']; ?></h3>
+                                    <p>Total Leads</p>
+                                 </div>
                                 </div>
+                              
                                 <?php /* ?>
 								<div class="col-md-2 col-xs-6 border-right">
 									<h3 class="bold no-mtop"><?= $cl1['count']; ?></h3>
