@@ -247,6 +247,12 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 													<option value="not_interested" <?php if ($_POST['typeofl'] == "not_interested") {
 																			echo 'selected="selected"';
 																		} ?>>Not Interested</option>
+													<option value="call_back" <?php if ($_POST['typeofl'] == "call_back") {
+																			echo 'selected="selected"';
+																		} ?>>Call Back</option>
+													<option value="invalid_number" <?php if ($_POST['typeofl'] == "invalid_number") {
+																			echo 'selected="selected"';
+																		} ?>>Invalid Number</option>																		
 												</select>
 
 											</div>
@@ -436,24 +442,24 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
 										while ($row = $result->fetch_assoc()) {
 
-											$result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
-											$lead1   = $result1->fetch_array();
+											// $result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
+											// $lead1   = $result1->fetch_array();
 
-											if ($row['type'] == "Student") {
-												$ld = "DMC";
-											}
-											if ($row['type'] == "Visit") {
-												$ld = "DMV";
-											}
-											if ($row['type'] == "work") {
-												$ld = "DMW";
-											}
-											if ($row['type'] == "Business") {
-												$ld = "DMB";
-											}
-											if ($row['type'] == "Skill") {
-												$ld = "DMS";
-											}
+											// if ($row['type'] == "Student") {
+											// 	$ld = "DMC";
+											// }
+											// if ($row['type'] == "Visit") {
+											// 	$ld = "DMV";
+											// }
+											// if ($row['type'] == "work") {
+											// 	$ld = "DMW";
+											// }
+											// if ($row['type'] == "Business") {
+											// 	$ld = "DMB";
+											// }
+											// if ($row['type'] == "Skill") {
+											// 	$ld = "DMS";
+											// }
 
 											if ($row['service_interest'] != "") {
 												$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
