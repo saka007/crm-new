@@ -100,7 +100,7 @@
 										$src2 = $obj->display('dm_source', '1=1');
 								if ($src2->num_rows > 0) {
 									while ($src3 = $src2->fetch_array()) {
-										$count= $obj->display3('SELECT COUNT(*) as count FROM `dm_lead` where market_source='.$src3['id'].' and counsilor='.$row['counsilor']);
+										$count= $obj->display3("SELECT COUNT(*) as count FROM `dm_lead` where regdate between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."' and market_source=".$src3['id']." and counsilor=".$row['counsilor']);
 										if ($count->num_rows > 0) {
 										$count1= $count->fetch_array();
 										}

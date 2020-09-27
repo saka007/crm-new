@@ -214,11 +214,38 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
       <hr/>
 
+      <form name="search" action="" method="post">
+										<div class="row">
+											<div class="col-sm-2 form-group">
+												<label>Start Date</label>
+												<div class="input-group date" id="sdate" data-target-input="nearest">
+													<input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
+																																							else  echo date('d-m-Y') ?>" />
+													<div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
+														<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+													</div>
+												</div>
+
+											</div>
+											<div class="col-sm-2 form-group"><label>End Date</label>
+												<div class="input-group date" id="edate" data-target-input="nearest">
+													<input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
+																																							else  echo date('d-m-Y') ?>" />
+													<div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
+														<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+													</div>
+												</div>
+											</div>
+											<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
+										</div>
+			</form>
+<?php if($_POST) { ?>
       <table class="table table-bordered table-striped" id="dataTables-Table_new" name="dataTables-Table_new" style="width:100%" > 
                                 <thead>
                                     <tr>
                                         <th>Sr no.</th>
                                         <th>Client Name</th>
+                                        <th>Counsultant</th>
                                         <th>Date</th>
                                         <th>Status</th>
                                         <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
@@ -232,18 +259,23 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
                                 <tbody>
                                    <?php
                                    if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
-                                    $meet = $obj->display3('SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id');
+                                    $meet = $obj->display3("SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id where a.date between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."'");
                                    }
                                    else{
-                                   $meet = $obj->display3('SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id WHERE a.counsilorid='.$_SESSION['ID']);
+                                   $meet = $obj->display3("SELECT *,a.type as mtype,a.id as apid FROM `appointments` a INNER JOIN dm_lead l on a.leadid=l.id where a.date between '".date('Y-m-d',strtotime($_POST["sdate"]))."' and '".date('Y-m-d',strtotime($_POST["edate"]))."' and a.counsilorid=".$_SESSION['ID']);
                                    }
                                    if($meet->num_rows > 0) {
                                       $i=1;
                                    while($row = $meet->fetch_array())
-                                   { ?>
+                                   { 
+                                    //  print_r($row);
+                                    $emp = $obj->display('dm_employee', 'id=' .$row['counsilorid']);
+                                    $em1 = $emp->fetch_assoc();
+                                     ?>
                                    <tr>
                                       <td><?=$i;?></td>
                                       <td><?=$row['fname'].''.$row['lname'];?></td>
+                                      <td><?=$em1['name'];?></td>
                                       <td><?=$row['date'];?></td>
                                       <td><?php if($row['done']==1) { echo "Done"; } else { echo "Not Done"; }?></td>
                                       <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
@@ -256,6 +288,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
                                    <?php $i++;}} ?>
 
                                    </tbody></table>
+                                   <?php } ?>
 
              </div>
           </div>
@@ -264,6 +297,23 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
      </div>
  </div>
 <?php include_once("foot.php"); ?>
+
+<script>
+$(function(){
+// $('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
+// $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
+$('#sdate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    });
+	$('#edate').datetimepicker({
+        format: 'DD-MM-YYYY',
+        allowInputToggle: true,
+        // defaultDate: moment()
+    }); 
+}); 
+</script>
 <script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
 <script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>

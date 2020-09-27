@@ -73,16 +73,15 @@
 
 						</div>
 
-						<!-- <?php 
+						<?php 
 
-						if($_SESSION['TYPE']=="SA" ||  $_SESSION['TYPE']=="RMSM" || $_SESSION['TYPE']=="DGM" || $_SESSION['TYPE']=="FMP" || $_SESSION['TYPE']=="FO" || $_SESSION['TYPE']=="BM") { 
-						if($_SESSION['TYPE']!="BM") {
-						?>		 -->
+						if($_SESSION['TYPE']=="SA" ||  $_SESSION['TYPE']=="RM") { 
+						?>		 
 
 						<div class="col-sm-2 form-group"><label>Region</label>
 						<select class="form-control" name="region" id="region" >
 							<option value="">Select</option>
-							<?php $sou=$obj->display('dm_region','status=1 '.$region.' order by name');
+							<?php $sou=$obj->display('dm_region','status=1 order by name');
 							while($sou1=$sou->fetch_array())
 							{
 							?>
@@ -90,22 +89,9 @@
 							<?php } ?>
 							</select>
 						</div> 
-						<!-- <?php if($_SESSION['ID']!='6' && $_SESSION['ID']!='25'){?>
-						<div class="col-sm-2 form-group"><label>UAE Or Overseas</label>
-						<select class="form-control" name="gcc" id="region" >
-							<option value="">Select</option>
-							<option value="1">Dxb AUH & DOH</option>
-							<option value="2">SHJ OMN & PUN</option>
-							</select>
-							</div>
-						<?php }?> -->
-						<!-- <div class="col-sm-2 form-group"><label>Branch</label>
-						<select class="form-control" name="branch" id="branch" >
-							<option value="">Select</option>
-							</select>
-						</div> -->
-						<!-- <?php } ?> -->
-						<!-- <div class="col-sm-3 form-group"><label >Marketing Source</label>
+						 <?php } ?> 
+
+						<div class="col-sm-3 form-group"><label >Marketing Source</label>
 						<select class="form-control" name="market_source" >
 							<option value="">Select</option>
 							<?php $sou=$obj->display('dm_source','status=1 order by name');
@@ -115,17 +101,7 @@
 							<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['market_source']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
 							<?php } ?>
 							</select>
-						</div> -->
-						<!-- <div class="col-sm-2 form-group"><label >Mode of Enquiry</label>
-						<select class="form-control" name="enquiry">
-							<option value="">Select</option>
-							<option value="Call" <?php if($_POST['enquiry']=="Call") { echo 'selected="selected"';}?>>Call</option>
-							<option value="Email" <?php if($_POST['enquiry']=="Email") { echo 'selected="selected"';}?>>Email</option>
-							<option value="Walkin" <?php if($_POST['enquiry']=="Walkin") { echo 'selected="selected"';}?>>Walkin</option>
-							
-							</select>
-							
-							</div>			 -->
+						</div>
 
 						<!-- <div class="col-sm-2 form-group"><label >Country Interested</label>
 						<select class="form-control" name="country_interest" >
@@ -152,36 +128,13 @@
 							
 						</select>
 						</div> -->
-						<!-- <div class="col-sm-2 form-group"><label >Convert</label>
-						<select class="form-control" name="convet" id="convet" >
-							<option value="">Select</option>
-							<option value="DNQ" <?php if($_POST['convet']=="DNQ") { echo 'selected="selected"';}?>>DNQ</option>
-							<option value="Not Interested" <?php if($_POST['convet']=="Not Interested") { echo 'selected="selected"';}?>>Not Interested</option>
-							<option value="Prospect" <?php if($_POST['convet']=="Prospect") { echo 'selected="selected"';}?>>Prospect</option>
-							
-							</select>
-							
-							</div> -->
-
-
-						<!-- <div class="col-sm-2 form-group"><label >Program Type</label>
-						<select class="form-control" name="type">
-							<option value="">Select</option>
-							<option value="Business" <?php if($_POST['type']=="Business") { echo 'selected="selected"';}?>>Business</option>
-							<option value="Skill" <?php if($_POST['type']=="Skill") { echo 'selected="selected"';}?>>Skill</option>
-							<option value="Student" <?php if($_POST['type']=="Student") { echo 'selected="selected"';}?>>Student</option>
-							<option value="Visit" <?php if($_POST['type']=="Visit") { echo 'selected="selected"';}?>>Visit</option>
-							<option value="Work" <?php if($_POST['type']=="Work") { echo 'selected="selected"';}?>>Work</option>
-							
-							</select>
-						</div> -->
 
 						 <div class="col-sm-3 form-group"><label>Counselor</label>
 						<select class="form-control" name="counsilor" id="counsilor" >
 							<option value="">Select</option>
 						<?php 
-						if($_POST['region']!="") { $qry=" and region=".$_POST['region'];}
-						$emp=$obj->display('dm_employee','status=1 and (role=4 || role=10 || role=31 || role=3 || role=2 || role=7 || role=20 || role=8 || role=14 || role=24 || role=26 || role=27 || role=5 || role=11 || role=13 || role=15 || role=18 || role=23 || role=25 || role=28 || role=29 || role=33)order by name'.$qry);
+						if($_SESSION['TYPE']=="BM") { $qry=" and region=".$_SESSION['REGION'];}
+						$emp=$obj->display('dm_employee','status=1 '.$qry);
 						while($emp1=$emp->fetch_array())
 						{
 						?>
@@ -191,14 +144,6 @@
 						</select>
 						</div>
 
-						<!-- <?php } ?> --> 
-
-						<!-- <div class="col-sm-3 form-group"><label>Jan Sales</label>
-						<select class="form-control" name="jan" id="jan" >
-							<option value="">Select</option>
-							<option value="1">With Jan sales</option>
-						</select>
-						</div> -->
          				<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
 						</div>
 
@@ -211,13 +156,13 @@
 
 <?php
 $query="1=1";
-if($_SESSION['TYPE']=="SA" ||  $_SESSION['TYPE']=="FMP" || $_SESSION['TYPE']=="DGM" || $_SESSION['TYPE']=="RMSM" || $_SESSION['TYPE']=="FO" || $_SESSION['TYPE']=="BM") { 	
-if($_POST['region']!="" && $_POST['gcc']!="1" && $_POST['gcc']!="2") { 	$query.=" and T2.region=".$_POST['region'];}
-if($_POST['gcc']=="1") { 	$query.=" and T2.region in (3,4,7)";}
-if($_POST['gcc']=="2") { 	$query.=" and T2.region in (5,6,8)";}
-if($_SESSION['ID']=="25") { 	$query.=" and T2.region in (3,4,7)";}
-if($_SESSION['ID']=="6") { 	$query.=" and T2.region in (5,6,8)";}
-if($_POST['branch']!="") { 	$query.=" and T2.branch=".$_POST['branch'];}
+if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="BM" || $_SESSION['TYPE']=="RM") { 	
+if($_POST['region']!="") { 	$query.=" and T2.region=".$_POST['region'];}
+// if($_POST['gcc']=="1") { 	$query.=" and T2.region in (3,4,7)";}
+// if($_POST['gcc']=="2") { 	$query.=" and T2.region in (5,6,8)";}
+// if($_SESSION['ID']=="25") { 	$query.=" and T2.region in (3,4,7)";}
+// if($_SESSION['ID']=="6") { 	$query.=" and T2.region in (5,6,8)";}
+// if($_POST['branch']!="") { 	$query.=" and T2.branch=".$_POST['branch'];}
 if($_POST['type']!="") { 	$query.=" and T2.type='".$_POST['type']."'";}
 if($_POST['service_interest']!="") { 	$query.=" and T2.service_interest=".$_POST['service_interest'];}
 if($_POST['counsilor']!="") { 	$query.=" and T2.Counsilor=".$_POST['counsilor'];}
@@ -226,8 +171,8 @@ if($_POST['enquiry']!="") { $query.=" and T2.enquiry='".$_POST['enquiry']."'";}
 if($_POST['country_interest']!="") { $query.=" and T2.country_interest='".$_POST['country_interest']."'";}
 if($_POST['convet']!="") { $query.=" and T2.convet='".$_POST['convet']."'";}
 }
-if($_SESSION['TYPE']=="AC" || $_SESSION['TYPE']=="BM") { 	
-$query.=" and T2.branch=".$_SESSION['BRANCH'];
+if($_SESSION['TYPE']=="BM") { 	
+$query.=" and T2.region=".$_SESSION['REGION'];
 }
 if($_POST)
 {
@@ -420,31 +365,6 @@ $('#sdate').datetimepicker({
         $('#dataTable').DataTable({
 			 //responsive: true,
 			"scrollX": true,
-            <?php if($_SESSION['TYPE']=="SA" ||  $_SESSION['TYPE']=="RMSM" || $_SESSION['TYPE']=="DGM" || $_SESSION['TYPE']=="FMP" || $_SESSION['TYPE']=="FO" || $_SESSION['TYPE']=="AC")
-			      { ?>
-			"lengthMenu": [[-1], ["All"]],
-			dom: 'Brft',
-			buttons: [ 
-			{
-                extend: 'excel',
-				footer: true,
-                title: 'Total Sales Report',
-				messageTop: 'Report from <?php echo date('d-m-Y',strtotime($_POST["sdate"]));?> to <?php echo date('d-m-Y',strtotime($_POST["edate"]));?>'
-            },
-			{
-                extend: 'pdf',
-				footer: true,
-                title: 'Total Sales Report',
-				messageTop: 'Report from <?php echo date('d-m-Y',strtotime($_POST["sdate"]));?> to <?php echo date('d-m-Y',strtotime($_POST["edate"]));?>'
-            },
-			{
-                extend: 'print',
-				footer: true,
-                title: 'Total Sales Report',
-				messageTop: 'Report from <?php echo date('d-m-Y',strtotime($_POST["sdate"]));?> to <?php echo date('d-m-Y',strtotime($_POST["edate"]));?>'
-            }
-		 ]
-		 <?php } ?>
         });
     });
     </script>

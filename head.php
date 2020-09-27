@@ -483,6 +483,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Audit Report</p>
                   </a>
                 </li>
+                <li class="nav-item">
+                  <a href="appointment_report.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Meetings Report</p>
+                  </a>
+                </li>
                  <!-- <li class="nav-item">
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
