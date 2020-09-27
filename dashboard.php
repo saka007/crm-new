@@ -137,18 +137,35 @@ span.fc-title {
               <!-- /.card-header -->
               <div class="card-body">
                 <div class="row">
-                  <div class="col-md-6">
+                  <!-- <div class="col-md-6">
                    <h3 class="card-title">Meeting Calender</h3>
                    <br>
                     <div class="cal fc fc-ltr fc-bootstrap" id="calendar" ></div>
-                  </div>
+                  </div> -->
+
+
                   <div class="col-md-6">
-                    <div class="widget-box">
-                      <div class="widget-title">
-                        <h5>BALANCE COLLECTION FOR TODAY</h5>
-                      </div>
-                      <div class="widget-content nopadding fix_hgt">
-                        <ul class="recent-posts">
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">MEETING CALENDER</h3>
+                    </div>
+                    <div class="card-body">
+                    <div class="cal fc fc-ltr fc-bootstrap" id="calendar" ></div>
+                    </div>
+                    <!-- /.card-body -->
+                  </div>
+                  <!-- /.col -->
+                </div>
+
+
+
+                  <div class="col-md-6">
+                  <div class="card card-primary">
+                    <div class="card-header">
+                      <h3 class="card-title">TODAY'S COLLECTION</h3>
+                    </div>
+                    <div class="card-body">
+                    <ul class="recent-posts">
                           <?php
                           if ($_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "SA" ) {
                             $bal = $obj->display('dm_lead', 'payBalance!=0 and dueDate="' . date('Y-m-d') . '"');
@@ -181,8 +198,9 @@ span.fc-title {
                             </li>
                           <?php } ?>
                         </ul>
-                      </div>
                     </div>
+                    <!-- /.card-body -->
+                  </div>
                   <!-- /.col -->
                 </div>
                 <!-- /.row -->
