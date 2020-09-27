@@ -95,7 +95,61 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
-								<div class="col-md-2 col-xs-6 border-right">
+							<div class="col-lg-2 col-6">
+							<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $totl1['count']; ?></h3>
+                                    <p>Total Leads</p>
+                                 </div>
+								</div>
+							 </div>	
+
+							 <div class="col-lg-2 col-6">
+								<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $cl1['count']; ?></h3>
+                                    <p>New Leads</p>
+                                 </div>
+								</div>
+							 </div>
+
+							 <div class="col-lg-2 col-6">
+								<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $toth1['count']; ?></h3>
+                                    <p>Hot Leads</p>
+                                 </div>
+								</div>
+							 </div>
+
+							 <div class="col-lg-2 col-6">
+								<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $totw1['count']; ?></h3>
+                                    <p>Warm Leads</p>
+                                 </div>
+								</div>
+							 </div>
+
+							 <div class="col-lg-2 col-6">
+								<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?= $totc1['count']; ?></h3>
+                                    <p>Cold Leads</p>
+                                 </div>
+								</div>
+							 </div>
+							 
+							 <div class="col-lg-2 col-6">
+								<div class="small-box bg-info">
+                                <div class="inner">
+                                    <h3><?=$totcold1['count'];?></h3>
+                                    <p>Other Leads</p>
+                                 </div>
+								</div>
+							 </div>
+
+								<!-- <div class="col-md-2 col-xs-6 border-right">
 									<h3 class="bold no-mtop"><?= $totl1['count']; ?></h3>
 									<p style="color:#989898" class="font-medium no-mbot">
 										Total Leads </p>
@@ -106,13 +160,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 										New Leads </p>
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
-									<!-- <h3 class="bold no-mtop"><?= $toth1['count']; ?></h3> -->
 									<h3 class="bold no-mtop"><?= $toth1['count']; ?></h3>
 									<p style="color:#03A9F4" class="font-medium no-mbot">
 										Hot Leads </p>
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
-									<!-- <h3 class="bold no-mtop"><?= $toth1['count']; ?></h3> -->
 									<h3 class="bold no-mtop"><?= $totw1['count']; ?></h3>
 									<p style="color:#03A9F4" class="font-medium no-mbot">
 										Warm Leads </p>
@@ -126,7 +178,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 							<h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
 							<p style="color:#2d2d2d" class="font-medium no-mbot">
 								Other Leads     </p>
-							</div>
+							</div> -->
 							
 							</div>
 
@@ -195,6 +247,12 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 													<option value="not_interested" <?php if ($_POST['typeofl'] == "not_interested") {
 																			echo 'selected="selected"';
 																		} ?>>Not Interested</option>
+													<option value="call_back" <?php if ($_POST['typeofl'] == "call_back") {
+																			echo 'selected="selected"';
+																		} ?>>Call Back</option>
+													<option value="invalid_number" <?php if ($_POST['typeofl'] == "invalid_number") {
+																			echo 'selected="selected"';
+																		} ?>>Invalid Number</option>																		
 												</select>
 
 											</div>
@@ -384,24 +442,24 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
 										while ($row = $result->fetch_assoc()) {
 
-											$result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
-											$lead1   = $result1->fetch_array();
+											// $result1 = $obj->display('dm_lead_assesment', ' leadId=' . $row["id"]);
+											// $lead1   = $result1->fetch_array();
 
-											if ($row['type'] == "Student") {
-												$ld = "DMC";
-											}
-											if ($row['type'] == "Visit") {
-												$ld = "DMV";
-											}
-											if ($row['type'] == "work") {
-												$ld = "DMW";
-											}
-											if ($row['type'] == "Business") {
-												$ld = "DMB";
-											}
-											if ($row['type'] == "Skill") {
-												$ld = "DMS";
-											}
+											// if ($row['type'] == "Student") {
+											// 	$ld = "DMC";
+											// }
+											// if ($row['type'] == "Visit") {
+											// 	$ld = "DMV";
+											// }
+											// if ($row['type'] == "work") {
+											// 	$ld = "DMW";
+											// }
+											// if ($row['type'] == "Business") {
+											// 	$ld = "DMB";
+											// }
+											// if ($row['type'] == "Skill") {
+											// 	$ld = "DMS";
+											// }
 
 											if ($row['service_interest'] != "") {
 												$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
@@ -536,11 +594,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 														function confirmation(ev, l, c, d, t, r) {
 															ev.preventDefault();
 															if (!d) {
-																Swal.fire('Sohail/Vamshi MC date Daal');
+																Swal.fire('Please enter date');
 																return false;
 															}
 															if (!t) {
-																Swal.fire('Sohail/Vamshi MC type select kar');
+																Swal.fire('Please enter type');
 																return false;
 															}
 															url = ev.currentTarget.getAttribute('href');

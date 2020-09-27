@@ -319,7 +319,7 @@ if ($_POST['save'] || $_POST['submit']) {
 											<option value="invalid_number">Invalid Number</option>
 										</select>
 									</div>
-									<div class="col-sm-4 form-group"><label>Lead Enquiry Source</label>
+									<div class="col-sm-4 form-group"><label>Contacted Through</label>
 										<select class="form-control" name="enquiry">
 											<option value="">Select</option>
 											<?php $en = $obj->display('dm_enquiry', 'status=1 order by name');

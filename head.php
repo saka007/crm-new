@@ -361,6 +361,96 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
 <?php } ?>
 
+          <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Lead Filter Management
+                  <i class="fas fa-angle-left right"></i>
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=new" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>New Lead</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=Hot" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Hot Lead</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=Warm" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Warm Lead</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=Cold" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Cold Lead</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=DNQ" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>DNQ Lead</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=DNQ_AGE" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>DNQ AGE</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=DNQ_Qualification" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>DNQ Qualification</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=no_response" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>No Response</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=not_interested" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Not Inerested</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=call_back" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Call Back</p>
+                  </a>
+                </li>
+
+                <li class="nav-item">
+                  <a href="lead_search_management_filter.php?cat=invalid_number" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Invalid Number</p>
+                  </a>
+                </li>
+                
+              </ul>
+            </li>
+
+
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -515,7 +605,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-table"></i>
                 <p>
-                  Extra Features
+                  Login/Logout
                   <i class="fas fa-angle-left right"></i>
                 </p>
               </a>
@@ -524,14 +614,14 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   <a onclick="userActivity('login')" id="loginStart" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0)
                                                                                                         ? 'nav-link disable' : 'nav-link'; ?>">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Login Hour Start</p>
+                    <p>Log In</p>
                   </a>
                 </li>
                 <li class="nav-item">
                   <a onclick="userActivity('logout')" id="loginEnd" href="javascript:void(0)" class="<?php echo ($loginEntryRecorded > 0 && $logoutEntryRecorded < 1)
                                                                                                         ? 'nav-link' : 'nav-link disable'; ?>">
                     <i class="far fa-circle nav-icon"></i>
-                    <p>Loggedoff</p>
+                    <p>Log Out</p>
                   </a>
                 </li>
               </ul>

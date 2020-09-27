@@ -387,7 +387,7 @@ $reg1 = $reg->fetch_array();
 									</select>
 
 								</div>
-								<div class="col-sm-4 form-group"><label>Lead Enquiry Source</label>
+								<div class="col-sm-4 form-group"><label>Contacted Through</label>
 									<select class="form-control" name="enquiry" required>
 										<option value="">Select</option>
 										<?php $en = $obj->display('dm_enquiry', 'status=1 order by name');

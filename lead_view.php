@@ -109,9 +109,20 @@ if (isset($_GET['lead'])) {
 
 						<div class="row">
 
-							<div class="col-sm-4 form-group"><label>Appointment</label><br /><?php echo $lead1['appointment']; ?></div>
+							<div class="col-sm-4 form-group"><label>Appointment</label><br />
+							   <?php 		  
+									$appt = $obj->display('appointments', 'booked=1 and leadid=' . $_GET['lead']);
+									if ($appt->num_rows > 0) {
+										while ($appt1 = $appt->fetch_array()) {
+											echo $appt1['date'].'<br>';
+										}
+									}
+									else { echo "No Appointments";}
+							
+							   ?>
+						    </div>
 
-							<div class="col-sm-4 form-group"><label>Follow Up</label><br /><?php echo $lead1['followup']; ?></div>
+							<!-- <div class="col-sm-4 form-group"><label>Follow Up</label><br /><?php // echo $lead1['followup']; ?></div> -->
 
 							<div class="col-sm-4 form-group"><label>Mode of Enquiry</label><br /><?php echo $lead1['enquiry']; ?></div>
 
@@ -129,11 +140,13 @@ if (isset($_GET['lead'])) {
 							<div class="col-sm-4 form-group"><label>Spouse Contact No</label><br /><?php echo $lead1['phones']; ?></div>
 
 						</div>
-
+					
+						<h4> Other data</h4>
+						<br/>
 						<div class="row">
 
 							<div class="col-sm-4 form-group"><label>Gender</label><br /><?php echo $lead1['gender']; ?></div>
-							<div class="col-sm-4 form-group"><label>Convert</label><br /><?php echo $lead1['convet']; ?></div>
+							<!-- <div class="col-sm-4 form-group"><label>Convert</label><br /><?php //echo $lead1['convet']; ?></div> -->
 						</div>
 						<div class="row">
 							<div class="col-sm-12 form-group"><label>Remark</label><br />
