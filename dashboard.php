@@ -37,7 +37,7 @@ if (isset($_GET['task'])) {
 }
 ?>
  <!-- fullCalendar -->
- <link rel="stylesheet" href="https://phppot.com/demo/php-calendar-event-management-using-fullcalendar-javascript-library/fullcalendar/fullcalendar.min.css">
+ <link rel="stylesheet" href="css/full_calender.min.css">
 <style>
 span.fc-title {
     color: #ffffff;
@@ -143,7 +143,46 @@ span.fc-title {
                     <div class="cal fc fc-ltr fc-bootstrap" id="calendar" ></div>
                   </div>
                   <div class="col-md-6">
-                  </div>
+                    <div class="widget-box">
+                      <div class="widget-title">
+                        <h5>BALANCE COLLECTION FOR TODAY</h5>
+                      </div>
+                      <div class="widget-content nopadding fix_hgt">
+                        <ul class="recent-posts">
+                          <?php
+                          if ($_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "SA" ) {
+                            $bal = $obj->display('dm_lead', 'payBalance!=0 and dueDate="' . date('Y-m-d') . '"');
+                          }
+                           else if ( $_SESSION['TYPE'] == "BM") {
+                            $bal = $obj->display('dm_lead', 'payBalance!=0 and region="' . $_SESSION['REGION'] . '" and dueDate="' . date('Y-m-d') . '"');
+                          }
+                          else {
+                            $bal = $obj->display('dm_lead', 'payBalance!=0 and Counsilor="' . $_SESSION['ID'] . '" and dueDate="' . date('Y-m-d') . '"');
+                          }
+                          if ($bal->num_rows) {
+                            while ($bal1 = $bal->fetch_array()) {
+                          ?>
+                              <li>
+                                <div class="article-post">
+                                  <div class="row">
+                                    <div class="col-8"><?= $bal1['fname']; ?></div>
+                                    <div class="col-4">AED <?= $bal1['payBalance']; ?></div>
+                                  </div>
+                                </div>
+                              </li>
+                            <?php }
+                          } else { ?>
+                            <li>
+                              <div class="article-post">
+                                <div class="row">
+                                  <div class="col-8">NO DATA FOUND</div>
+                                </div>
+                              </div>
+                            </li>
+                          <?php } ?>
+                        </ul>
+                      </div>
+                    </div>
                   <!-- /.col -->
                 </div>
                 <!-- /.row -->
@@ -386,7 +425,7 @@ span.fc-title {
 <!-- AdminLTE for demo purposes -->
 <!-- <script src="theme/dist/js/demo.js"></script> -->
 <!-- fullCalendar 2.2.5 -->
-<script src='http://fullcalendar.io/js/fullcalendar-2.2.5/fullcalendar.min.js'></script>
+<script src='js/fullcalendar.min.js'></script>
 
 <!-- <script src="theme/plugins/fullcalendar-daygrid/main.min.js"></script> -->
 <!-- <script src="../plugins/fullcalendar-timegrid/main.min.js"></script> -->
