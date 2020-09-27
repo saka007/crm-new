@@ -18,7 +18,7 @@ if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 } else if ($_SESSION['TYPE'] == "BM") {
 	// echo "sas";
 	$toth = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Hot" and region=' . $_SESSION["REGION"]);
-	$toth1 = $totl->fetch_array();
+	$toth1 = $toth->fetch_array();
 } else {
 	$toth = $obj->display3('select count(*) as count from dm_lead where lead_category="Hot" and counsilor=' . $_SESSION["ID"]);
 	$toth1 = $toth->fetch_array();
@@ -30,7 +30,7 @@ if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 } else if ($_SESSION['TYPE'] == "BM") {
 	// echo "sas";
 	$totw = $obj->display3('select count(*) as count from dm_lead WHERE lead_category="Warm" and region=' . $_SESSION["REGION"]);
-	$totw1 = $totl->fetch_array();
+	$totw1 = $totw->fetch_array();
 } else {
 	$totw = $obj->display3('select count(*) as count from dm_lead where lead_category="Warm" and counsilor=' . $_SESSION["ID"]);
 	$totw1 = $totw->fetch_array();
