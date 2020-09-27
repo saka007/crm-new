@@ -480,7 +480,7 @@ $(document).ready(function () {
             var deleteMsg = confirm("Do you want to go to lead management page?");
             if (deleteMsg) {
                 //  window.location.href = "lead_view.php?lead="+event.title;
-                 window.location.href = "book_meeting.php";
+                 window.location.href = "book_meetings.php";
                 // $('#calendar').fullCalendar('removeEvents', event.id);
                 // displayMessage("Deleted Successfully");
 
