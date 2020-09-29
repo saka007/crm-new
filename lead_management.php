@@ -59,6 +59,21 @@ if ($_POST['save'] || $_POST['submit']) {
 		);
 		$odr = $obj->insert('dm_lead', $data);
 
+		if ($_POST['mdate'] != "") {
+			$data = array(
+				'leadid' => $_POST['id'],
+				'date' => date('Y-m-d', strtotime($_POST['mdate'])),
+				'counsilorid' => $_POST['assign'],
+				'booked' => 1,
+				'type' => $_POST['mtype'],
+				'time' => $_POST['time'],
+				'region' => $emp1['region']
+			);
+			// print_r($data);die;
+			// echo date('Y-m-d',strtotime($_REQUEST['date']));die;
+			$obj->insert('appointments', $data);
+		}
+
 
 		if ($_POST['remark'] != "") {
 			$data4 = array(
@@ -293,6 +308,38 @@ if ($_POST['save'] || $_POST['submit']) {
 									</div>
 								</div>
 
+								<div class="row">
+									<div class="col-sm-6">
+										<h4 class="mb-3">Book Meeting</h4>
+									</div>
+
+								</div>
+								
+								<div class="row">
+
+								<div class="col-sm-4 form-group"><label>Meeting Date</label>
+									<div class="input-group date" id="mdate" data-target-input="nearest">
+										<input type="text" class="form-control datetimepicker-input" name="mdate" data-target="#mdate" />
+										<div class="input-group-append" data-target="#mdate" data-toggle="datetimepicker">
+											<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+										</div>
+									</div>
+								</div>
+
+								<div class="col-sm-4 form-group"><label>Meeting Time</label>
+								<input type="text" class="form-control" id="time" name="time" value="">
+								</div>
+
+								<div class="col-sm-4 form-group"><label>Meeting Type</label>
+									<select class="form-control" id="mtype<?php echo $row['id']; ?>" name="mtype">
+										<option value="">Select</option>
+										<option value="zoom">Zoom</option>
+										<option value="in_office">In office</option>
+										<option value="walk_in">Walk In</option>
+									</select>
+								</div>
+								
+							</div>
 
 
 

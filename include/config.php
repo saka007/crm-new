@@ -185,7 +185,7 @@ public function pagination($query, $per_page,$page, $url){
 
 
 // $obj = new Functions("localhost","mydmcons_dm","!XM~F)xRX}.r","mydmcons_dm");
-$obj = new Functions("localhost","root","","gm_server");	
+$obj = new Functions("localhost","root","","gm");	
 
 if(dirname($_SERVER['PHP_SELF']) == '/') { $dir="";} else { $dir=dirname($_SERVER['PHP_SELF']);}
 

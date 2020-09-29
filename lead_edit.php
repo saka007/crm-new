@@ -1,6 +1,11 @@
 <?php
 include_once("head.php");
 
+if(isset($_GET['not'])) {
+	$data = array('notfr' => 0 );
+	$obj->update('dm_lead_remark', $data, 'id='.$_GET['not']);
+}
+
 if ($_POST['save'] || $_POST['submit']) {
 	$emp = $obj->display('dm_employee', 'id=' . $_POST['assign']);
 	$emp1 = $emp->fetch_array();
@@ -76,9 +81,16 @@ if ($_POST['save'] || $_POST['submit']) {
 			'`lead`'  =>  $_POST['id'],
 			'`date`'  =>  date('Y-m-d'),
 			'`remark`'  =>  $_POST['remark'],
-			'`emp`' => $_SESSION['LOG_USER']
+			'`emp`' => $_SESSION['LOG_USER'],
 		);
-		$obj->insert('dm_lead_remark', $data4);
+		$rmr=$obj->insert('dm_lead_remark', $data4);
+	}
+
+	if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM") {
+		$data5 = array(
+		'notfr' => 1,
+		);
+		$obj->update('dm_lead_remark', $data5, 'id='. $rmr);
 	}
 
 	if ($_POST['mdate'] != "") {
