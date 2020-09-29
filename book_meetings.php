@@ -247,6 +247,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
                                         <th>Client Name</th>
                                         <th>Counsultant</th>
                                         <th>Date</th>
+                                        <th>time</th>
                                         <th>Status</th>
                                         <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
 		      	<th>Click if Appointment Done</th>
@@ -277,10 +278,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
                                       <td><?=$row['fname'].''.$row['lname'];?></td>
                                       <td><?=$em1['name'];?></td>
                                       <td><?=$row['date'];?></td>
+                                      <td><?=$row['time'];?></td>
                                       <td><?php if($row['done']==1) { echo "Done"; } else { echo "Not Done"; }?></td>
                                       <?php if($_SESSION['TYPE']=='RM' || $_SESSION['TYPE']=='SA' || $_SESSION['TYPE']=='BM'){ ?>
-						    	<td><a href="appointment.php?l=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a></td>
-						    	<td><a href="appointment.php?ld=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a></td>
+                                      <td><?php if($row['done']==NULL && $row['not_done']==NULL) { ?><a href="appointment.php?l=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a><?php } ?></td>
+                                      <td><?php if($row['done']==NULL && $row['not_done']==NULL) { ?><a href="appointment.php?ld=<?php echo $row['apid'];  ?>" onclick="confirmation(event)" class="btn btn-primary">Done</a><?php } ?></td>
 						    <?php } ?>
                                       <td><?=$row['mtype'];?></td>
                                     </tr>

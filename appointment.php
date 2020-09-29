@@ -6,6 +6,7 @@ $data = array(
 	'counsilorid' => $_REQUEST['emp'],
 	'booked' => 1,
 	'type' =>$_REQUEST['type'],
+	'time' => $_REQUEST['time'],
 	'region' => $_REQUEST['region']
 	 );
 // print_r($data);die;

@@ -559,6 +559,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																			<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 																		</div>
 																	</div>
+																	<input type="text" class="form-control" id="time" name="time" value="" placeholder="Mention Time">
 																	<!-- <input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id']; ?>"> -->
 																	<div class="col-sm-3 form-group"><label>Meeting Type</label>
 																		<select class="form-control" id="mtype<?php echo $row['id']; ?>" name="mtype">
@@ -573,7 +574,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																	<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
 																	<!-- <button type="button" class="btn btn-primary">Save changes</button> -->
 																	<!-- appointment.php?lead=<?php echo $row['id'];  ?>&counsilor=<?php echo $row['Counsilor']; ?>&date= -->
-																	<a href="#" onclick="confirmation(event,<?php echo $row['id'];  ?>,<?php echo $row['Counsilor']; ?>,$('#datepicker<?php echo $row['id']; ?>').val(),$('#mtype<?php echo $row['id']; ?>').val(),<?php echo $row['region']; ?>)" class="btn btn-primary">Book</a>
+																	<a href="#" onclick="confirmation(event,<?php echo $row['id'];  ?>,<?php echo $row['Counsilor']; ?>,$('#datepicker<?php echo $row['id']; ?>').val(),$('#mtype<?php echo $row['id']; ?>').val(),<?php echo $row['region']; ?>,$('#time').val())" class="btn btn-primary">Book</a>
 																</div>
 															</div>
 														</div>
@@ -589,9 +590,15 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																allowInputToggle: true,
 																// defaultDate: moment()
 															});
+															$('#timepicker<?php echo $row['id']; ?>').timepicker({
+																// format: 'DD-MM-YYYY',
+																uiLibrary: 'bootstrap4',
+																allowInputToggle: true,
+																// defaultDate: moment()
+															});
 														});
 
-														function confirmation(ev, l, c, d, t, r) {
+														function confirmation(ev, l, c, d, t, r,time) {
 															ev.preventDefault();
 															if (!d) {
 																Swal.fire('Please enter date');
@@ -625,7 +632,8 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																			type: t,
 																			date: d,
 																			emp: c,
-																			region: r
+																			region: r,
+																			time:time
 																		},
 																		sucess: function(data) {
 																			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')

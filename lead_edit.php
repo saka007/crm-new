@@ -88,6 +88,7 @@ if ($_POST['save'] || $_POST['submit']) {
 			'counsilorid' => $_POST['assign'],
 			'booked' => 1,
 			'type' => $_POST['mtype'],
+			'time' => $_POST['time'],
 			'region' => $emp1['region']
 		);
 		// print_r($data);die;
@@ -336,6 +337,10 @@ $reg1 = $reg->fetch_array();
 									</div>
 								</div>
 
+								<div class="col-sm-4 form-group"><label>Meeting Time</label>
+								<input type="text" class="form-control" id="time" name="time" value="">
+								</div>
+
 								<div class="col-sm-4 form-group"><label>Meeting Type</label>
 									<select class="form-control" id="mtype<?php echo $row['id']; ?>" name="mtype">
 										<option value="">Select</option>
@@ -344,6 +349,7 @@ $reg1 = $reg->fetch_array();
 										<option value="walk_in">Walk In</option>
 									</select>
 								</div>
+								
 							</div>
 
 							<div class="row">
