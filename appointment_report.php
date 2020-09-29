@@ -30,59 +30,59 @@
 				<div class="col-lg-12 col-md-12 col-sm-12">
 					<!-- /.card -->
 					<div class="card">
-					<div class="card-header"><h4 class="mb-3">Meeting Report (Counselor Wise)</h4></div></div> 
-<form name="search" action="" method="post">
+					   <div class="card-header">
+						 <h4 class="mb-3">Meeting Report (Counselor Wise)</h4>
+					    </div>
+					   
+						<div class="card-body">
+				
+				<form name="search" action="" method="post">
 
-<div class="row">
+				<div class="row">
 
-<div class="col-sm-2 form-group">
+				<div class="col-sm-2 form-group">
 
-<label >Start Date</label>
+				<label >Start Date</label>
+					<div class="input-group date" id="sdate" data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
+																																else  echo date('d-m-Y') ?>" />
+						<div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>
+					</div>
+				</div>
+				<div class="col-sm-2 form-group">
+				<label >End Date</label>
+						<div class="input-group date" id="edate" data-target-input="nearest">
+						<input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
+																																else  echo date('d-m-Y') ?>" />
+						<div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
+							<div class="input-group-text"><i class="fa fa-calendar"></i></div>
+						</div>
+					</div>
 
+				</div>
+				<?php if($_SESSION['TYPE']=="SA"){ ?>
+				<div class="col-sm-2 form-group"><label>Region</label>
+				<select class="form-control" name="region" id="region" >
+					<option value="">Select</option>
+					<?php $sou=$obj->display('dm_region','status=1 order by name');
+					while($sou1=$sou->fetch_array())
+					{
+					?>
+					<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
+					<?php } ?>
+					</select>
+				</div>
+				<?php } ?>
 
-	<div class="input-group date" id="sdate" data-target-input="nearest">
-		<input type="text" class="form-control datetimepicker-input" name="sdate" data-target="#sdate" value="<?php if ($_POST['sdate']) echo $_POST['sdate'];
-																												else  echo date('d-m-Y') ?>" />
-		<div class="input-group-append" data-target="#sdate" data-toggle="datetimepicker">
-			<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-		</div>
-	</div>
-</div>
+				<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
 
-<div class="col-sm-2 form-group">
+				</div>
 
-<label >End Date</label>
+				</form>
 
-<div class="input-group date" id="edate" data-target-input="nearest">
-															<input type="text" class="form-control datetimepicker-input" name="edate" data-target="#edate" value="<?php if ($_POST['edate']) echo $_POST['edate'];
-																																									else  echo date('d-m-Y') ?>" />
-															<div class="input-group-append" data-target="#edate" data-toggle="datetimepicker">
-																<div class="input-group-text"><i class="fa fa-calendar"></i></div>
-															</div>
-														</div>
-
-</div>
-<?php if($_SESSION['TYPE']=="SA"){ ?>
-<div class="col-sm-2 form-group"><label>Region</label>
-<select class="form-control" name="region" id="region" >
-	<option value="">Select</option>
-	<?php $sou=$obj->display('dm_region','status=1 order by name');
-	while($sou1=$sou->fetch_array())
-	{
-	?>
-	<option value="<?php echo $sou1['id'];?>"  <?php if($sou1['id']==$_POST['region']) { echo 'selected="selected"';}?>><?php echo $sou1['name'];?></option>
-	<?php } ?>
-	</select>
-</div>
-<?php } ?>
-
-<div class="col-sm-2 form-group"><label>&nbsp;</label><br /><input type="submit" class="btn btn-info" name="search" value="Search" ></div>
-
-</div>
-
-</form>
-
-<?php if($_POST){ 
+<?php if($_POST) { 
 	$query= ' and 1=1';
 	if($_POST['region']!="") { 	$query =" and region=".$_POST['region'];}
 	?>
@@ -132,14 +132,29 @@
 							?>
 						</tbody>	
 						</table>
+						<?php } ?>
 						</div>
-						</div>
-						</div>
-						</div>
+						<!-- /.card-body -->
+					</div>
+					<!-- /.card -->
+				</div>
+				<!-- /.col -->
+			</div>
+			<!-- /.row -->
+		</div>
+		<!-- /.container-fluid -->
+	</section>
+	<!-- /.content -->
+</div>
 						
-					<?php } ?>
-						<?php include_once('foot.php');?>
-						<script>
+					
+			
+<?php include_once('foot.php');?>
+<script src="theme/plugins/datatables/jquery.dataTables.min.js"></script>
+<script src="theme/plugins/datatables-bs4/js/dataTables.bootstrap4.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/dataTables.responsive.min.js"></script>
+<script src="theme/plugins/datatables-responsive/js/responsive.bootstrap4.min.js"></script>
+<script>
 $(function(){
 // $('#sdate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true}); 
 // $('#edate').datepicker({    format: 'dd-mm-yyyy',	autoclose: true});
@@ -156,18 +171,18 @@ $('#sdate').datetimepicker({
 }); 
 </script>
  
-						<script>
-							$(document).ready(function(){
-								$('#myTable').DataTable({
-									responsive:true,
-									dom:'Bfprt',
-									buttons: [
-            {
-            	extend:'excel',
-            	footer:true,
-            	title:'Lead Report',
-            	messageTop:'Lead Added today'
-            }]
-								});
-								});
-						</script>			
+<script>
+	$(document).ready(function(){
+		$('#myTable').DataTable({
+			responsive:true,
+			//dom:'Bfprt',
+			// buttons: [
+			// 	{
+			// 		extend:'excel',
+			// 		footer:true,
+			// 		title:'Lead Report',
+			// 		messageTop:'Lead Added today'
+			// 	}]
+		});
+		});
+</script>			
