@@ -133,7 +133,11 @@ if ($_POST['save'] || $_POST['submit']) {
 		}*/
 		}
 	} else {
-		header("location:lead_management.php?error=Duplicate entry");
+		$dup = $ext->fetch_array();
+		// echo "<pre>";
+		// print_r($dup['id']);
+		// die;
+		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id ".$dup['id']);
 	}
 }
 ?>
