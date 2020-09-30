@@ -75,7 +75,9 @@ include_once("head.php");
 										<th>Branch</th>
 
 										<th>Department</th>
-
+										<?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") { ?>
+											<th>Designation</th>
+										<?php } ?>
 										<th>PPNo.</th>
 
 										<th>Visa Exp.</th>
@@ -125,7 +127,9 @@ include_once("head.php");
 											<td><?php $d = $obj->display("dm_department", "id=" . $res2['department']);
 												$d2 = $d->fetch_array();
 												echo $d2['name']; ?></td>
-
+											<?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") { ?>
+												<td><?= $res2['designation']; ?></td>
+											<?php } ?>
 											<td><?= $res2['ppNo']; ?></td>
 
 											<td><?= date('d-m-Y', strtotime($res2['visaExp'])); ?></td>
@@ -267,7 +271,12 @@ include_once("head.php");
 																				<?php } ?>
 																			</select>
 																		</div>
-
+																		<?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") { ?>
+																			<div class="form-group col-sm-4">
+																				<label>Designation</label>
+																				<input type="text" class="form-control" name="designation" value="<?= $res2['designation'] ?>" />
+																			</div>
+																		<?php } ?>
 																		<div class="form-group col-sm-4">
 																			<label>Passport No.</label>
 																			<input type="text" class="form-control" name="ppNo" value="<?= $res2['ppNo'] ?>" />
@@ -556,6 +565,12 @@ include_once("head.php");
 								<?php } ?>
 							</select>
 						</div>
+						<?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") { ?>
+							<div class="form-group col-sm-4">
+								<label>Designation</label>
+								<input type="text" class="form-control" name="designation" />
+							</div>
+						<?php } ?>
 						<div class="form-group col-sm-4">
 							<label>Passport No.</label>
 							<input type="text" class="form-control" name="ppNo" />

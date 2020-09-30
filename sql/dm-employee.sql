@@ -1,0 +1,1 @@
+ALTER TABLE `dm_employee` ADD `designation` VARCHAR(255) NULL DEFAULT NULL AFTER `region`;
