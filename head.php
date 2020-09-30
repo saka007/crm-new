@@ -396,6 +396,60 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
 <?php } ?>
 
+<?php if($_SESSION['TYPE']=="RM") { ?>
+            <li class="nav-item has-treeview">
+              <a href="#" class="nav-link">
+                <i class="nav-icon fas fa-copy"></i>
+                <p>
+                  Admin Setup
+                  <i class="fas fa-angle-left right"></i>
+                  <!-- <span class="badge badge-info right">6</span> -->
+                </p>
+              </a>
+              <ul class="nav nav-treeview">
+                <!-- <li class="nav-item">
+                  <a href="lead_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add New Lead</p>
+                  </a>
+                </li> -->
+         
+           
+            <li class="nav-item">
+              <a class="nav-link" href="service_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Service Management</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="country_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Country Management</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="enquiry_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Lead Inquiry Management</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="source_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Lead Source Management</span></a>
+            </li>
+
+            <li class="nav-item">
+              <a class="nav-link" href="contract_file_list.php">
+              <i class="far fa-circle nav-icon"></i>
+                <span>Manage Agreements</span></a>
+            </li>
+
+              </ul>
+            </li>
+
+<?php } ?>
+
           <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
@@ -585,7 +639,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-            <?php if($_SESSION['TYPE']=="SA") { ?>
+            <?php if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM") { ?>
             <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
