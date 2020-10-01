@@ -9,6 +9,12 @@ include_once("head.php");
 if ($_POST['save'] || $_POST['submit']) {
 	$ext = $obj->display('dm_lead', 'email="' . $_POST['email'] . '" or mobile="' . $_POST['mobile'] . '"');
 	if ($ext->num_rows == 0) {
+		$curr_id = $_SESSION["ID"];
+		
+		if($_POST['assign'] == "") {
+			$_POST['assign'] = $curr_id;
+		}
+		
 		$emp = $obj->display('dm_employee', 'id=' . $_POST['assign']);
 		if ($emp->num_rows > 0) {
 			$emp1 = $emp->fetch_array();
