@@ -156,6 +156,15 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
     border-color: #000000 !important;
     box-shadow: none;
   }
+
+  .user-panel img {
+    height: auto;
+    width: 3.1rem !important;
+  }
+
+  .img-circle {
+    border-radius: 30% !important;
+  }
 </style>
 
 <body id="page-top">
@@ -294,8 +303,16 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-          </div>
+          <?php
+            $user_image = $obj->display3('select photo from dm_employee where id=' . $_SESSION['ID']);
+            if ($user_image->num_rows > 0) {
+              $user_image1 = $user_image->fetch_array();
+            ?>
+             <img src="uploads/employee/<?php echo $user_image1['photo'];?>" class="img-circle elevation-2" alt="User Image"> 
+          <?php  } else { ?>
+             <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+           <?php } ?>
+           </div>
           <div class="info">
             <?php
             $user_designation = $obj->display3('select name from dm_role where id=' . $_SESSION['ROLE']);
