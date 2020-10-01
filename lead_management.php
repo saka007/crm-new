@@ -576,6 +576,12 @@ if ($_POST['save'] || $_POST['submit']) {
 			// defaultDate: moment()
 		});
 
+		$('#mdate').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
 	});
 </script>
 <?php } else { ?>
