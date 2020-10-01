@@ -133,6 +133,7 @@ if ($_POST['save'] || $_POST['submit']) {
 		}*/
 		}
 	} else {
+		
 		$dup = $ext->fetch_array();
 		// echo "<pre>";
 		// print_r($dup['id']);
@@ -331,7 +332,7 @@ if ($_POST['save'] || $_POST['submit']) {
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Time</label>
-								<input type="text" class="form-control" id="time" name="time" value="">
+								<input type="time" class="form-control" id="time" name="time" value="">
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Type</label>
@@ -701,6 +702,12 @@ if ($_POST['save'] || $_POST['submit']) {
 		});
 
 		$('#mobiles').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
+		$('#mdate').datetimepicker({
 			format: 'DD-MM-YYYY',
 			allowInputToggle: true,
 			// defaultDate: moment()
