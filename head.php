@@ -304,14 +304,18 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
           <?php
+            
+           
+
             $user_image = $obj->display3('select photo from dm_employee where id=' . $_SESSION['ID']);
             if ($user_image->num_rows > 0) {
               $user_image1 = $user_image->fetch_array();
+              if ($user_image1['photo'] != '') {
             ?>
              <img src="uploads/employee/<?php echo $user_image1['photo'];?>" class="img-circle elevation-2" alt="User Image"> 
-          <?php  } else { ?>
+          <?php } else { ?>
              <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-           <?php } ?>
+           <?php }  }  ?>
            </div>
           <div class="info">
             <?php
