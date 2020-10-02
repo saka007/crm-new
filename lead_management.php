@@ -10,7 +10,7 @@ if ($_POST['save'] || $_POST['submit']) {
 	$ext = $obj->display('dm_lead', 'email="' . $_POST['email'] . '" or mobile="' . $_POST['mobile'] . '"');
 	if ($ext->num_rows == 0) {
 		$curr_id = $_SESSION["ID"];
-		
+
 		if($_POST['assign'] == "") {
 			$_POST['assign'] = $curr_id;
 		}
@@ -141,10 +141,11 @@ if ($_POST['save'] || $_POST['submit']) {
 	} else {
 		
 		$dup = $ext->fetch_array();
-		// echo "<pre>";
-		// print_r($dup['id']);
-		// die;
-		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id ".$dup['id']);
+		$assignee = $obj->display('dm_employee', 'id=' . $dup['assignTo']);
+		if ($assignee->num_rows > 0) {
+			$assignee1 = $assignee->fetch_array();
+		}
+		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id <strong><i>".$dup['id']." </i></strong> and assigned to <strong><i>".$assignee1['name']."</i></strong><br><a href='/lead_view.php?lead=". $dup['id']."'>View Lead</a>");
 	}
 }
 ?>
