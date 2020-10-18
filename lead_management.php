@@ -82,24 +82,22 @@ if ($_POST['save'] || $_POST['submit']) {
 
 
 		if ($_POST['remark'] != "") {
-			$data4 = array(
+			$data4 = array (
 				'`lead`'  =>  $odr,
 				'`date`'  =>  date('Y-m-d'),
 				'`remark`'  =>  $_POST['remark'],
 				'`emp`' => $_SESSION['LOG_USER']
 			);
 			$obj->insert('dm_lead_remark', $data4);
-		}
-		if ($_POST['remark'] != "") {
 			$data5 =  array(
 				'notf' => 1
 			);
-			$obj->update('dm_lead', $data5, 'id=$odr');
+			$obj->update('dm_lead', $data5, 'id='.$odr);
 		}
 
 		if ($_POST['appoint'] != "") {
 			$data = array(
-				'leadid' => $_POST['id'],
+				'leadid' => $odr,
 				'date' => date('Y-m-d', strtotime($_POST['appoint'])),
 				'counsilorid' => $_POST['assign'],
 				'booked' => 1,
@@ -326,7 +324,7 @@ if ($_POST['save'] || $_POST['submit']) {
 									</div>
 
 								</div>
-								
+
 								<div class="row">
 
 								<div class="col-sm-4 form-group"><label>Meeting Date</label>
