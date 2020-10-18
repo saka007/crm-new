@@ -1,4 +1,7 @@
 <?php include_once("head.php");
+require './vendor/autoload.php';
+
+use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
 
 if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 	$totl = $obj->display3('select count(*) as count from dm_lead');
@@ -46,30 +49,179 @@ if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 	$totc = $obj->display3('select count(*) as count from dm_lead where lead_category="Cold" and counsilor=' . $_SESSION["ID"]);
 	$totc1 = $totc->fetch_array();
 }
-if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
-	$totcold=$obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
-  $totcold1 = $totcold->fetch_array();
-  }
-  else if ($_SESSION['TYPE'] == "BM") {
+if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+	$totcold = $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
+	$totcold1 = $totcold->fetch_array();
+} else if ($_SESSION['TYPE'] == "BM") {
 	// echo "sas";
-	$totcold=$obj->display3('select count(*) as count from dm_lead where region='.$_SESSION['REGION'].' and lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
-  $totcold1 = $totcold->fetch_array();
+	$totcold = $obj->display3('select count(*) as count from dm_lead where region=' . $_SESSION['REGION'] . ' and lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" ');
+	$totcold1 = $totcold->fetch_array();
+} else {
+	$totcold = $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor=' . $_SESSION["ID"]);
+	$totcold1 = $totcold->fetch_array();
 }
-  else{
-  $totcold= $obj->display3('select count(*) as count from dm_lead where lead_category!="Hot" and lead_category!="Warm" and lead_category!="Cold" and counsilor='.$_SESSION["ID"]);
-  $totcold1 = $totcold->fetch_array();
-  }
 
 // $data = array(
 //    			'notf'  =>  1
 // 			);
 // 	$obj->update('dm_lead',$data,'assignTo='.$_SESSION['ID'].' and notf=0');
+$duplicateRecord = [];
+$skipRecord = [];
+if (isset($_POST["import"])) {
 
+	$allowedFileType = [
+		'application/vnd.ms-excel',
+		'text/xls',
+		'text/xlsx',
+		'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+	];
+
+	if (in_array($_FILES["file"]["type"], $allowedFileType)) {
+
+		$targetPath = 'uploads/' . $_FILES['file']['name'];
+		move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
+
+		$Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
+
+		$spreadSheet = $Reader->load($targetPath);
+		$excelSheet = $spreadSheet->getActiveSheet();
+		$spreadSheetAry = $excelSheet->toArray();
+
+		$sheetCount = count($spreadSheetAry);
+
+		for ($i = 1; $i < $sheetCount; $i++) {
+
+			$fname = isset($spreadSheetAry[$i][0]) ? $spreadSheetAry[$i][0] : '';
+			$mname = isset($spreadSheetAry[$i][1]) ? $spreadSheetAry[$i][1] : '';
+			$lname = isset($spreadSheetAry[$i][2]) ? $spreadSheetAry[$i][2] : '';
+			$email = isset($spreadSheetAry[$i][3]) ? $spreadSheetAry[$i][3] : '';
+			$mobile = isset($spreadSheetAry[$i][4]) ? $spreadSheetAry[$i][4] : '';
+			$alternate_num = isset($spreadSheetAry[$i][5]) ? $spreadSheetAry[$i][5] : '';
+			$nationality = isset($spreadSheetAry[$i][6]) ? $spreadSheetAry[$i][6] : '';
+			$address = isset($spreadSheetAry[$i][7]) ? $spreadSheetAry[$i][7] : '';
+			$dob = isset($spreadSheetAry[$i][8]) ? $spreadSheetAry[$i][8] : '';
+			$gender = isset($spreadSheetAry[$i][9]) ? $spreadSheetAry[$i][9] : '';
+			$country_interest = isset($spreadSheetAry[$i][10]) ? $spreadSheetAry[$i][10] : '';
+			$service_interest = isset($spreadSheetAry[$i][11]) ? $spreadSheetAry[$i][11] : '';
+			$relative = isset($spreadSheetAry[$i][12]) ? $spreadSheetAry[$i][12] : '';
+			$market_source = isset($spreadSheetAry[$i][13]) ? $spreadSheetAry[$i][13] : '';
+			$mstatus = isset($spreadSheetAry[$i][14]) ? $spreadSheetAry[$i][14] : '';
+			$fnames = isset($spreadSheetAry[$i][15]) ? $spreadSheetAry[$i][15] : '';
+			$emails = isset($spreadSheetAry[$i][16]) ? $spreadSheetAry[$i][16] : '';
+			$phones = isset($spreadSheetAry[$i][17]) ? $spreadSheetAry[$i][17] : '';
+			$mobiles = isset($spreadSheetAry[$i][18]) ? $spreadSheetAry[$i][18] : '';
+			$sedu = isset($spreadSheetAry[$i][19]) ? $spreadSheetAry[$i][19] : '';
+			$kids = isset($spreadSheetAry[$i][20]) ? $spreadSheetAry[$i][20] : '';
+			$sexp = isset($spreadSheetAry[$i][21]) ? $spreadSheetAry[$i][21] : '';
+			// $mdate = isset($spreadSheetAry[$i][21]) ? $spreadSheetAry[$i][21] : '';
+			// $time = isset($spreadSheetAry[$i][22]) ? $spreadSheetAry[$i][22] : '';
+			// $mtype = isset($spreadSheetAry[$i][23]) ? $spreadSheetAry[$i][23] : '';
+			$lead_category = isset($spreadSheetAry[$i][22]) ? $spreadSheetAry[$i][22] : '';
+			$enquiry = isset($spreadSheetAry[$i][23]) ? $spreadSheetAry[$i][23] : '';
+
+
+			if ($email === '' || $mobile === '') {
+				array_push($skipRecord, $i);
+				$skip_error = "skip-error";
+				$message_skip = "Record Skip";
+				continue;
+			}
+
+			$ext = $obj->display('dm_lead', 'email="' . $email . '" or mobile="' . $mobile . '"');
+
+			if ($ext->num_rows == 0) {
+			
+				if ($dob != "") {
+					$dob = date('Y-m-d', strtotime($dob));
+				}
+
+				$data = array(
+					'fname'  =>  $fname,
+					'mname'  =>  $mname,
+					'lname'  =>  $lname,
+					'email'  =>  $email,
+					'phone'  =>  $alternate_num,
+					'mobile'  =>  $mobile,
+					'nationality'  =>  $nationality,
+					'address'  =>  $address,
+					'dob'  =>  $dob,
+					'gender'  =>  $gender,
+					'country_interest'  =>  $country_interest,
+					'service_interest'  =>  $service_interest,
+					'relative' => $relative,
+					'market_source'  =>  $market_source,
+					'mstatus' => $mstatus,
+					//spouse data
+					'fnames' => $fnames,
+					'emails' => $emails,
+					'phones' => $phones,
+					'mobiles' => $mobiles,
+					'sedu' => $sedu,
+					'kids' => $kids,
+					'sexp' => $sexp,
+					//end
+					'lead_category' => $lead_category,
+					'enquiry'  =>  $enquiry,
+					'assignTo'  =>  $_SESSION["ID"],
+					'Counsilor'  =>  $_SESSION["ID"],
+					// 'appointment'  =>  $appointment, no entry on add new page
+					'regdate'  =>  date('Y-m-d'),
+					'last_updated' => date('d-m-Y h-i-sa'),
+					// 'followup'  =>  date('Y-m-d', strtotime($_POST['followup'])), no entry on add new page
+					// 'convet'  =>  $_POST['convet'], no entry on add new page
+					// 'type'  =>  $_POST['type'],no entry on add new page
+					'branch'  =>  $_SESSION["BRANCH"],
+					'region'  =>  $_SESSION["REGION"]
+				);
+				$odr = $obj->insert('dm_lead', $data);
+
+				if (!empty($odr)) {
+					$type = "success";
+					$message = "Excel Data Imported into the Database";
+				} else {
+					$type = "error";
+					$message = "Problem in Importing Excel Data";
+				}
+			} else {
+				array_push($duplicateRecord, $i);
+				$duplicate_error = "duplicate-error";
+				$message_dup = "Duplicate error";
+			}
+		}
+	} else {
+		$type = "error";
+		$message = "Invalid File Type. Upload Excel File.";
+	}
+}
 ?>
+
 
 <link rel="stylesheet" href="theme/plugins/datatables-bs4/css/dataTables.bootstrap4.min.css">
 <link rel="stylesheet" href="theme/plugins/datatables-responsive/css/responsive.bootstrap4.min.css">
+<style>
+	#response {
+		padding: 5px;
+		margin-top: 0px;
+		border-radius: 2px;
+		display: none;
+	}
 
+	.success {
+		background: #c7efd9;
+		border: #bbe2cd 1px solid;
+	}
+
+	.duplicate-error,
+	.skip-error,
+	.error {
+		background: #fbcfcf;
+		border: #f3c6c7 1px solid;
+	}
+
+	div#response.display-block {
+		display: block;
+	}
+</style>
 <!-- Begin Page Content -->
 <div class="content-wrapper">
 	<section class="content-header">
@@ -91,63 +243,96 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-lg-12 col-md-12 col-sm-12">
+					<div id="response" class="<?php if (!empty($type)) {
+													echo $type . " display-block";
+												} ?>"><?php if (!empty($message)) {
+															echo $message;
+														} ?></div>
+					<div id="response" class="<?php if (!empty($duplicate_error)) {
+													echo $duplicate_error . " display-block";
+												} ?>"><?php if (!empty($duplicateRecord)) {
+															// echo $message_dup;
+															echo "Total Duplicate Entry Count " . count($duplicateRecord);
+															echo "<br>Duplicate Entry Record Number ";
+															foreach ($duplicateRecord as $key => $value) {
+																echo $value + 1 . "&nbsp;&nbsp;";
+															}
+														} ?></div>
+					<div id="response" class="<?php if (!empty($skip_error)) {
+													echo $skip_error . " display-block";
+												} ?>"><?php if (!empty($message_skip)) {
+															// echo $message_skip;
+															echo "Total Skipped Count " . count($skipRecord);
+															echo "<br>Skipped Entry Record Number ";
+															foreach ($skipRecord as $key => $value) {
+																echo $value + 1 . "&nbsp;&nbsp;";
+															}
+														} ?></div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section class="content">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-lg-12 col-md-12 col-sm-12">
 					<!-- /.card -->
 					<div class="card">
 						<div class="card-header">
 							<div class="row">
-							<div class="col-lg-2 col-6">
-							<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?= $totl1['count']; ?></h3>
-                                    <p>Total Leads</p>
-                                 </div>
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $totl1['count']; ?></h3>
+											<p>Total Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>	
 
-							 <div class="col-lg-2 col-6">
-								<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?= $cl1['count']; ?></h3>
-                                    <p>New Leads</p>
-                                 </div>
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $cl1['count']; ?></h3>
+											<p>New Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>
 
-							 <div class="col-lg-2 col-6">
-								<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?= $toth1['count']; ?></h3>
-                                    <p>Hot Leads</p>
-                                 </div>
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $toth1['count']; ?></h3>
+											<p>Hot Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>
 
-							 <div class="col-lg-2 col-6">
-								<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?= $totw1['count']; ?></h3>
-                                    <p>Warm Leads</p>
-                                 </div>
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $totw1['count']; ?></h3>
+											<p>Warm Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>
 
-							 <div class="col-lg-2 col-6">
-								<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?= $totc1['count']; ?></h3>
-                                    <p>Cold Leads</p>
-                                 </div>
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $totc1['count']; ?></h3>
+											<p>Cold Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>
-							 
-							 <div class="col-lg-2 col-6">
-								<div class="small-box bg-info">
-                                <div class="inner">
-                                    <h3><?=$totcold1['count'];?></h3>
-                                    <p>Other Leads</p>
-                                 </div>
+
+								<div class="col-lg-2 col-6">
+									<div class="small-box bg-info">
+										<div class="inner">
+											<h3><?= $totcold1['count']; ?></h3>
+											<p>Other Leads</p>
+										</div>
+									</div>
 								</div>
-							 </div>
 
 								<!-- <div class="col-md-2 col-xs-6 border-right">
 									<h3 class="bold no-mtop"><?= $totl1['count']; ?></h3>
@@ -175,11 +360,11 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 										Cold Leads </p>
 								</div>
 								<div class="col-md-2 col-xs-6 border-right">
-							<h3 class="bold no-mtop"><?=$totcold1['count'];?></h3>
+							<h3 class="bold no-mtop"><?= $totcold1['count']; ?></h3>
 							<p style="color:#2d2d2d" class="font-medium no-mbot">
 								Other Leads     </p>
 							</div> -->
-							
+
 							</div>
 
 							<div class="row">
@@ -236,46 +421,46 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																			echo 'selected="selected"';
 																		} ?>>DNQ</option>
 													<option value="DNQ_AGE" <?php if ($_POST['typeofl'] == "DNQ_AGE") {
-																			echo 'selected="selected"';
-																		} ?>>DNQ AGE</option>
+																				echo 'selected="selected"';
+																			} ?>>DNQ AGE</option>
 													<option value="DNQ_Qualification" <?php if ($_POST['typeofl'] == "DNQ_Qualification") {
-																			echo 'selected="selected"';
-																		} ?>>DNQ Qualification</option>
+																							echo 'selected="selected"';
+																						} ?>>DNQ Qualification</option>
 													<option value="no_response" <?php if ($_POST['typeofl'] == "no_response") {
-																			echo 'selected="selected"';
-																		} ?>>No Response</option>
+																					echo 'selected="selected"';
+																				} ?>>No Response</option>
 													<option value="not_interested" <?php if ($_POST['typeofl'] == "not_interested") {
-																			echo 'selected="selected"';
-																		} ?>>Not Interested</option>
+																						echo 'selected="selected"';
+																					} ?>>Not Interested</option>
 													<option value="call_back" <?php if ($_POST['typeofl'] == "call_back") {
-																			echo 'selected="selected"';
-																		} ?>>Call Back</option>
+																					echo 'selected="selected"';
+																				} ?>>Call Back</option>
 													<option value="invalid_number" <?php if ($_POST['typeofl'] == "invalid_number") {
-																			echo 'selected="selected"';
-																		} ?>>Invalid Number</option>																		
+																						echo 'selected="selected"';
+																					} ?>>Invalid Number</option>
 												</select>
 
 											</div>
-											<?php if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM" || $_SESSION['TYPE']=="BM") { ?>
-											<div class="col-sm-3 form-group"><label>Counsultant</label>
-												<select class="form-control" name="counsilor" id="counsilor">
-													<option value="">Select</option>
-													<?php
-													if ($_POST['region'] != "") {
-														$qry = " and region=" . $_POST['region'];
-													}
-													if ($_SESSION['TYPE']=="BM"){
-														$qry = " and region=" . $_SESSION['REGION'];
-													}
-													$emp = $obj->display('dm_employee', 'status=1 '. $qry .' order by name');
-													while ($emp1 = $emp->fetch_array()) {
-													?>
-														<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_POST['counsilor']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
-													<?php }
-													?>
-												</select>
-											</div>
-													<?php } ?> 
+											<?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM" || $_SESSION['TYPE'] == "BM") { ?>
+												<div class="col-sm-3 form-group"><label>Counsultant</label>
+													<select class="form-control" name="counsilor" id="counsilor">
+														<option value="">Select</option>
+														<?php
+														if ($_POST['region'] != "") {
+															$qry = " and region=" . $_POST['region'];
+														}
+														if ($_SESSION['TYPE'] == "BM") {
+															$qry = " and region=" . $_SESSION['REGION'];
+														}
+														$emp = $obj->display('dm_employee', 'status=1 ' . $qry . ' order by name');
+														while ($emp1 = $emp->fetch_array()) {
+														?>
+															<option value="<?php echo $emp1['id']; ?>" <?php if ($emp1['id'] == $_POST['counsilor']) { ?> selected="selected" <?php } ?>><?php echo $emp1['name']; ?></option>
+														<?php }
+														?>
+													</select>
+												</div>
+											<?php } ?>
 
 
 											<!-- <div class="col-sm-3 form-group"><label >Country Interested</label>
@@ -331,7 +516,14 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 							</div>
 						</div>
 						<!-- /.card-header -->
+						<form action="" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
+							<div class="col-sm-12">
+								<input type="file" name="file" id="file" accept=".xls,.xlsx">
+								<button type="submit" id="submit" name="import" class="btn btn-info">Import as Excel</button>
+							</div>
+						</form>
 						<div class="card-body" style="width: 80%;">
+
 							<?php
 							if ($_SESSION['TYPE'] == "IC" || $_SESSION['TYPE'] == "AOM" || $_SESSION['TYPE'] == "SIC"  || $_SESSION['TYPE'] == "MC" || $_SESSION['TYPE'] == "BM" || $_SESSION['TYPE'] == "ABM" || $_SESSION['TYPE'] == "AM"  || $_SESSION['TYPE'] == "RM" || $_SESSION["TYPE"] == "FMP" || $_SESSION["TYPE"] == "DGM" || $_SESSION["TYPE"] == "CPO" || $_SESSION["TYPE"] == "SCPO" || $_SESSION["TYPE"] == "CPM" ||  $_SESSION["TYPE"] == "OM" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "MBI" || $_SESSION["TYPE"] == "PDC" || $_SESSION["TYPE"] == "OC" || $_SESSION["TYPE"] == "HR" ||  $_SESSION["TYPE"] == "TC" ||  $_SESSION["TYPE"] == "RMO" || $_SESSION["TYPE"] == "RMSM") {
 								$query = " and assignTo=" . $_SESSION['ID'];
@@ -351,7 +543,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 							if ($_POST) {
 
 								$query .= " and paidYet=0";
-								if ($_POST['find'] == "") {
+								if ($_POST['find'] == "" && (!isset($_POST["import"]))) {
 									$query .= " and regdate between '" . date('Y-m-d', strtotime($_POST["sdate"])) . "' and '" . date('Y-m-d', strtotime($_POST["edate"])) . "'";
 								}
 								if ($_POST['market_source'] != "") {
@@ -429,12 +621,12 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 									// 		$result = $obj->display('dm_lead', '1=1' . $query . ' order by regdate desc limit 0,100');
 									// 	}
 									// } else {
-										// echo $query;
-										if ($_POST) {
-											$result = $obj->display('dm_lead', '1=1' . $query);
-										} else {
-											$result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
-										}
+									// echo $query;
+									if ($_POST) {
+										$result = $obj->display('dm_lead', '1=1' . $query);
+									} else {
+										$result = $obj->display('dm_lead', '1=1 and notf=0' . $query);
+									}
 									// }
 									if ($result->num_rows > 0) {
 
@@ -463,20 +655,24 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 
 											if ($row['service_interest'] != "") {
 												$ser = $obj->display('dm_service', 'id=' . $row["service_interest"]);
-												if ($ser->num_rows > 0) { $ser1 = $ser->fetch_array(); }
+												if ($ser->num_rows > 0) {
+													$ser1 = $ser->fetch_array();
+												}
 											}
 											if ($row['country_interest'] != "") {
 												$ctr = $obj->display("dm_country_proces", "id=" . $row["country_interest"]);
-												if ($ctr->num_rows > 0) { $ctr1 = $ctr->fetch_array(); }
+												if ($ctr->num_rows > 0) {
+													$ctr1 = $ctr->fetch_array();
+												}
 											}
 											$mak = $obj->display("dm_source", "id=" . $row["market_source"]);
 											if ($mak->num_rows > 0) {
-											  $mak1 = $mak->fetch_array();
+												$mak1 = $mak->fetch_array();
 											}
 
 											$em = $obj->display('dm_employee', 'id=' . $row['Counsilor']);
 											if ($em->num_rows > 0) {
-											 $em1 = $em->fetch_array();
+												$em1 = $em->fetch_array();
 											}
 
 									?>
@@ -522,8 +718,9 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																		while ($rem1 = $rem->fetch_array()) {
 																			echo $rem1['remark'] . ' added By ' . $rem1['emp'] . '  -' . date('d/m/Y', strtotime($rem1['date'])) . '<br>';
 																		}
+																	} else {
+																		echo "No Remarks";
 																	}
-																	else { echo "No Remarks";}
 																	?>
 																</div>
 															</div>
@@ -598,7 +795,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 															});
 														});
 
-														function confirmation(ev, l, c, d, t, r,time) {
+														function confirmation(ev, l, c, d, t, r, time) {
 															ev.preventDefault();
 															if (!d) {
 																Swal.fire('Please enter date');
@@ -633,7 +830,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																			date: d,
 																			emp: c,
 																			region: r,
-																			time:time
+																			time: time
 																		},
 																		sucess: function(data) {
 																			// $('#alert_message').html('<div class=alert alert-success">'+data+'</div>')
