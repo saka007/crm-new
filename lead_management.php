@@ -97,7 +97,7 @@ if ($_POST['save'] || $_POST['submit']) {
 
 		if ($_POST['appoint'] != "") {
 			$data = array(
-				'leadid' => $_POST['id'],
+				'leadid' => $odr,
 				'date' => date('Y-m-d', strtotime($_POST['appoint'])),
 				'counsilorid' => $_POST['assign'],
 				'booked' => 1,
