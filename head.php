@@ -1,4 +1,5 @@
 <?php
+// phpinfo();
 // if($_POST)
 // {
 //   echo $_POST['message'];die;

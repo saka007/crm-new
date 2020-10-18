@@ -350,7 +350,7 @@ $reg1 = $reg->fetch_array();
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Time</label>
-								<input type="text" class="form-control" id="time" name="time" value="">
+								<input type="time" class="form-control" id="time" name="time" value="">
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Type</label>

@@ -559,7 +559,7 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																			<div class="input-group-text"><i class="fa fa-calendar"></i></div>
 																		</div>
 																	</div>
-																	<input type="text" class="form-control" id="time" name="time" value="" placeholder="Mention Time">
+																	<input type="time" class="form-control" id="time" name="time" value="">
 																	<!-- <input type="text" class="form-control datepicker" name="date" id="datepicker<?php echo $row['id']; ?>"> -->
 																	<div class="col-sm-3 form-group"><label>Meeting Type</label>
 																		<select class="form-control" id="mtype<?php echo $row['id']; ?>" name="mtype">
@@ -590,12 +590,12 @@ if ($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
 																allowInputToggle: true,
 																// defaultDate: moment()
 															});
-															$('#timepicker<?php echo $row['id']; ?>').timepicker({
-																// format: 'DD-MM-YYYY',
-																uiLibrary: 'bootstrap4',
-																allowInputToggle: true,
-																// defaultDate: moment()
-															});
+															// $('#timepicker<?php echo $row['id']; ?>').timepicker({
+															// 	// format: 'DD-MM-YYYY',
+															// 	uiLibrary: 'bootstrap4',
+															// 	allowInputToggle: true,
+															// 	// defaultDate: moment()
+															// });
 														});
 
 														function confirmation(ev, l, c, d, t, r,time) {
