@@ -9,6 +9,12 @@ include_once("head.php");
 if ($_POST['save'] || $_POST['submit']) {
 	$ext = $obj->display('dm_lead', 'email="' . $_POST['email'] . '" or mobile="' . $_POST['mobile'] . '"');
 	if ($ext->num_rows == 0) {
+		$curr_id = $_SESSION["ID"];
+
+		if($_POST['assign'] == "") {
+			$_POST['assign'] = $curr_id;
+		}
+		
 		$emp = $obj->display('dm_employee', 'id=' . $_POST['assign']);
 		if ($emp->num_rows > 0) {
 			$emp1 = $emp->fetch_array();
@@ -131,7 +137,13 @@ if ($_POST['save'] || $_POST['submit']) {
 		}*/
 		}
 	} else {
-		header("location:lead_management.php?error=Duplicate entry");
+		
+		$dup = $ext->fetch_array();
+		$assignee = $obj->display('dm_employee', 'id=' . $dup['assignTo']);
+		if ($assignee->num_rows > 0) {
+			$assignee1 = $assignee->fetch_array();
+		}
+		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id <strong><i>".$dup['id']." </i></strong> and assigned to <strong><i>".$assignee1['name']."</i></strong><br><a href='/lead_view.php?lead=". $dup['id']."'>View Lead</a>");
 	}
 }
 ?>
@@ -325,7 +337,7 @@ if ($_POST['save'] || $_POST['submit']) {
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Time</label>
-								<input type="text" class="form-control" id="time" name="time" value="">
+								<input type="time" class="form-control" id="time" name="time" value="">
 								</div>
 
 								<div class="col-sm-4 form-group"><label>Meeting Type</label>
@@ -569,6 +581,12 @@ if ($_POST['save'] || $_POST['submit']) {
 			// defaultDate: moment()
 		});
 
+		$('#mdate').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
 	});
 </script>
 <?php } else { ?>
@@ -695,6 +713,12 @@ if ($_POST['save'] || $_POST['submit']) {
 		});
 
 		$('#mobiles').datetimepicker({
+			format: 'DD-MM-YYYY',
+			allowInputToggle: true,
+			// defaultDate: moment()
+		});
+
+		$('#mdate').datetimepicker({
 			format: 'DD-MM-YYYY',
 			allowInputToggle: true,
 			// defaultDate: moment()

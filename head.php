@@ -7,47 +7,43 @@
 include_once("include/config.php");
 include_once("include/authenticate.php");
 // echo $_SESSION['ID'];
-if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
   $cl = $obj->display3('select count(*) as count from dm_lead where notf=0');
   $cltotal = $obj->display3('select count(*) as count from dm_lead');
   $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0');
-}
-else if($_SESSION['TYPE']=="BM"){
-  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and region='.$_SESSION['REGION']);
-  $cltotal = $obj->display3('select count(*) as count from dm_lead where region='.$_SESSION['REGION']);
-  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and region='.$_SESSION['REGION']);
-}
-else{
-  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor='.$_SESSION['ID']);
-  $cltotal = $obj->display3('select count(*) as count from dm_lead where counsilor='.$_SESSION['ID']);
-  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and counsilor='.$_SESSION['ID']);
+} else if ($_SESSION['TYPE'] == "BM") {
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and region=' . $_SESSION['REGION']);
+  $cltotal = $obj->display3('select count(*) as count from dm_lead where region=' . $_SESSION['REGION']);
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and region=' . $_SESSION['REGION']);
+} else {
+  $cl = $obj->display3('select count(*) as count from dm_lead where notf=0 and counsilor=' . $_SESSION['ID']);
+  $cltotal = $obj->display3('select count(*) as count from dm_lead where counsilor=' . $_SESSION['ID']);
+  $cln = $obj->display3('select count(*) as count from dm_lead where paidYet!=0 and counsilor=' . $_SESSION['ID']);
 }
 
-if($cl->num_rows >0 ){
-$cl1 = $cl->fetch_array();
+if ($cl->num_rows > 0) {
+  $cl1 = $cl->fetch_array();
 }
 
-if($cltotal->num_rows >0 ){
+if ($cltotal->num_rows > 0) {
   $cl1total = $cltotal->fetch_array();
 }
 
-if($cln->num_rows >0 ){
-$cln1 = $cln->fetch_array();
+if ($cln->num_rows > 0) {
+  $cln1 = $cln->fetch_array();
 }
 
-if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
+if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
   $nfl = $obj->display3('select count(*) as count from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1');
-}
-else if($_SESSION['TYPE']=="BM") {
-  $nfl = $obj->display3('select count(*) as count from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and region='.$_SESSION['REGION']);
-}
-else {
-  $nfl = $obj->display3('select count(*) as count from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and counsilor='.$_SESSION['ID']);
+} else if ($_SESSION['TYPE'] == "BM") {
+  $nfl = $obj->display3('select count(*) as count from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and region=' . $_SESSION['REGION']);
+} else {
+  $nfl = $obj->display3('select count(*) as count from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and counsilor=' . $_SESSION['ID']);
 }
 
-if($nfl->num_rows >0 ){
+if ($nfl->num_rows > 0) {
   $nfl1 = $nfl->fetch_array();
-  }
+}
 // echo $cl1['count'];
 
 // $op = $obj->display('dm_ops_skill_canada', "leadId=" . $_SESSION['ID']);
@@ -132,8 +128,8 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
   <!-- <link href="https://cdn.datatables.net/1.10.20/css/jquery.dataTables.min.css" rel="stylesheet"> -->
   <!-- daterangepicker -->
-<script src="theme/plugins/moment/moment.min.js"></script>
-<script src="theme/plugins/daterangepicker/daterangepicker.js"></script>
+  <script src="theme/plugins/moment/moment.min.js"></script>
+  <script src="theme/plugins/daterangepicker/daterangepicker.js"></script>
 
 </head>
 <style>
@@ -154,12 +150,22 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
   #disabled-button-wrapper .btn[disabled] {
     pointer-events: none;
   }
+
   .btn-info {
-  color: #fff;
-  background-color: #007bff !important;
-  border-color: #000000 !important;
-  box-shadow: none;
-}
+    color: #fff;
+    background-color: #007bff !important;
+    border-color: #000000 !important;
+    box-shadow: none;
+  }
+
+  .user-panel img {
+    height: auto;
+    width: 3.1rem !important;
+  }
+
+  .img-circle {
+    border-radius: 30% !important;
+  }
 </style>
 
 <body id="page-top">
@@ -187,13 +193,17 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
       <ul class="navbar-nav ml-auto">
         <!-- Messages Dropdown Menu -->
         <li class="nav-item dropdown">
-          <?php
-          if ($loginEntryRecorded) {
-            $user_activity = $employee_activity_sql->fetch_array();
-          } ?>
+        <?php
+        if ($loginEntryRecorded) {
+          $user_activity = $employee_activity_sql->fetch_array();
+        } ?>
+        <li class="nav-item" style="position: absolute;left: 15px;">Total lunch Time
+        <a href="user_activity.php"><div id="totalLunchTime" class="btn btn-primary"><?php echo round(abs(strtotime($user_activity['break_out_time']) - strtotime($user_activity['break_in_time'])) / 3600, 2); ?></div></a>
+        </li>
         <li class="nav-item" id="timer" style="margin: 5px 5px;">
           <?php echo ($user_activity['break_out_time']) ? $user_activity['break_out_time'] : ''; ?>
         </li>
+
         <?php
         if ($user_activity['break_in_time'] && !$user_activity['break_out_time']) {
         ?>
@@ -210,6 +220,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
             var myVar;
           </script>
         <?php } ?>
+
         <li class="nav-item" id="disabled-button-wrapper" <?php if ($loginEntryRecorded < 1) { ?> data-title="Enabled after Login hour activity is started" <?php } ?>>
           <button id="timerBtn" class="btn btn-primary" type="button" onclick="breakTimerToggle(myVar)" <?php if ($loginEntryRecorded < 1 || $user_activity['break_out_time'] || $logoutEntryRecorded) {
                                                                                                         ?> disabled <?php } ?>>
@@ -218,38 +229,36 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
 
         <!-- Notifications Dropdown Menu -->
         <div id="notf">
-        <li class="nav-item dropdown">
-          <a class="nav-link" data-toggle="dropdown" href="#">
-            <i class="far fa-bell"></i>
-            <span class="badge badge-warning navbar-badge"><?=$nfl1['count'];?></span>
-          </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-            <span class="dropdown-item dropdown-header"><?=$nfl1['count'];?> New remark Added on</span>
-            <?php
-            if($_SESSION['TYPE']=="SA" || $_SESSION['TYPE']=="RM"){
-              $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1');
-            }
-            else if($_SESSION['TYPE']=="BM") {
-              $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and region='.$_SESSION['REGION']);
-            }
-            else {
-              $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and counsilor='.$_SESSION['ID']);
-            }
-            
-            if($nfld->num_rows >0 ){
-             while( $nfld1 = $nfld->fetch_array()) { ?>
-
-              <div class="dropdown-divider"></div>
-              <a href="#" class="dropdown-item">
-              <a href="lead_edit.php?lead=<?=$nfld1['id'];?>&not=<?=$nfld1['rid'];?>">  <i class="fas fa-envelope mr-2"></i>lead id  <?=$nfld1['id'];?></a>
-                <!-- <span class="float-right text-muted text-sm"></span> -->
-              </a>
-<?php
-             }
+          <li class="nav-item dropdown">
+            <a class="nav-link" data-toggle="dropdown" href="#">
+              <i class="far fa-bell"></i>
+              <span class="badge badge-warning navbar-badge"><?= $nfl1['count']; ?></span>
+            </a>
+            <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+              <span class="dropdown-item dropdown-header"><?= $nfl1['count']; ?> New remark Added on</span>
+              <?php
+              if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
+                $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1');
+              } else if ($_SESSION['TYPE'] == "BM") {
+                $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and region=' . $_SESSION['REGION']);
+              } else {
+                $nfld = $obj->display3('select l.id as id,r.id as rid from dm_lead l join dm_lead_remark r on l.id = r.lead  where notfr=1 and counsilor=' . $_SESSION['ID']);
               }
-            ?>
-           
-            <!-- <div class="dropdown-divider"></div>
+
+              if ($nfld->num_rows > 0) {
+                while ($nfld1 = $nfld->fetch_array()) { ?>
+
+                  <div class="dropdown-divider"></div>
+                  <a href="#" class="dropdown-item">
+                    <a href="lead_edit.php?lead=<?= $nfld1['id']; ?>&not=<?= $nfld1['rid']; ?>"> <i class="fas fa-envelope mr-2"></i>lead id <?= $nfld1['id']; ?></a>
+                    <!-- <span class="float-right text-muted text-sm"></span> -->
+                  </a>
+              <?php
+                }
+              }
+              ?>
+
+              <!-- <div class="dropdown-divider"></div>
             <a href="#" class="dropdown-item">
               <i class="fas fa-users mr-2"></i> 8 friend requests
               <span class="float-right text-muted text-sm">12 hours</span>
@@ -259,20 +268,24 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               <i class="fas fa-file mr-2"></i> 3 new reports
               <span class="float-right text-muted text-sm">2 days</span>
             </a> -->
-            <!-- <div class="dropdown-divider"></div> -->
-            <!-- <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> -->
-          </div>
-        </li>
+              <!-- <div class="dropdown-divider"></div> -->
+              <!-- <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a> -->
+            </div>
+          </li>
         </div>
         <li class="nav-item dropdown">
           <a class="nav-link" data-toggle="dropdown" href="#">
             <i class="fas fa-power-off"></i>
           </a>
-          <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+          <div class="dropdown-menu dropdown-menu-small dropdown-menu-right">
+            <a href="profile.php" class="dropdown-item">
+              Profile
+            </a>
             <div class="dropdown-divider"></div>
             <a href="logout.php" class="dropdown-item">
               logout
             </a>
+          </div>
         </li>
       </ul>
     </nav>
@@ -291,16 +304,28 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
         <!-- Sidebar user panel (optional) -->
         <div class="user-panel mt-3 pb-3 mb-3 d-flex">
           <div class="image">
-            <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
-          </div>
-          <div class="info">
-            <?php 
-              $user_designation = $obj->display3('select name from dm_role where id='.$_SESSION['ROLE']);
-              if ($user_designation->num_rows) {
-                  $user_designation1 = $user_designation->fetch_array();
-                 }
+          <?php
+            
+           
+
+            $user_image = $obj->display3('select photo from dm_employee where id=' . $_SESSION['ID']);
+            if ($user_image->num_rows > 0) {
+              $user_image1 = $user_image->fetch_array();
+              if ($user_image1['photo'] != '') {
             ?>
-            <a href="#" class="d-block"><?php echo $_SESSION['LOG_USER'] ." <br><i> ". $user_designation1['name'];?></i></a>
+             <img src="uploads/employee/<?php echo $user_image1['photo'];?>" class="img-circle elevation-2" alt="User Image"> 
+          <?php } else { ?>
+             <img src="theme/dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image">
+           <?php }  }  ?>
+           </div>
+          <div class="info">
+            <?php
+            $user_designation = $obj->display3('select name from dm_role where id=' . $_SESSION['ROLE']);
+            if ($user_designation->num_rows) {
+              $user_designation1 = $user_designation->fetch_array();
+            }
+            ?>
+            <a href="#" class="d-block"><?php echo $_SESSION['LOG_USER'] . " <br><i> " . $user_designation1['name']; ?></i></a>
           </div>
         </div>
 
@@ -324,80 +349,134 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <i class="fas fa-fw fa-envelope"></i>
                 <span>Lead Category <span id="mmcount"></span></span></a>
             </li> -->
-<?php if($_SESSION['TYPE']=="SA") { ?>
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                  Admin Setup
-                  <i class="fas fa-angle-left right"></i>
-                  <!-- <span class="badge badge-info right">6</span> -->
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <!-- <li class="nav-item">
+            <?php if ($_SESSION['TYPE'] == "SA") { ?>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Admin Setup
+                    <i class="fas fa-angle-left right"></i>
+                    <!-- <span class="badge badge-info right">6</span> -->
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <!-- <li class="nav-item">
                   <a href="lead_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Add New Lead</p>
                   </a>
                 </li> -->
-                <li class="nav-item">
-              <a class="nav-link" href="region_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Region Management</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="branch_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Branch Management</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="region_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Region Management</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="branch_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Branch Management</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="department_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Department Management</span></a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="service_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Service Management</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="department_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Department Management</span></a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="service_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Service Management</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="country_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Country Management</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="country_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Country Management</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="enquiry_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Lead Inquiry Management</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="enquiry_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Lead Inquiry Management</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="source_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Lead Source Management</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="source_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Lead Source Management</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="contract_file_list.php">
-              <i class="far fa-circle nav-icon"></i>
-                <span>Manage Agreements</span></a>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="contract_file_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Manage Agreements</span></a>
+                  </li>
 
-            <li class="nav-item">
-              <a class="nav-link" href="role_list.php">
-                <i class="fas fa-user nav-icon"></i>
-                <span>Access Hierarchy Management</span></a>
-            </li>
-              </ul>
-            </li>
+                  <li class="nav-item">
+                    <a class="nav-link" href="role_list.php">
+                      <i class="fas fa-user nav-icon"></i>
+                      <span>Access Hierarchy Management</span></a>
+                  </li>
+                </ul>
+              </li>
 
-<?php } ?>
+            <?php } ?>
 
-          <li class="nav-item has-treeview">
+            <?php if ($_SESSION['TYPE'] == "RM") { ?>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Admin Setup
+                    <i class="fas fa-angle-left right"></i>
+                    <!-- <span class="badge badge-info right">6</span> -->
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <!-- <li class="nav-item">
+                  <a href="lead_management.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Add New Lead</p>
+                  </a>
+                </li> -->
+
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="service_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Service Management</span></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="country_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Country Management</span></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="enquiry_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Lead Inquiry Management</span></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="source_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Lead Source Management</span></a>
+                  </li>
+
+                  <li class="nav-item">
+                    <a class="nav-link" href="contract_file_list.php">
+                      <i class="far fa-circle nav-icon"></i>
+                      <span>Manage Agreements</span></a>
+                  </li>
+
+                </ul>
+              </li>
+
+            <?php } ?>
+
+            <li class="nav-item has-treeview">
               <a href="#" class="nav-link">
                 <i class="nav-icon fas fa-copy"></i>
                 <p>
@@ -482,7 +561,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Invalid Number</p>
                   </a>
                 </li>
-                
+
               </ul>
             </li>
 
@@ -493,7 +572,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Lead Management
                   <i class="fas fa-angle-left right"></i>
-                  <span class="badge badge-info right"><?=$cl1['count'];?></span>
+                  <span class="badge badge-info right"><?= $cl1['count']; ?></span>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -524,7 +603,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Client Management
                   <i class="fas fa-angle-left right"></i>
-                  <span class="badge badge-info right"><?=$cln1['count'];?></span>
+                  <span class="badge badge-info right"><?= $cln1['count']; ?></span>
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -534,7 +613,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Client Data</p>
                   </a>
                 </li>
-                 <li class="nav-item">
+                <li class="nav-item">
                   <a href="lead_agree_upload_list.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Agreement Upload</p>
@@ -548,12 +627,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-            <?php if($_SESSION['TYPE']=="SA") { ?>
-            <li class="nav-item active">
-              <a class="nav-link" href="employe_list.php">
-                <i class="fas fa-fw fa-users"></i>
-                <span>Employee Management</span></a>
-            </li>
+            <?php if ($_SESSION['TYPE'] == "SA") { ?>
+              <li class="nav-item active">
+                <a class="nav-link" href="employe_list.php">
+                  <i class="fas fa-fw fa-users"></i>
+                  <span>Employee Management</span></a>
+              </li>
             <?php } ?>
 
             <li class="nav-item has-treeview">
@@ -562,7 +641,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 <p>
                   Leave request
                   <i class="fas fa-angle-left right"></i>
-                  <!-- <span class="badge badge-info right  "><?=$cln1['count'];?></span> -->
+                  <!-- <span class="badge badge-info right  "><?= $cln1['count']; ?></span> -->
                 </p>
               </a>
               <ul class="nav nav-treeview">
@@ -572,7 +651,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                     <p>Manage Leaves</p>
                   </a>
                 </li>
-                 <!-- <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p></p>
@@ -586,49 +665,49 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                 </li>  -->
               </ul>
             </li>
-            <?php if($_SESSION['TYPE']=="SA") { ?>
-            <li class="nav-item has-treeview">
-              <a href="#" class="nav-link">
-                <i class="nav-icon fas fa-copy"></i>
-                <p>
-                  Report
-                  <i class="fas fa-angle-left right"></i>
-                  <!-- <span class="badge badge-info right"><?=$cln1['count'];?></span> -->
-                </p>
-              </a>
-              <ul class="nav nav-treeview">
-                <li class="nav-item">
-                  <a href="report_sales.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Sales Report</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="daily_lead.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Audit Report</p>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a href="appointment_report.php" class="nav-link">
-                    <i class="far fa-circle nav-icon"></i>
-                    <p>Meetings Report</p>
-                  </a>
-                </li>
-                 <!-- <li class="nav-item">
+            <?php if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") { ?>
+              <li class="nav-item has-treeview">
+                <a href="#" class="nav-link">
+                  <i class="nav-icon fas fa-copy"></i>
+                  <p>
+                    Report
+                    <i class="fas fa-angle-left right"></i>
+                    <!-- <span class="badge badge-info right"><?= $cln1['count']; ?></span> -->
+                  </p>
+                </a>
+                <ul class="nav nav-treeview">
+                  <li class="nav-item">
+                    <a href="report_sales.php" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Sales Report</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="daily_lead.php" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Audit Report</p>
+                    </a>
+                  </li>
+                  <li class="nav-item">
+                    <a href="appointment_report.php" class="nav-link">
+                      <i class="far fa-circle nav-icon"></i>
+                      <p>Meetings Report</p>
+                    </a>
+                  </li>
+                  <!-- <li class="nav-item">
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p></p>
                   </a>
                 </li> -->
-                <!-- <li class="nav-item">
+                  <!-- <li class="nav-item">
                   <a href="book_meetings.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Meetings</p>
                   </a>
                 </li>  -->
-              </ul>
-            </li>
+                </ul>
+              </li>
 
             <?php } ?>
 
@@ -663,7 +742,7 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
               </ul>
             </li>
 
-            
+
 
           </ul>
         </nav>
@@ -674,12 +753,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
     <script>
       $(function() {
         var timer;
-var seconds = 30; // how often should we refresh the DIV?
-    timer = setInterval(function() {
-        $('#notf').load(window.location.href + " #notf");
-    }, seconds*1000)
+        var seconds = 30; // how often should we refresh the DIV?
+        timer = setInterval(function() {
+          $('#notf').load(window.location.href + " #notf");
+        }, seconds * 1000)
       });
-        </script>
+    </script>
     <script>
       $(function() {
         $('#disabled-button-wrapper').tooltip();
@@ -765,7 +844,9 @@ var seconds = 30; // how often should we refresh the DIV?
           dataType: 'json',
           data: '&break_in_time=' + break_in_time + '&break_out_time=' + break_out_time,
           success: function(result) {
-            console.log(result);
+            if (result.totalLunchTime) {
+              document.getElementById("totalLunchTime").innerHTML = result.totalLunchTime
+            }
           },
           error: function(result) {
             console.log(result);

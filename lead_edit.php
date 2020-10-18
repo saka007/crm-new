@@ -399,6 +399,9 @@ $reg1 = $reg->fetch_array();
 										<option value="call_back" <?php if ($lead1['lead_category'] == "call_back") {
 																echo 'selected="selected"';
 															} ?>>Call Back</option>
+										<option value="not_interested" <?php if ($lead1['lead_category'] == "not_interested") {
+																echo 'selected="selected"';
+															} ?>>Not Interested</option>
 										<option value="invalid_number" <?php if ($lead1['lead_category'] == "invalid_number") {
 																echo 'selected="selected"';
 															} ?>>Invalid Number</option>

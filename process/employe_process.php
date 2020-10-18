@@ -26,6 +26,7 @@ move_uploaded_file( $_FILES["photo"]["tmp_name"], "../uploads/employee/" . $phot
     			"username" => $_POST['username'],
     			"password" => $_POST['password'],
     			"ppNo" => $_POST['ppNo'],
+    			"designation" => $_POST['designation'],
     			"visaExp" => date('Y-m-d',strtotime($_POST['visaExp'])),
     			"department" => $_POST['department'],
     			"EID" => $_POST['EID']
@@ -80,7 +81,8 @@ if($_POST['action']=='edit')
     			"nationality" => $_POST['nationality'],
     			"branch" => $_POST['branch'],
     			"region" => $reg1['region'],
-    			"ppNo" => $_POST['ppNo'],
+				"ppNo" => $_POST['ppNo'],
+				"designation" => $_POST['designation'],
     			"visaExp" => date('Y-m-d',strtotime($_POST['visaExp'])),
     			"department" => $_POST['department'],
     			"EID" => $_POST['EID']
