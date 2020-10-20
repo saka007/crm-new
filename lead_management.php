@@ -67,7 +67,7 @@ if ($_POST['save'] || $_POST['submit']) {
 
 		if ($_POST['mdate'] != "") {
 			$data = array(
-				'leadid' => $_POST['id'],
+				'leadid' => $odr,
 				'date' => date('Y-m-d', strtotime($_POST['mdate'])),
 				'counsilorid' => $_POST['assign'],
 				'booked' => 1,
