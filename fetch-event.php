@@ -44,5 +44,8 @@ foreach($already_used as $already_used1) {
         ); 
     }
 }
-echo json_encode($file_data_array);
+
+echo "<pre>";
+print_r($file_data_array);
+//echo json_encode($file_data_array);
 ?>
