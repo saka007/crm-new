@@ -6,7 +6,8 @@ require_once './vendor/Classes/PHPExcel/IOFactory.php';
 
 $duplicateRecord = [];
 $skipRecord = [];
-if (isset($_POST["import"]) && isset($_SESSION['import']) && $_POST["import"] == $_SESSION["import"]) {
+
+if (isset($_POST["import"]) && isset($_SESSION['import']) && $_POST["import"] == $_SESSION["import"]) {    
     $_SESSION["import"] = '';
     $allowedFileType = [
         'application/vnd.ms-excel',
@@ -17,7 +18,7 @@ if (isset($_POST["import"]) && isset($_SESSION['import']) && $_POST["import"] ==
 
     if (in_array($_FILES["file"]["type"], $allowedFileType)) {
 
-        $targetPath = 'uploads/' . $_FILES['file']['name'];
+        $targetPath = 'uploads/import_lead/' . $_FILES['file']['name'];
         move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
         $objPHPExcel = PHPExcel_IOFactory::load($targetPath);
@@ -225,5 +226,5 @@ if (isset($_POST["import"]) && isset($_SESSION['import']) && $_POST["import"] ==
         </div>
     </section>
 </div>
-<?php include_once("foot.php"); 
+<?php include_once("foot.php");
 ?>
