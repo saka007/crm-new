@@ -1,7 +1,7 @@
 <?php include_once("head.php");
-require './vendor/autoload.php';
-
-use PhpOffice\PhpSpreadsheet\Reader\Xlsx;
+/** Include PHPExcel */
+require_once './vendor/Classes/PHPExcel.php';
+require_once './vendor/Classes/PHPExcel/IOFactory.php';
 
 if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 	$totl = $obj->display3('select count(*) as count from dm_lead');
@@ -67,8 +67,8 @@ if ($_SESSION['TYPE'] == "SA" || $_SESSION['TYPE'] == "RM") {
 // 	$obj->update('dm_lead',$data,'assignTo='.$_SESSION['ID'].' and notf=0');
 $duplicateRecord = [];
 $skipRecord = [];
-if (isset($_POST["import"])) {
-
+if (isset($_POST["import"]) && isset($_SESSION['import']) && $_POST["import"] == $_SESSION["import"]) {
+	$_SESSION["import"] = '';
 	$allowedFileType = [
 		'application/vnd.ms-excel',
 		'text/xls',
@@ -81,117 +81,111 @@ if (isset($_POST["import"])) {
 		$targetPath = 'uploads/' . $_FILES['file']['name'];
 		move_uploaded_file($_FILES['file']['tmp_name'], $targetPath);
 
-		$Reader = new \PhpOffice\PhpSpreadsheet\Reader\Xlsx();
-
-		$spreadSheet = $Reader->load($targetPath);
-		$excelSheet = $spreadSheet->getActiveSheet();
-		$spreadSheetAry = $excelSheet->toArray();
-
-		$sheetCount = count($spreadSheetAry);
-
-		for ($i = 1; $i < $sheetCount; $i++) {
-
-			$fname = isset($spreadSheetAry[$i][0]) ? $spreadSheetAry[$i][0] : '';
-			$mname = isset($spreadSheetAry[$i][1]) ? $spreadSheetAry[$i][1] : '';
-			$lname = isset($spreadSheetAry[$i][2]) ? $spreadSheetAry[$i][2] : '';
-			$email = isset($spreadSheetAry[$i][3]) ? $spreadSheetAry[$i][3] : '';
-			$mobile = isset($spreadSheetAry[$i][4]) ? $spreadSheetAry[$i][4] : '';
-			$alternate_num = isset($spreadSheetAry[$i][5]) ? $spreadSheetAry[$i][5] : '';
-			$nationality = isset($spreadSheetAry[$i][6]) ? $spreadSheetAry[$i][6] : '';
-			$address = isset($spreadSheetAry[$i][7]) ? $spreadSheetAry[$i][7] : '';
-			$dob = isset($spreadSheetAry[$i][8]) ? $spreadSheetAry[$i][8] : '';
-			$gender = isset($spreadSheetAry[$i][9]) ? $spreadSheetAry[$i][9] : '';
-			$country_interest = isset($spreadSheetAry[$i][10]) ? $spreadSheetAry[$i][10] : '';
-			$service_interest = isset($spreadSheetAry[$i][11]) ? $spreadSheetAry[$i][11] : '';
-			$relative = isset($spreadSheetAry[$i][12]) ? $spreadSheetAry[$i][12] : '';
-			$market_source = isset($spreadSheetAry[$i][13]) ? $spreadSheetAry[$i][13] : '';
-			$mstatus = isset($spreadSheetAry[$i][14]) ? $spreadSheetAry[$i][14] : '';
-			$fnames = isset($spreadSheetAry[$i][15]) ? $spreadSheetAry[$i][15] : '';
-			$emails = isset($spreadSheetAry[$i][16]) ? $spreadSheetAry[$i][16] : '';
-			$phones = isset($spreadSheetAry[$i][17]) ? $spreadSheetAry[$i][17] : '';
-			$mobiles = isset($spreadSheetAry[$i][18]) ? $spreadSheetAry[$i][18] : '';
-			$sedu = isset($spreadSheetAry[$i][19]) ? $spreadSheetAry[$i][19] : '';
-			$kids = isset($spreadSheetAry[$i][20]) ? $spreadSheetAry[$i][20] : '';
-			$sexp = isset($spreadSheetAry[$i][21]) ? $spreadSheetAry[$i][21] : '';
-			// $mdate = isset($spreadSheetAry[$i][21]) ? $spreadSheetAry[$i][21] : '';
-			// $time = isset($spreadSheetAry[$i][22]) ? $spreadSheetAry[$i][22] : '';
-			// $mtype = isset($spreadSheetAry[$i][23]) ? $spreadSheetAry[$i][23] : '';
-			$lead_category = isset($spreadSheetAry[$i][22]) ? $spreadSheetAry[$i][22] : '';
-			$enquiry = isset($spreadSheetAry[$i][23]) ? $spreadSheetAry[$i][23] : '';
-
-
-			if ($email === '' || $mobile === '') {
-				array_push($skipRecord, $i);
-				$skip_error = "skip-error";
-				$message_skip = "Record Skip";
-				continue;
-			}
-
-			$ext = $obj->display('dm_lead', 'email="' . $email . '" or mobile="' . $mobile . '"');
-
-			if ($ext->num_rows == 0) {
-			
-				if ($dob != "") {
-					$dob = date('Y-m-d', strtotime($dob));
+		$objPHPExcel = PHPExcel_IOFactory::load($targetPath);
+		foreach ($objPHPExcel->getWorksheetIterator() as $worksheet) {
+			$highestRow = $worksheet->getHighestRow();
+			for ($row = 2; $row <= $highestRow; $row++) {
+				$fname = $worksheet->getCellByColumnAndRow(0, $row)->getValue();
+				$mname = $worksheet->getCellByColumnAndRow(1, $row)->getValue();
+				$lname = $worksheet->getCellByColumnAndRow(2, $row)->getValue();
+				$email = $worksheet->getCellByColumnAndRow(3, $row)->getValue();
+				$mobile = $worksheet->getCellByColumnAndRow(4, $row)->getValue();
+				$nationality = $worksheet->getCellByColumnAndRow(5, $row)->getValue();
+				$address = $worksheet->getCellByColumnAndRow(6, $row)->getValue();
+				$dob = $worksheet->getCellByColumnAndRow(7, $row)->getValue();
+				$gender = $worksheet->getCellByColumnAndRow(8, $row)->getValue();
+				$country_interest = $worksheet->getCellByColumnAndRow(9, $row)->getValue();
+				$service_interest = $worksheet->getCellByColumnAndRow(10, $row)->getValue();
+				$relative = $worksheet->getCellByColumnAndRow(11, $row)->getValue();
+				$market_source = $worksheet->getCellByColumnAndRow(12, $row)->getValue();
+				$mstatus = $worksheet->getCellByColumnAndRow(13, $row)->getValue();
+				$fnames = $worksheet->getCellByColumnAndRow(14, $row)->getValue();
+				$emails = $worksheet->getCellByColumnAndRow(15, $row)->getValue();
+				$phones = $worksheet->getCellByColumnAndRow(16, $row)->getValue();
+				$mobiles = $worksheet->getCellByColumnAndRow(17, $row)->getValue();
+				$sedu = $worksheet->getCellByColumnAndRow(18, $row)->getValue();
+				$kids = $worksheet->getCellByColumnAndRow(19, $row)->getValue();
+				$sexp = $worksheet->getCellByColumnAndRow(20, $row)->getValue();
+				$lead_category = $worksheet->getCellByColumnAndRow(21, $row)->getValue();
+				$enquiry = $worksheet->getCellByColumnAndRow(22, $row)->getValue();
+				if (empty($email) || empty($mobile)) {
+					array_push($skipRecord, $row);
+					$skip_error = "skip-error";
+					$message_skip = "Record Skip";
+					continue;
 				}
 
-				$data = array(
-					'fname'  =>  $fname,
-					'mname'  =>  $mname,
-					'lname'  =>  $lname,
-					'email'  =>  $email,
-					'phone'  =>  $alternate_num,
-					'mobile'  =>  $mobile,
-					'nationality'  =>  $nationality,
-					'address'  =>  $address,
-					'dob'  =>  $dob,
-					'gender'  =>  $gender,
-					'country_interest'  =>  $country_interest,
-					'service_interest'  =>  $service_interest,
-					'relative' => $relative,
-					'market_source'  =>  $market_source,
-					'mstatus' => $mstatus,
-					//spouse data
-					'fnames' => $fnames,
-					'emails' => $emails,
-					'phones' => $phones,
-					'mobiles' => $mobiles,
-					'sedu' => $sedu,
-					'kids' => $kids,
-					'sexp' => $sexp,
-					//end
-					'lead_category' => $lead_category,
-					'enquiry'  =>  $enquiry,
-					'assignTo'  =>  $_SESSION["ID"],
-					'Counsilor'  =>  $_SESSION["ID"],
-					// 'appointment'  =>  $appointment, no entry on add new page
-					'regdate'  =>  date('Y-m-d'),
-					'last_updated' => date('d-m-Y h-i-sa'),
-					// 'followup'  =>  date('Y-m-d', strtotime($_POST['followup'])), no entry on add new page
-					// 'convet'  =>  $_POST['convet'], no entry on add new page
-					// 'type'  =>  $_POST['type'],no entry on add new page
-					'branch'  =>  $_SESSION["BRANCH"],
-					'region'  =>  $_SESSION["REGION"]
-				);
-				$odr = $obj->insert('dm_lead', $data);
+				$ext = $obj->display('dm_lead', 'email="' . $email . '" or mobile="' . $mobile . '"');
 
-				if (!empty($odr)) {
-					$type = "success";
-					$message = "Excel Data Imported into the Database";
+
+				if ($ext->num_rows == 0) {
+
+					if ($dob != "") {
+						$dob = date('Y-m-d', strtotime($dob));
+					}
+
+					$data = array(
+						'fname'  =>  $fname,
+						'mname'  =>  $mname,
+						'lname'  =>  $lname,
+						'email'  =>  $email,
+						'phone'  =>  $alternate_num,
+						'mobile'  =>  $mobile,
+						'nationality'  =>  $nationality,
+						'address'  =>  $address,
+						'dob'  =>  $dob,
+						'gender'  =>  $gender,
+						'country_interest'  =>  $country_interest,
+						'service_interest'  =>  $service_interest,
+						'relative' => $relative,
+						'market_source'  =>  $market_source,
+						'mstatus' => $mstatus,
+						//spouse data
+						'fnames' => $fnames,
+						'emails' => $emails,
+						'phones' => $phones,
+						'mobiles' => $mobiles,
+						'sedu' => $sedu,
+						'kids' => $kids,
+						'sexp' => $sexp,
+						//end
+						'lead_category' => $lead_category,
+						'enquiry'  =>  $enquiry,
+						'assignTo'  =>  $_SESSION["ID"],
+						'Counsilor'  =>  $_SESSION["ID"],
+						// 'appointment'  =>  $appointment, no entry on add new page
+						'regdate'  =>  date('Y-m-d'),
+						'last_updated' => date('d-m-Y h-i-sa'),
+						// 'followup'  =>  date('Y-m-d', strtotime($_POST['followup'])), no entry on add new page
+						// 'convet'  =>  $_POST['convet'], no entry on add new page
+						// 'type'  =>  $_POST['type'],no entry on add new page
+						'branch'  =>  $_SESSION["BRANCH"],
+						'region'  =>  $_SESSION["REGION"]
+					);
+					$odr = $obj->insert('dm_lead', $data);
+
+					if (!empty($odr)) {
+						$type = "success";
+						$message = "Excel Data Imported into the Database";
+					} else {
+						$type = "error";
+						$message = "Problem in Importing Excel Data";
+					}
 				} else {
-					$type = "error";
-					$message = "Problem in Importing Excel Data";
+					$dup = $ext->fetch_array();
+					$dup1 = array($row => $dup['id']);
+					array_push($duplicateRecord, $dup1);
+					$duplicate_error = "duplicate-error";
+					$message_dup = "Duplicate error";
 				}
-			} else {
-				array_push($duplicateRecord, $i);
-				$duplicate_error = "duplicate-error";
-				$message_dup = "Duplicate error";
 			}
 		}
 	} else {
 		$type = "error";
 		$message = "Invalid File Type. Upload Excel File.";
 	}
+} else {
+	$_SESSION["import"] = md5(rand(0, 10000000));
 }
 ?>
 
@@ -245,29 +239,30 @@ if (isset($_POST["import"])) {
 				<div class="col-lg-12 col-md-12 col-sm-12">
 					<div id="response" class="<?php if (!empty($type)) {
 													echo $type . " display-block";
-												} ?>"><?php if (!empty($message)) {
+												} ?>"><?php if (!empty($type)) {
 															echo $message;
 														} ?></div>
 					<div id="response" class="<?php if (!empty($duplicate_error)) {
 													echo $duplicate_error . " display-block";
-												} ?>"><?php if (!empty($duplicateRecord)) {
-															// echo $message_dup;
+												} ?>"><?php if (!empty($duplicate_error)) {
 															echo "Total Duplicate Entry Count " . count($duplicateRecord);
-															echo "<br>Duplicate Entry Record Number ";
-															foreach ($duplicateRecord as $key => $value) {
-																echo $value + 1 . "&nbsp;&nbsp;";
+															echo "<br>Duplicate Entry Record Number  ";
+															foreach ($duplicateRecord as $values) {
+																foreach ($values as $key => $value) {
+																	echo "<a href='./lead_view.php?lead=" . $value . "'>" . $key . "</a>" . "&nbsp;&nbsp;";
+																}
 															}
 														} ?></div>
 					<div id="response" class="<?php if (!empty($skip_error)) {
 													echo $skip_error . " display-block";
-												} ?>"><?php if (!empty($message_skip)) {
-															// echo $message_skip;
+												} ?>"><?php if (!empty($skip_error)) {
 															echo "Total Skipped Count " . count($skipRecord);
-															echo "<br>Skipped Entry Record Number ";
+															echo "<br>Skipped Entry Record Number  ";
 															foreach ($skipRecord as $key => $value) {
-																echo $value + 1 . "&nbsp;&nbsp;";
+																echo $value . "&nbsp;&nbsp;";
 															}
-														} ?></div>
+														} ?>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -519,7 +514,7 @@ if (isset($_POST["import"])) {
 						<form action="" method="post" name="frmExcelImport" id="frmExcelImport" enctype="multipart/form-data">
 							<div class="col-sm-12">
 								<input type="file" name="file" id="file" accept=".xls,.xlsx">
-								<button type="submit" id="submit" name="import" class="btn btn-info">Import as Excel</button>
+								<button type="submit" id="submit" name="import" class="btn btn-info" value="<?php echo htmlspecialchars($_SESSION["import"]); ?>">Import as Excel</button>
 							</div>
 						</form>
 						<div class="card-body" style="width: 80%;">
