@@ -1,5 +1,4 @@
 <?php
-// phpinfo();
 // if($_POST)
 // {
 //   echo $_POST['message'];die;
@@ -586,6 +585,12 @@ $logoutEntryRecorded = $employee_activity_sql1->num_rows;
                   <a href="lead_search_management.php" class="nav-link">
                     <i class="far fa-circle nav-icon"></i>
                     <p>Manage Leads</p>
+                  </a>
+                </li>
+                <li class="nav-item">
+                  <a href="import_lead_excel.php" class="nav-link">
+                    <i class="far fa-circle nav-icon"></i>
+                    <p>Import Leads</p>
                   </a>
                 </li>
                 <li class="nav-item">
