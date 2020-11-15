@@ -143,7 +143,7 @@ if ($_POST['save'] || $_POST['submit']) {
 		if ($assignee->num_rows > 0) {
 			$assignee1 = $assignee->fetch_array();
 		}
-		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id <strong><i>".$dup['id']." </i></strong> and assigned to <strong><i>".$assignee1['name']."</i></strong><br><a href='/lead_view.php?lead=". $dup['id']."'>View Lead</a>");
+		header("location:lead_management.php?error=Duplicate entry of email or phone for lead id <strong><i>".$dup['id']." </i></strong> and assigned to <strong><i>".$assignee1['name']."</i></strong><br><a href='/lead_view_dup_check.php?lead=". $dup['id']."'>View Lead</a>");
 	}
 }
 ?>
