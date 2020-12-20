@@ -24,13 +24,15 @@
      overflow: hidden;
    }
  </style>
- <footer class="sticky-footer bg-white ">
-   <div class="container my-auto">
-     <div class="copyright text-center my-auto">
-       <span>GIANT MIGRATION Copyright 2020</span>
+ <?php if (basename($_SERVER['PHP_SELF']) !== 'lead_payment_invoice.php') { ?>
+   <footer class="sticky-footer bg-white ">
+     <div class="container my-auto">
+       <div class="copyright text-center my-auto">
+         <span>GIANT MIGRATION Copyright 2020</span>
+       </div>
      </div>
-   </div>
- </footer>
+   </footer>
+ <?php } ?>
  <!-- End of Footer -->
 
  </div>
