@@ -32,12 +32,11 @@ if ($bran->num_rows) {
 				<div class="col-sm-2">
 					<h1>Invoice</h1>
 				</div>
-				<!-- <div class="col-sm-3">
-					<a href="http://localhost:8080/mydmconsultant/mail.php" class="btn btn-info">Send Welcome Mail</a>
-				</div> -->
+
 				<div class="col-sm-2">
 					<a href="#" onclick="javascript:printPage(print);" style="margin-left: -90px;" class="btn btn-primary">Print Receipt</a>
 				</div>
+
 				<div class="col-sm-8">
 					<ol class="breadcrumb float-sm-right">
 						<li class="breadcrumb-item"><a href="dashboard.php">Home</a></li>
@@ -51,9 +50,6 @@ if ($bran->num_rows) {
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-12">
-
-
-
 					<!-- Main content -->
 					<div class="wrapper">
 						<!-- Main content -->
@@ -62,7 +58,6 @@ if ($bran->num_rows) {
 								<div class="line">
 									<div class="row">
 										<div class="col-12">
-
 											<table style="width:100%">
 												<tr>
 													<td style="text-align:left;">
@@ -85,6 +80,7 @@ if ($bran->num_rows) {
 																				if ($gh->num_rows) $gh1 = $gh->fetch_array();
 																				echo $gh1['id']; ?><br>
 														<?php
+														echo '<b>TRN : </b>  1234567890</br>';
 														// if ($r != '6' && $r != '7' && $r != '8') {
 														// 	echo '<b>TRN : </b>  1234567890</br>';
 														// } elseif ($r == '6') {
@@ -104,7 +100,7 @@ if ($bran->num_rows) {
 															<strong><?php echo $lead1['fname'] . " " . $lead1['lname']; ?>:</strong><br>
 															<?php echo $lead1['address'] ?><br><br>
 															<?php echo $bran1['name'] . "," . $region['name']; ?><br>
-															Received with thanks on account of Giant Document Clearing Services, Dubai.<br>
+															Received with thanks on account of Giant Document Clearing Services, <?php echo $bran1['name'] ?>.<br>
 															The amount is paid for the payment due against service retain.<br>
 															All payment is subject to realization.
 														</address>
@@ -128,20 +124,31 @@ if ($bran->num_rows) {
 												<tbody>
 													<tr>
 														<th style="width:330px">Canada Processing Documentation </th>
-														<td></td>
+														<td><?php echo $lead1['payTotal']; ?>
+															<?php if ($lead1['discount'] != 0) { ?>
+																- <?php echo $lead1['discount']; ?> (Discount)
+															<?php } ?>
+														</td>
 														<td>
-
+															<?php $bal = $lead1['payTotal'] - $lead1['discount'];
+															echo number_format((float)$bal, 2, '.', '') ?>
 														</td>
 													</tr>
 													<tr>
 														<th>Mode of Payment</th>
-														<td></td>
-														<th>Total Paid: </th>
+														<td><?php if (strpos($recpt1['payMethod'], 'Card') !== false) { ?>
+																<img src="theme/dist/img/credit/visa.png" alt="Visa">
+																<img src="theme/dist/img/credit/mastercard.png" alt="Mastercard">
+															<?php } else {
+																echo $recpt1['payMethod'];
+															} ?></td>
+														<th>Total Paid (VAT 5%): <?php $tot = $recpt1['amount'] + $recpt1['tax'];
+																					echo $base = number_format((float)$tot, 2, '.', ''); ?></th>
 														</td>
 													</tr>
 													<tr>
 														<th>Due Payment</th>
-														<td></td>
+														<td><?php echo $lead1['payBalance']; ?></td>
 														<td>
 
 														</td>
@@ -156,7 +163,7 @@ if ($bran->num_rows) {
 											<p>Received by:</p><br><br>
 
 											<p>
-												Giant Document Clearing Services, Dubai
+												Giant Document Clearing Services, <?php echo $bran1['name'] ?>
 											</p>
 										</div>
 										<!-- /.col -->
@@ -186,16 +193,15 @@ if ($bran->num_rows) {
 									</td>
 									<td style="top: 30px;text-align:left;position: relative;">
 										<address>
-											<span style="color: orange;"><i class="fas fa-map-marker-alt"></i></span> Office 2340,Boulevard Plaza,Tower 2,<br>
-											Burj Khalifa Community, Downtown, <br>
-											PO Box 124342, Dubai UAE
+											<span style="color: orange;"><i class="fas fa-map-marker-alt"></i></span> <?php echo wordwrap($bran1['address'], 40, "<br>\n"); ?> <br>
+											<?php echo $bran1['name'] ?> <?php echo $region['name'] ?>
 										</address>
 									</td>
 									<td style="top: 30px;text-align:left;position: relative;">
 										<address>
-										<span style="color: orange;"><i class="fas fa-phone-alt"></i></span> +971507334350<br>
-										<span style="color: orange;"><i class="fas fa-blender-phone"></i></span> +97144096876 <br>
-										<span style="color: orange;"><i class="fas fa-envelope"></i></span> info@giantmigration.com
+											<span style="color: orange;"><i class="fas fa-phone-alt"></i></span> <?php echo $bran1['mobile'] ?><br>
+											<!-- <span style="color: orange;"><i class="fas fa-blender-phone"></i></span> +97144096876 <br> -->
+											<span style="color: orange;"><i class="fas fa-envelope"></i></span> <?php echo $bran1['email'] ?>
 										</address>
 									</td>
 								</tr>
